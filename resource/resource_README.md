@@ -40,3 +40,31 @@
     - sound_enemy_dead
 - 損血
     - sound_blood_loss
+
+
+# image
+- 小怪
+    - image_mob_move_right
+    - image_mob_move_left
+- boss
+    - image_boss_move_right
+    - image_boss_move_left
+    - image_boss_move_up
+    - image_boss_move_down
+- 角色
+    - image_character_gray
+    - image_character_blue
+    - image_character_red
+    - image_character_yellow
+    - image_character_green
+    - image_character_purple
+- 商城
+    - image_shop
+- 路 (小怪地圖的)
+    - image_map_mob_road
+- boss地圖
+    - image_map_boss
+- 其他icon
+    - image_HP
+    - image_money
+    - image_number
