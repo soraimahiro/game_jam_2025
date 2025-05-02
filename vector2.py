@@ -16,10 +16,10 @@ class Vector2:
 			return Vector2(self.x * other, self.y * other)
 		if isinstance(other, Vector2):
 			return self.x * other.x + self.y * other.y
-	def __truediv__(self, s: int | float):
-		return Vector2(self.x / s, self.y / s)
-	def __floordiv__(self, s: int):
-		return Vector2(self.x // s, self.y // s)
+	def __truediv__(self, n: int | float):
+		return Vector2(self.x / n, self.y / n)
+	def __floordiv__(self, n: int):
+		return Vector2(self.x // n, self.y // n)
 	def __eq__(self, other: 'Vector2'):
 		return self.x == other.x and self.y == other.y
 	def __neg__(self):
@@ -30,12 +30,14 @@ class Vector2:
 		return self + other
 	def sub(self, other: 'Vector2'):
 		return self - other
-	def scale(self, s: int | float):
+	def scale(self, s: int | float) -> 'Vector2':
 		return self * s
 	def to_tuple(self):
 		return (self.x, self.y)
 	def parallel(self, other: 'Vector2'):
 		return self.x * other.y == self.y * other.x
-	def proj(self, other: 'Vector2'):
+	def proj(self, other: 'Vector2') -> 'Vector2':
 		"""ask for the projection of `self` on `other`"""
-		return other * (self * other / other * other)
+		so: int | float = self * other
+		oo: int | float = other * other
+		return other * (so / oo)

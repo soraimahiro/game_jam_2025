@@ -12,7 +12,7 @@ class Entity(pygame.sprite.Sprite):
 		self.hp = hp
 		self.damage = damage
 		self.pos = pos
-		self.icon = pygame.transform.scale(pygame.image.load(icon), (50, 50))
+		self.icon = pygame.transform.scale(pygame.image.load(icon), (75, 75))
 		self.move = mov # how long do the entity move
 		self.wait_time = wait_time  # how many rounds do the entity take to move
 		self.round_pass = 0  # how many rounds pass

@@ -7,8 +7,7 @@ class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.pos = Vector2(0, 0)
-		self.icon = pygame.transform.scale(pygame.image.load("./resource/image/diamond.png"), (50, 50))
-		self.rect = self.icon.get_rect()
+		self.icon = pygame.transform.scale(pygame.image.load("./resource/image/diamond.png"), (75, 75))
 		self.money = 0
 		self.hp = 10
 		self.skills = []

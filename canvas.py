@@ -33,6 +33,16 @@ class Canvas:
 		position = center + entity.pos * delta - shift
 		screen.blit(entity.icon, position.to_tuple())
 		pass
+	def draw_bar(self, screen: pygame.Surface):
+		heart = pygame.transform.scale(pygame.image.load("./resource/image/redstone.png"), (50, 50))
+		for i in range(self.player.hp):
+			screen.blit(heart, (heart.get_width() * 1.1 * i, 0))
+		gold = pygame.transform.scale(pygame.image.load("./resource/image/gold_ingot.png"), (50, 50))
+		screen.blit(gold, (screen.get_width() - gold.get_width(), 0))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 48)
+		text = font.render(f"{self.player.money} ", 0, (0, 0, 0))
+		screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), gold.get_height() / 2 - text.get_height() / 3))
+		pass
 	def draw_title(self, screen: pygame.Surface):
 		screen.fill((255, 255, 255))
 		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 128)
@@ -76,6 +86,8 @@ class Canvas:
 		# Draw entities
 		for entity in self.entities:
 			self.draw_unit(screen, entity)
+		# Draw upper bar
+		self.draw_bar(screen)
 		pass
 	def draw_boss(self, screen: pygame.Surface):
 		# fill background
@@ -85,6 +97,8 @@ class Canvas:
 		# Draw entities
 		for entity in self.entities:
 			self.draw_unit(screen, entity)
+		# Draw upper bar
+		self.draw_bar(screen)
 		pass
 	def draw_win(self, screen: pygame.Surface):
 		screen.fill((127, 127, 0))
@@ -238,7 +252,7 @@ class Canvas:
 	def next_round(self):
 		for entity in self.entities:
 			entity.next_step(self.player)
-			# TODO Collision Detected check when boss move 
+			# check when boss move 
 			if entity.pos == self.player.pos:
 				self.player.hp -= entity.damage
 				print(f"hp = {self.player.hp}")
