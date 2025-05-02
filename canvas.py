@@ -204,9 +204,10 @@ class Canvas:
 			# TODO Collision Detected check when boss move 
 			if entity.pos == self.player.pos:
 				self.player.hp -= entity.damage
-				print(f"hp = {self.player.hp}")
+				print(f"hp = {self.player.hp}")		
+			self.player.attack(entity)
 		for entity in self.entities:
-			if entity.hp == 0:
+			if entity.hp <= 0:
 				self.entities.remove(entity)
 		self.round_pass += 1
 		if self.enemy_wait <= self.round_pass:
