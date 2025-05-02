@@ -9,21 +9,13 @@ class Canvas:
 	S_BATTLE = 3;	S_BOSS = 4;		S_SHOP = 5;		S_END = 6
 	def __init__(self):
 		self.stage = Canvas.S_BATTLE
-		self.entities = [Entity(
-			"./resource/image/iron_ingot.png",
-			Entity.T_MOSTER,
-			1,
-			Vector2(j * -5, random.randrange(-3, 3)),
-			Vector2(j, 0)
-		) for j in [random.choice((-1, 1))] for i in range(3)]
+		self.entities = [Entity.random_enemy() for i in range(3)]
 		self.player = Player()
-		self.shadows = [Entity(
-			"./resource/image/emerald.png",
-			Entity.T_SHADOW,
-			-1,
-			Vector2(0, i),
-			Vector2(0, 0)
-		) for i in range(-3, 4)]
+		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
+		self.round_pass = 0
+		self.enemy_wait = 3
+		self.new_enemy_count = 2
+		self.boss_wait = 20
 		pass
 	def draw_unit(self, screen: pygame.Surface, entity: Player | Entity):
 		width = screen.get_width()
@@ -107,4 +99,11 @@ class Canvas:
 	def next_round(self):
 		for entity in self.entities:
 			entity.next_step()
+			if entity.hp == 0:
+				self.entities.remove(entity)
+		self.round_pass += 1
+		if (self.enemy_wait <= self.round_pass):
+			self.round_pass -= self.enemy_wait
+			for i in range(self.new_enemy_count):
+				self.entities.append(Entity.random_enemy())
 		pass
