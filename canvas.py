@@ -135,6 +135,10 @@ class Canvas:
 		elif key in {pygame.K_a, pygame.K_LEFT}:
 			if (self.player.pos.x > -5):
 				self.player.pos.x -= 1
+				for entity in self.entities:
+					if entity.pos == self.player.pos and entity.move.x > 0:
+						self.player.hp -= entity.damage
+						print(f"hp = {self.player.hp}")
 				for shadow in self.shadows:
 					if shadow.pos.y == self.player.pos.y:
 						shadow.pos.x = self.player.pos.x
@@ -142,6 +146,10 @@ class Canvas:
 		elif key in {pygame.K_d, pygame.K_RIGHT}:
 			if (self.player.pos.x < 5):
 				self.player.pos.x += 1
+				for entity in self.entities:
+					if entity.pos == self.player.pos and entity.move.x < 0:
+						self.player.hp -= entity.damage
+						print(f"hp = {self.player.hp}")
 				for shadow in self.shadows:
 					if shadow.pos.y == self.player.pos.y:
 						shadow.pos.x = self.player.pos.x
@@ -150,18 +158,34 @@ class Canvas:
 		if key in {pygame.K_w, pygame.K_UP}:
 			if self.player.pos.y > -3:
 				self.player.pos.y -= 1
+				for entity in self.entities:
+					if entity.pos == self.player.pos and entity.move.y < 0 and entity.move.x == 0:
+						self.player.hp -= entity.damage
+						print(f"hp = {self.player.hp}")
 				self.next_round()
 		elif key in {pygame.K_s, pygame.K_DOWN}:
 			if self.player.pos.y < 3:
 				self.player.pos.y += 1
+				for entity in self.entities:
+					if entity.pos == self.player.pos and entity.move.y > 0 and entity.move.x == 0:
+						self.player.hp -= entity.damage
+						print(f"hp = {self.player.hp}")
 				self.next_round()
 		elif key in {pygame.K_a, pygame.K_LEFT}:
 			if (self.player.pos.x > -5):
 				self.player.pos.x -= 1
+				for entity in self.entities:
+					if entity.pos == self.player.pos and entity.move.x > 0 and entity.move.y == 0:
+						self.player.hp -= entity.damage
+						print(f"hp = {self.player.hp}")
 				self.next_round()
 		elif key in {pygame.K_d, pygame.K_RIGHT}:
 			if (self.player.pos.x < 5):
 				self.player.pos.x += 1
+				for entity in self.entities:
+					if entity.pos == self.player.pos and entity.move.x < 0 and entity.move.y == 0:
+						self.player.hp -= entity.damage
+						print(f"hp = {self.player.hp}")
 				self.next_round()
 	def pressed(self, key: int):
 		if self.stage == Canvas.S_TITLE:
@@ -177,7 +201,7 @@ class Canvas:
 	def next_round(self):
 		for entity in self.entities:
 			entity.next_step()
-			# TODO Collision Detected
+			# TODO Collision Detected check when boss move 
 			if entity.pos == self.player.pos:
 				self.player.hp -= entity.damage
 				print(f"hp = {self.player.hp}")
