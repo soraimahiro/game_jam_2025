@@ -7,8 +7,9 @@ from entity import Entity
 class Canvas:
 	S_TITLE = 0;	S_SETTING = 1;	S_CREDITS = 2
 	S_BATTLE = 3;	S_BOSS = 4;		S_SHOP = 5;		S_END = 6
+	T_START = 0;	T_SETTING = 1;	T_CREDIT = 2
 	def __init__(self):
-		self.stage = Canvas.S_BATTLE
+		self.stage = Canvas.S_TITLE
 		self.entities = [Entity.random_enemy() for i in range(3)]
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
@@ -27,6 +28,21 @@ class Canvas:
 		position = center + entity.pos * delta - shift
 		screen.blit(entity.icon, position.to_tuple())
 		pass
+	def draw_title(self, screen: pygame.Surface):
+		screen.fill((255, 255, 255))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 128)
+		text = font.render("Our Game", 0, (0, 0, 255), None)
+		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.25))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 72)
+		text = font.render("Start", 0, (0, 0, 0) if self.player.pos.y != Canvas.T_START else (255, 127, 0), None)
+		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.5))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 72)
+		text = font.render("Setting", 0, (0, 0, 0) if self.player.pos.y != Canvas.T_SETTING else (255, 127, 0), None)
+		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.6))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 72)
+		text = font.render("Credit", 0, (0, 0, 0) if self.player.pos.y != Canvas.T_CREDIT else (255, 127, 0), None)
+		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.7))
+		pass
 	def draw_battle(self, screen: pygame.Surface):
 		# fill background
 		screen.fill((255, 127, 127))
@@ -39,6 +55,16 @@ class Canvas:
 		# Draw entities
 		for entity in self.entities:
 			self.draw_unit(screen, entity)
+		pass
+	def pressed_title(self, key):
+		if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
+			self.player.pos.y -= 1
+		elif key in {pygame.K_d, pygame.K_DOWN, pygame.K_d, pygame.K_RIGHT}:
+			self.player.pos.y += 1
+		elif key == pygame.K_RETURN:
+			if self.player.pos.y == Canvas.T_START:
+				self.stage = Canvas.S_BATTLE
+		self.player.pos.y %= 3
 		pass
 	def pressed_battle(self, key):
 		if key in {pygame.K_w, pygame.K_UP}:
@@ -87,14 +113,18 @@ class Canvas:
 				self.player.pos.x += 1
 				self.next_round()
 	def draw(self, screen: pygame.Surface):
-		if (self.stage == Canvas.S_BATTLE):
+		if self.stage == Canvas.S_TITLE:
+			self.draw_title(screen)
+		elif self.stage == Canvas.S_BATTLE:
 			self.draw_battle(screen)
-		elif (self.stage == Canvas.S_BOSS):
+		elif self.stage == Canvas.S_BOSS:
 			self.draw_boss(screen)
 	def pressed(self, key: int):
-		if (self.stage == Canvas.S_BATTLE):
+		if self.stage == Canvas.S_TITLE:
+			self.pressed_title(key)
+		elif self.stage == Canvas.S_BATTLE:
 			self.pressed_battle(key)
-		elif (self.stage == Canvas.S_BOSS):
+		elif self.stage == Canvas.S_BOSS:
 			self.pressed_boss(key)
 	def next_round(self):
 		for entity in self.entities:
