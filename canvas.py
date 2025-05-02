@@ -13,7 +13,7 @@ class Canvas:
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
 		self.round_pass = 0
-		self.enemy_wait = 3
+		self.enemy_wait = 8
 		self.new_enemy_count = 2
 		self.boss_wait = 20
 		pass
@@ -99,10 +99,15 @@ class Canvas:
 	def next_round(self):
 		for entity in self.entities:
 			entity.next_step()
+			# TODO Collision Detected
+			if entity.pos == self.player.pos:
+				self.player.hp -= entity.damage
+				print(f"hp = {self.player.hp}")
+		for entity in self.entities:
 			if entity.hp == 0:
 				self.entities.remove(entity)
 		self.round_pass += 1
-		if (self.enemy_wait <= self.round_pass):
+		if self.enemy_wait <= self.round_pass:
 			self.round_pass -= self.enemy_wait
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy())

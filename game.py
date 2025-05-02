@@ -10,7 +10,6 @@ canvas = Canvas()
 while True:
 	clock.tick(60)
 	canvas.draw(screen)
-	pygame.display.flip()
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			pygame.quit()
@@ -20,6 +19,7 @@ while True:
 				canvas = Canvas()
 			canvas.pressed(event.key)
 			pass
+	pygame.display.flip()
 	
 	
 
