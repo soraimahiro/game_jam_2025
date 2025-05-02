@@ -17,7 +17,9 @@ while True:
 		elif event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
 				canvas = Canvas()
-			canvas.pressed(event.key)
+			if not canvas.pressed(event.key):
+				pygame.quit()
+				exit()
 			pass
 	pygame.display.flip()
 	
