@@ -7,7 +7,7 @@ from entity import Entity
 class Canvas:
 	S_TITLE = 0;	S_SETTING = 1;	S_CREDITS = 2
 	S_BATTLE = 3;	S_BOSS = 4;		S_SHOP = 5;		S_END = 6
-	T_START = 0;	T_SETTING = 1;	T_CREDIT = 2
+	T_START = 0;	T_SETTING = 1;	T_CREDIT = 2;	T_EXIT = 3
 	def __init__(self):
 		self.stage = Canvas.S_TITLE
 		self.entities = [Entity.random_enemy() for i in range(3)]
@@ -45,6 +45,8 @@ class Canvas:
 		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.6))
 		text = font.render("Credit", 0, (0, 0, 0) if self.player.pos.y != Canvas.T_CREDIT else (255, 127, 0), None)
 		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.7))
+		text = font.render("Exit", 0, (0, 0, 0) if self.player.pos.y != Canvas.T_EXIT else (255, 127, 0), None)
+		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
 		pass
 	def draw_setting(self, screen: pygame.Surface):
 		screen.fill((127, 255, 0))
@@ -55,7 +57,7 @@ class Canvas:
 		screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.6))
 		pass
 	def draw_credit(self, screen: pygame.Surface):
-		screen.fill((127, 127, 63))
+		screen.fill((180, 180, 0))
 		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 48)
 		text = font.render("Credit", 0, (0, 0, 0), None)
 		screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.15))
@@ -84,6 +86,24 @@ class Canvas:
 		for entity in self.entities:
 			self.draw_unit(screen, entity)
 		pass
+	def draw_win(self, screen: pygame.Surface):
+		screen.fill((127, 127, 0))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 128)
+		text = font.render("You Win!!", 0, (0, 0, 0), None)
+		screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 48)
+		text = font.render("Press Enter to return", 0, (0, 0, 0), None)
+		screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+		pass
+	def draw_lose(self, screen: pygame.Surface):
+		screen.fill((72, 72, 72))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 128)
+		text = font.render("You Lose...", 0, (0, 0, 0), None)
+		screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
+		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 48)
+		text = font.render("Press Enter to return", 0, (0, 0, 0), None)
+		screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+		pass
 	def draw(self, screen: pygame.Surface):
 		if self.stage == Canvas.S_TITLE:
 			self.draw_title(screen)
@@ -95,7 +115,13 @@ class Canvas:
 			self.draw_battle(screen)
 		elif self.stage == Canvas.S_BOSS:
 			self.draw_boss(screen)
-	def pressed_title(self, key):
+		elif self.stage == Canvas.S_END:
+			if (self.player.hp > 0):
+				self.draw_win(screen)
+			else:
+				self.draw_lose(screen)
+		pass
+	def pressed_title(self, key) -> bool:
 		if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
 			self.player.pos.y -= 1
 		elif key in {pygame.K_d, pygame.K_DOWN, pygame.K_d, pygame.K_RIGHT}:
@@ -107,17 +133,19 @@ class Canvas:
 				self.set_stage(Canvas.S_SETTING)
 			elif self.player.pos.y == Canvas.T_CREDIT:
 				self.set_stage(Canvas.S_CREDITS)
-		self.player.pos.y %= 3
-		pass
-	def pressed_setting(self, key):
+			elif self.player.pos.y == Canvas.T_EXIT:
+				return False
+		self.player.pos.y %= 4
+		return True
+	def pressed_setting(self, key) -> bool:
 		if key == pygame.K_RETURN:
 			self.set_stage(self.previous_stage)
-		pass
-	def pressed_credit(self, key):
+		return True
+	def pressed_credit(self, key) -> bool:
 		if key == pygame.K_RETURN:
 			self.set_stage(self.previous_stage)
-		pass
-	def pressed_battle(self, key):
+		return True
+	def pressed_battle(self, key) -> bool:
 		if key in {pygame.K_w, pygame.K_UP}:
 			if self.player.pos.y > -3:
 				self.player.pos.y -= 1
@@ -154,7 +182,8 @@ class Canvas:
 					if shadow.pos.y == self.player.pos.y:
 						shadow.pos.x = self.player.pos.x
 				self.next_round()
-	def pressed_boss(self, key):
+		return True
+	def pressed_boss(self, key) -> bool:
 		if key in {pygame.K_w, pygame.K_UP}:
 			if self.player.pos.y > -3:
 				self.player.pos.y -= 1
@@ -187,30 +216,45 @@ class Canvas:
 						self.player.hp -= entity.damage
 						print(f"hp = {self.player.hp}")
 				self.next_round()
-	def pressed(self, key: int):
+		return True
+	def pressed_end(self, key) -> bool:
+		if key == pygame.K_RETURN:
+			self.set_stage(Canvas.S_TITLE)
+		return True
+	def pressed(self, key: int) -> bool:
 		if self.stage == Canvas.S_TITLE:
-			self.pressed_title(key)
+			return self.pressed_title(key)
 		elif self.stage == Canvas.S_SETTING:
-			self.pressed_setting(key)
+			return self.pressed_setting(key)
 		elif self.stage == Canvas.S_CREDITS:
-			self.pressed_credit(key)
+			return self.pressed_credit(key)
 		elif self.stage == Canvas.S_BATTLE:
-			self.pressed_battle(key)
+			return self.pressed_battle(key)
 		elif self.stage == Canvas.S_BOSS:
-			self.pressed_boss(key)
+			return self.pressed_boss(key)
+		elif self.stage == Canvas.S_END:
+			return self.pressed_end(key)
+		return False
 	def next_round(self):
 		for entity in self.entities:
-			entity.next_step()
+			entity.next_step(self.player)
 			# TODO Collision Detected check when boss move 
 			if entity.pos == self.player.pos:
 				self.player.hp -= entity.damage
 				print(f"hp = {self.player.hp}")
+		if not self.player.hp > 0:
+			self.set_stage(Canvas.S_END)
 		for entity in self.entities:
 			if entity.hp == 0:
+				if entity.type == Entity.T_BOSS:
+					self.stage = Canvas.S_END
 				self.entities.remove(entity)
 		self.round_pass += 1
-		if self.enemy_wait <= self.round_pass:
-			self.round_pass -= self.enemy_wait
+		if self.round_pass == self.boss_wait:
+			self.stage = Canvas.S_BOSS
+			self.entities.append(Entity.random_boss())
+			self.enemy_wait *= 2
+		elif self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy())
 		pass

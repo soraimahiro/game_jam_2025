@@ -22,6 +22,8 @@ class Vector2:
 		return Vector2(self.x // s, self.y // s)
 	def __eq__(self, other: 'Vector2'):
 		return self.x == other.x and self.y == other.y
+	def __neg__(self):
+		return Vector2(-self.x, -self.y)
 	def __repr__(self):
 		return f"Vector2({self.x}, {self.y})"
 	def add(self, other: 'Vector2'):
