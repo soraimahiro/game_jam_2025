@@ -1,22 +1,18 @@
 import pygame
+from vector2 import Vector2
+from skill import Skill
 
 # Player(x, y, width, height)
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height):
-        super().__init__()
-        self.image = pygame.Surface((width, height))
-        self.image.fill((255, 0, 0))  # Fill the player with red color
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.money = 0
-        self.hp = 100
-        self.skills = []
-    
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-
-class Skill:
-    def __init__(self, name, atk):
-        self.name = name
-        self.atk = atk
+	def __init__(self):
+		super().__init__()
+		self.pos = Vector2(0, 0)
+		self.icon = pygame.transform.scale(
+			pygame.image.load("./resource/image/diamond.png"),
+			(100, 100)
+		)
+		self.rect = self.icon.get_rect()
+		self.money = 0
+		self.hp = 100
+		self.skills = []
+		pass
