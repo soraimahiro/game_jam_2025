@@ -6,7 +6,7 @@ pygame.init()
 pygame.display.set_caption("Game Window")
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
-canvas = Canvas(screen)
+canvas = Canvas()
 while True:
 	clock.tick(60)
 	canvas.draw(screen)
@@ -16,6 +16,8 @@ while True:
 			pygame.quit()
 			exit()
 		elif event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_ESCAPE:
+				canvas = Canvas()
 			pass
 	
 	

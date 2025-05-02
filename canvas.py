@@ -4,20 +4,23 @@ from player import Player
 from entity import Entity
 
 class Canvas:
-	def __init__(self, screen: pygame.Surface):
-		self.entities = []
+	def __init__(self):
+		self.entities = [Entity() for i in range(3)]
 		self.player = Player()
-		self.width = screen.get_width()
-		self.height = screen.get_height()
-	def canvas_pos(self, entity: Player | Entity):
-		center = Vector2(self.width, self.height) / 2
-		delta = min((self.height - 50) / 6, self.width / 10)
+	def draw_unit(self, screen: pygame.Surface, entity: Player | Entity):
+		width = screen.get_width()
+		height = screen.get_height()
+		center = Vector2(width, height) / 2
+		delta = min((height - 50) / 6, width / 10)
 		shift = Vector2(entity.icon.get_width(), entity.icon.get_height()) / 2
-		return center + entity.pos * delta - shift
+		position = center + entity.pos * delta - shift
+		screen.blit(entity.icon, position.to_tuple())
+		pass
 	def draw(self, screen: pygame.Surface):
-		self.width = screen.get_width()
-		self.height = screen.get_height()
-		screen.fill((127, 127, 255)) # background
+		# fill background
+		screen.fill((127, 127, 255))
 		# Draw player
-		screen.blit(self.player.icon, self.canvas_pos(self.player).to_tuple())
-
+		self.draw_unit(screen, self.player)
+		# Draw entities
+		for entity in self.entities:
+			self.draw_unit(screen, entity)

@@ -1,12 +1,16 @@
 # entity.py
 import pygame
+import random
 from vector2 import Vector2 
 
 class Entity(pygame.sprite.Sprite):
 	def __init__(self):
 		self.type = 0  # type of entity
-		self.pos = Vector2(0, 0)
-		self.icon = None
+		self.pos = Vector2(random.randrange(-5, 5), random.randrange(-3, 3))
+		self.icon = pygame.transform.scale(
+			pygame.image.load("./resource/image/iron_ingot.png"),
+			(100, 100)
+		)
 		self.hp = 0
 		self.x_move_amount = 0  # how long do the entity move
 		self.y_move_amount = 0  # only boss has this
