@@ -56,21 +56,32 @@ def draw_title(stage: Stage, screen: pygame.Surface):
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
 
 def draw_setting(stage: Stage,screen: pygame.Surface):
+	icon_size = 150
+	skin_bg_icon_0 = globals.icon("resource/image/settings/image_character_box_0.png", (icon_size,icon_size))
+	skin_bg_icon_1 = globals.icon("resource/image/settings/image_character_box_1.png", (icon_size,icon_size))
+	skin_icon = globals.icon(globals.player_img, (icon_size-10,icon_size-10))
+	player_pos=(stage.player.pos.x,stage.player.pos.y)
 	screen.fill((127, 255, 0))
 	font = globals.font(size = 16)
 	text = font.render("Setting", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.15))
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.1))
 
 	font = globals.font(size = 18)
-	text = font.render("Skin Color", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.SKIN.value else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.3))
-	text = font.render("Sound", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.SOUND.value else (255, 127, 0), None)
+	text = font.render("Skin Color", 0, (0, 0, 0) if player_pos !=(0, SettingOption.SKIN.value) else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.2))
+	
+	text = font.render("Sound", 0, (0, 0, 0) if player_pos !=(0, SettingOption.SOUND.value) else (255, 127, 0), None)
 	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.5))
-	text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.EXIT.value else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.7))
-	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if (stage.player.pos.x,stage.player.pos.y)!=(1,1)  else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.7, screen.get_height() * 0.5))
+	
+	text = font.render("Exit", 0, (0, 0, 0) if player_pos != (0,SettingOption.EXIT.value) else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.8))
 
+	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if player_pos!=(1,1)  else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.55, screen.get_height() * 0.5))
+	
+	screen.blit(skin_bg_icon_0 if (stage.player.pos.x,stage.player.pos.y)!=(1,0) else skin_bg_icon_1, (screen.get_width() * 0.55, screen.get_height() * 0.1))
+	# skin_icon = globals.icon(globals.player_img, (icon_size-10,icon_size-10))
+	screen.blit(skin_icon, (screen.get_width() * 0.55 + 5, screen.get_height() * 0.1 + 5))
 def draw_credit(screen: pygame.Surface):
 	screen.fill((180, 180, 0))
 	font = globals.font(size = 12)

@@ -9,9 +9,11 @@ def init():
 	global icon_size
 	icon_size = (50, 50)
 	global color
-	color = "blue"
+	color = ["blue", "gray","green","purple","red","yellow"]
+	global color_index
+	color_index = 0
 	global player_img
-	player_img = f"./resource/image/type_simple/image_character_{color}.png"
+	player_img = get_player_img()
 	global health_img
 	health_img = "./resource/image/type_simple/image_HP.png"
 	global money_img
@@ -23,12 +25,15 @@ def init():
 	global font_file
 	font_file = "NOTOSANSTC-VARIABLEFONT_WGHT.TTF"
 	global shadow_img
-	shadow_img = f"type_simple/image_shadow_{color}"
+	shadow_img = get_shadow_img()
 	global music_volume
 	music_volume = 50
 	global sound_volume
 	sound_volume = music_volume
-
+def get_player_img():
+	return f"./resource/image/type_simple/image_character_{color[color_index]}.png"
+def get_shadow_img():
+	return f"./resource/image/type_simple/image_shadow_{color[color_index]}.png"
 font_set: set[tuple[str, int, pygame.font.Font]] = set()
 def font(file: str = None, size: int = 8, scale = None, bold: bool = False, italic: bool = False):
 	if file == None:
