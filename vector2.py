@@ -59,8 +59,6 @@ class Vector2:
 			return False
 		if B == D:
 			return True
-		if C == D:
-			return False
 		AB = B - A
 		AC = C - A
 		AD = D - A
@@ -85,10 +83,8 @@ class Vector2:
 			if AB * AC > 0:
 				return True
 			return False
-		if i < 0 or j < 0:
+		if i < 0 and j < 0:
 			return False
-		if i > 1 and j < 1:
-			return True
-		if i < 1 and j > 1:
+		if i > 1 or j > 1:
 			return True
 		return False
