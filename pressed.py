@@ -126,6 +126,11 @@ def pressed_esc_menu(stage: Stage, key):
 	stage.esc_menu.option %= 2
 	return True
 
+def pressed_story(stage: Stage, key) -> bool:
+	if key == pygame.K_RETURN:
+		stage.set_stage(StageOption.BATTLE)
+	return True
+
 def pressed(stage: Stage, key) -> bool:
 	if stage.esc_menu.show:
 		return pressed_esc_menu(stage, key)
@@ -135,6 +140,8 @@ def pressed(stage: Stage, key) -> bool:
 		return pressed_setting(stage, key)
 	elif stage.stage == StageOption.CREDITS:
 		return pressed_credit(stage, key)
+	elif stage.stage == StageOption.BATTLE_STORY:
+		return pressed_story(stage, key)
 	elif stage.stage == StageOption.BATTLE:
 		return pressed_battle(stage, key)
 	elif stage.stage == StageOption.BOSS:

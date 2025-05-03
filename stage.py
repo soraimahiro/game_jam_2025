@@ -3,19 +3,20 @@ from player import Player
 from entity import Entity
 from music import play_background_music
 from music import change_music_volume
-from enum import Enum
+from enum import Enum, auto
 from setting import Esc_menu
 
 import globals
 
 class StageOption(Enum):
-	TITLE = 0
-	SETTING = 1
-	CREDITS = 2
-	BATTLE = 3
-	BOSS = 4
-	SHOP = 5
-	END = 6
+	TITLE = auto()
+	SETTING = auto()
+	CREDITS = auto()
+	BATTLE_STORY = auto()
+	BATTLE = auto()
+	BOSS = auto()
+	SHOP = auto()
+	END = auto()
 
 class TitleOption(Enum):
 	START = 0
@@ -56,7 +57,7 @@ class Stage:
 					self.set_stage(StageOption.END)
 				self.entities.remove(entity)
 		self.round_pass += 1
-		if self.stage != StageOption.END and self.round_pass >= self.boss_wait - self.player.killed:
+		if self.stage != StageOption.END and self.round_pass >= self.boss_wait:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
 				self.set_stage(StageOption.BOSS)
 				self.entities.append(Entity.random_boss())
