@@ -5,9 +5,9 @@ from pressed import pressed
 import globals
 
 pygame.init()
-globals.init()
 pygame.display.set_caption("Game Window")
 screen = pygame.display.set_mode((800, 600))
+globals.init()
 clock = pygame.time.Clock()
 stage = Stage()
 stage.set_stage(StageOption.TITLE)
