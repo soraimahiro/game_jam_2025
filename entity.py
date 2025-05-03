@@ -64,7 +64,7 @@ class Entity(pygame.sprite.Sprite):
 	def random_boss(self):
 		rx = random.choice((-1, 1))
 		ry = random.choice((-1, 1))
-		return Entity("./resource/image/lava_bucket.png", Entity.T_BOSS, 10, 2, Vector2(rx * -6, ry * -4), Vector2(1, 1), 3)
+		return Entity("./resource/image/lava_bucket.png", Entity.T_BOSS, 10, 2, Vector2(rx * -6, ry * -4), Vector2(1, 1), 10, 3)
 	@ classmethod
 	def shadow(self, pos: Vector2):
 		return Entity("./resource/image/emerald.png", Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))

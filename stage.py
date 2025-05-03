@@ -59,7 +59,7 @@ class Stage:
 					self.set_stage(StageOption.END)
 				self.entities.remove(entity)
 		self.round_pass += 1
-		if self.round_pass >= self.boss_wait - self.player.killed:
+		if self.stage != StageOption.END and self.round_pass >= self.boss_wait - self.player.killed:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
 				self.set_stage(StageOption.BOSS)
 				self.entities.append(Entity.random_boss())
