@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class Entity(pygame.sprite.Sprite):
 	T_MONSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT = 4
-	T_GOODS = 5
+	T_GOODS = 5;	T_DISPLAY = 6
 	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
@@ -116,7 +116,7 @@ class Entity(pygame.sprite.Sprite):
 		if boss and random.choice((True, False)) and (choice.direction == 0 or (choice.direction | 0b1100) != 0):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
-			print("here")
+			#print("here")
 			if ry == 3: # up type
 				choice.move = Vector2(choice.move.y, -choice.move.x)
 			else: # down type

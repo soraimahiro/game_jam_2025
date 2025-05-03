@@ -150,18 +150,24 @@ def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 	pygame.draw.rect(screen, (255, 255, 255), rect, screen.get_width() * 3 // 5)
 	for i in range(-1, 2):
 		no = -1
-		for j in range(3):
-			if stage.player.skills[j] == stage.shop_info.goods[i]:
+		for j in range(stage.player.skills.__len__()):
+			if stage.player.skills[j].attacktype == stage.shop_info.goods[i]:
 				no = j
+				break
 		if no == -1:
 			no = stage.player.skills.__len__()
 			stage.player.skills.append(Skill(1, 0, stage.shop_info.goods[i]))
-		sell = Entity("lava_bucket", Entity.T_GOODS, -1, 0, Vector2(i * 3, 0), Vector2(0, 0), 0, 1, 0)
-		cost = Entity("iron_ingot", Entity.T_DISPLAY, -1, 0, Vector2(i * 3, -2), Vector2(0, 0), 0, 1, 0)
-		level = Entity("diamond", Entity.T_DISPLAY, -1, 0, Vector2(i * 3, 2), Vector2(0, 0), 0, 1, 0)
-		draw_unit(sell)
-		draw_unit(cost)
-		draw_unit(level)
+		the_type = stage.shop_info.goods[i].__repr__()
+		the_type = the_type[the_type.find('.') + 1:the_type.rfind(':')]
+		if stage.shop_info.option == i + 1:
+			sell = Entity(f"shop/image_skill_{the_type}_1", Entity.T_GOODS, -1, 0, Vector2(i * 3, 0), Vector2(0, 0), 0, 1, 0)
+		else:
+			sell = Entity(f"shop/image_skill_{the_type}_0", Entity.T_GOODS, -1, 0, Vector2(i * 3, 0), Vector2(0, 0), 0, 1, 0)
+		cost = Entity("type_simple/image_money", Entity.T_DISPLAY, -1, 0, Vector2(i * 3, -1), Vector2(0, 0), 0, 1, 0)
+		level = Entity(f"shop/image_skill_level_{stage.player.skills[no].level}", Entity.T_DISPLAY, -1, 0, Vector2(i * 3, 1), Vector2(0, 0), 0, 1, 0)
+		draw_unit(screen, sell)
+		draw_unit(screen, cost)
+		draw_unit(screen, level)
 	return True
 
 def draw(stage: Stage, screen: pygame.Surface):

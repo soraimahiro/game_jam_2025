@@ -73,7 +73,8 @@ class Stage:
 		pass
 	
 	def reset(self):
-		self.stage = StageOption.SHOP
+		self.stage = StageOption.TITLE
+		self.previous_stage = self.stage
 		self.entities = [Entity.random_enemy(False) for i in range(3)]
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
@@ -82,5 +83,5 @@ class Stage:
 		self.new_enemy_count = 2
 		self.boss_wait = 50
 		self.esc_menu = Esc_menu()
-		self.shop_info = Shop()
+		self.shop_info = Shop(self.player)
 		play_background_music(self)

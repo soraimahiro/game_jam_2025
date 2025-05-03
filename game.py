@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((800, 600))
 globals.init()
 clock = pygame.time.Clock()
 stage = Stage()
-#stage.set_stage(StageOption.TITLE)
+stage.set_stage(StageOption.SHOP)
 
 while True:
 	clock.tick(60)

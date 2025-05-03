@@ -1,5 +1,6 @@
 import pygame
 from stage import Stage, StageOption, TitleOption
+from skill import Skill
 
 def pressed_title(stage: Stage, key) -> bool:
 		if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
@@ -132,7 +133,15 @@ def pressed_shop(stage: Stage, key: int) -> bool:
 	elif key in {pygame.K_d, pygame.K_RIGHT}:
 		stage.shop_info.option += 1
 	elif key == pygame.K_RETURN:
-		if (stage.player.money >= stage.shop_info.goods[stage.shop_info.option].cost()):
+		no = -1
+		for i in range(stage.player.skills.__len__()):
+			if stage.player.skills[i].attacktype == stage.shop_info.goods[stage.shop_info.option]:
+				no = i
+				break
+		if no == -1:
+			no = stage.player.skills.__len__()
+			stage.player.skills.append(Skill(1, 0, stage.shop_info.goods[stage.shop_info.option]))
+		if (stage.player.money >= stage.player.skills[no].cost()):
 			pass
 	elif key == pygame.K_ESCAPE:
 		stage.set_stage(stage.previous_stage)
