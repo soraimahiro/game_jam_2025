@@ -19,21 +19,27 @@ class Skill:
 		pass
 	def __str__(self):
 		return f"Skill(damage={self.damage}, level={self.level}, direction={self.attacktype})"
-	def hit_enemy(self, pos : Vector2, start_time : int):
-		self.hits.append(Hit.hit(pos, start_time))
+	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int):
+		self.hits.append(Hit.hit(pos, start_time, is_hit))
 	def update(self, current_time : int):
 		for hit in self.hits:
 			if (current_time - hit.start_time >= hit.duration):
 				self.hits.remove(hit)
 	
 class Hit:
-	HIT_DURATION = 100
+	HIT_DURATION = 300
 	def __init__(self, entity : Entity, duration : int, start_time : int):
 		self.entity = entity
 		self.duration = duration
 		self.start_time = start_time
 
 	@ classmethod
-	def hit(self, pos : Vector2, start_time : int):
+	def hit(self, pos : Vector2, start_time : int, is_hit : int):
 		entity = Entity("./resource/image/type_simple/image_hit.png", Entity.T_HIT, 1, 0, pos, {0, 0})
+		if is_hit == 1:
+			#透明度設為255
+			entity.icon.set_alpha(255)
+		else:
+			#透明度設為10
+			entity.icon.set_alpha(10)
 		return Hit(entity, Hit.HIT_DURATION, start_time)

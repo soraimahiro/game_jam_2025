@@ -44,7 +44,7 @@ class Stage:
 			if entity.pos == self.player.pos:
 				self.player.hp -= entity.damage
 				print(f"hp = {self.player.hp}")
-			self.player.attack(entity)
+		self.player.attack(self.entities)
 		if not self.player.hp > 0:
 			self.set_stage(StageOption.END)
 		for entity in self.entities:
