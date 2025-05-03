@@ -46,7 +46,8 @@ class Entity(pygame.sprite.Sprite):
 			icon = globals.icon(f"./resource/image/{self.img}_right.png")
 		else:
 			icon = globals.icon(f"./resource/image/{self.img}.png")
-		return icon.set_alpha(alpha)
+		icon.set_alpha(alpha)
+		return icon
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
