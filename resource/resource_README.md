@@ -73,8 +73,6 @@ main path: ./resource/image/
     - type_simple/image_shadow_yellow
     - type_simple/image_shadow_green
     - type_simple/image_shadow_purple
-- 商城
-    - type_simple/image_shop
 - 地圖
     - type_simple/image_map
     - 路 (小怪地圖的)
@@ -113,7 +111,8 @@ main path: ./resource/image/
     - startpage/image_credit_1
     - startpage/image_exit_0
     - startpage/image_exit_1
-- 商店icon
+- 商城
+    - type_simple/image_shop
     - shop/image_skill_POINT_0
     - shop/image_skill_POINT_1
     - shop/image_skill_LINE_X_0
@@ -128,6 +127,8 @@ main path: ./resource/image/
     - shop/image_skill_level_1
     - shop/image_skill_level_2
     - shop/image_skill_level_3
+    - shop/image_blood_add_0
+    - shop/image_blood_add_1
     - shop/image_exit_0
     - shop/image_exit_1
 - 其他怪物
