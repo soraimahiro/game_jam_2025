@@ -14,15 +14,14 @@ class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.pos = Vector2(0, 0)
+		self.pre_pos = Vector2(0, 0)
 		self.money = 0
 		self.hp = 10
 		self.killed = 0
 		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
 		pass
-
-
 	def icon(self):
-		return pygame.transform.scale(globals.player_icon, globals.icon_size)
+		return globals.player_icon
 	def move(self, move: Vector2):
 		self.pre_pos = Vector2(self.pos.x, self.pos.y)
 		self.pos += move
