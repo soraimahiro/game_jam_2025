@@ -5,11 +5,16 @@ import globals
 from skill import AttackType
 import random
 import os
+from setting import Setting
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from entity import Entity
+# Player(x, y, width, height)
+
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.pos = Vector2(0, 0)
-		self.icon = pygame.transform.scale(globals.player_icon, (50, 50))
 		self.money = 0
 		self.hp = 10
 		self.killed = 0
