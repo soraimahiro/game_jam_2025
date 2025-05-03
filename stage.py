@@ -4,19 +4,20 @@ from entity import Entity
 from shop import Shop
 from music import play_background_music
 from music import change_music_volume
-from enum import Enum
+from enum import Enum, auto
 from setting import Esc_menu
 
 import globals
 
 class StageOption(Enum):
-	TITLE = 0
-	SETTING = 1
-	CREDITS = 2
-	BATTLE = 3
-	BOSS = 4
-	SHOP = 5
-	END = 6
+	TITLE = auto()
+	SETTING = auto()
+	CREDITS = auto()
+	BATTLE_STORY = auto()
+	BATTLE = auto()
+	BOSS = auto()
+	SHOP = auto()
+	END = auto()
 
 class TitleOption(Enum):
 	START = 0

@@ -16,6 +16,8 @@ def init():
 	health_img = "./resource/image/type_simple/image_HP.png"
 	global money_img
 	money_img = "./resource/image/type_simple/image_money.png"
+	global step_img
+	step_img = "./resource/image/type_simple/image_step.png"
 	global font_scale
 	font_scale = 4
 	global font_file
