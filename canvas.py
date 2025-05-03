@@ -74,7 +74,7 @@ def draw_credit(screen: pygame.Surface):
 def draw_battle(stage:Stage, screen: pygame.Surface):
 	# fill background
 	# screen.fill((255, 127, 127))
-	screen.fill((251, 219, 147))
+	screen.fill((247, 248, 190))
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
