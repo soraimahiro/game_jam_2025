@@ -38,27 +38,27 @@ class Player(pygame.sprite.Sprite):
 					if entity.pos.x >= self.pos.x - skill.level and entity.pos.x <= self.pos.x + skill.level:
 						entity.hp -= skill.damage
 						skill.hit_enemy(entity.pos, pygame.time.get_ticks())
-						print (f"entity hp = {entity.hp}")
+						#print (f"entity hp = {entity.hp}")
 			elif skill.attacktype == AttackType.LINE_Y.value:
 				if entity.pos.x == self.pos.x:
 					if entity.pos.y >= self.pos.y - skill.level and entity.pos.y <= self.pos.y + skill.level:
 						entity.hp -= skill.damage
 						skill.hit_enemy(entity.pos, pygame.time.get_ticks())
-						print (f"entity hp = {entity.hp}")
+						#print (f"entity hp = {entity.hp}")
 			elif skill.attacktype == AttackType.LINE_XY.value:
 				if entity.pos.y == self.pos.y and entity.pos.x >= self.pos.x - skill.level and entity.pos.x <= self.pos.x + skill.level:
 					entity.hp -= skill.damage
 					skill.hit_enemy(entity.pos, pygame.time.get_ticks())
-					print (f"entity hp = {entity.hp}")
+					#print (f"entity hp = {entity.hp}")
 				elif entity.pos.x == self.pos.x and entity.pos.y >= self.pos.y - skill.level and entity.pos.y <= self.pos.y + skill.level:
 					entity.hp -= skill.damage
 					skill.hit_enemy(entity.pos, pygame.time.get_ticks())
-					print (f"entity hp = {entity.hp}")
+					#print (f"entity hp = {entity.hp}")
 			elif skill.attacktype == AttackType.AREA.value:
 				if entity.pos.x >= self.pos.x - skill.level and entity.pos.x <= self.pos.x + skill.level and entity.pos.y >= self.pos.y - skill.level and entity.pos.y <= self.pos.y + skill.level:
 					entity.hp -= skill.damage
 					skill.hit_enemy(entity.pos, pygame.time.get_ticks())
-					print (f"entity hp = {entity.hp}")
+					#print (f"entity hp = {entity.hp}")
 				pass
 		if entity.hp <= 0:
 			self.killed += 1

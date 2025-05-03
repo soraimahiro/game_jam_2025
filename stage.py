@@ -42,7 +42,7 @@ class Stage:
 			# check when boss move 
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, pre_pos, entity.pos):
 				self.player.hp -= entity.damage
-				print(f"hp = {self.player.hp}")
+				#print(f"hp = {self.player.hp}")
 			self.player.attack(entity)
 		if not self.player.hp > 0:
 			self.set_stage(StageOption.END)
@@ -56,8 +56,8 @@ class Stage:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
 				self.set_stage(StageOption.BOSS)
 				self.entities.append(Entity.random_boss())
-				self.enemy_wait *= 2
-		elif self.round_pass % self.enemy_wait == 0:
+				self.enemy_wait = self.enemy_wait * 3 // 2
+		if self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy(self.stage == StageOption.BOSS, 1))
 		pass
@@ -67,7 +67,7 @@ class Stage:
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
 		self.round_pass = 0
-		self.enemy_wait = 8
+		self.enemy_wait = 4
 		self.new_enemy_count = 2
 		self.boss_wait = 50
 		self.esc_menu = Esc_menu()
