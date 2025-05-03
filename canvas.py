@@ -4,6 +4,7 @@ from player import Player
 from entity import Entity
 from stage import Stage, StageOption, TitleOption, SettingOption
 import globals
+import os
 
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	HP_MAX = 18
@@ -43,15 +44,49 @@ def draw_bar(stage: Stage, screen: pygame.Surface):
 def draw_title(stage: Stage, screen: pygame.Surface):
 	page = globals.icon("./resource/image/image_page_start.png", globals.screen_size)
 	screen.blit(page, globals.screen_pos)
-	font = globals.font(size = 24)
-	text = font.render("Start", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.START.value else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.5))
-	text = font.render("Setting", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.SETTING.value else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.6))
-	text = font.render("Credit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.CREDIT.value else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.7))
-	text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.EXIT.value else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
+
+	button_path    = "./resource/image/startpage/"
+	button_start   = os.path.join(button_path, "image_start_0.png")
+	button_settings = os.path.join(button_path, "image_settings_0.png")
+	button_credit  = os.path.join(button_path, "image_credit_0.png")
+	button_exit    = os.path.join(button_path, "image_exit_0.png")
+	if stage.player.pos.y == TitleOption.START.value:
+		button_start   = os.path.join(button_path, "image_start_1.png")
+	if stage.player.pos.y == TitleOption.SETTING.value:
+		button_settings = os.path.join(button_path, "image_settings_1.png")
+	if stage.player.pos.y == TitleOption.CREDIT.value:
+		button_credit  = os.path.join(button_path, "image_credit_1.png")
+	if stage.player.pos.y == TitleOption.EXIT.value:
+		button_exit    = os.path.join(button_path, "image_exit_1.png")
+	button_size = (globals.button_size[0] * 2, globals.button_size[1]) 
+	button_space = 10
+	index = 0
+	button = globals.icon(button_start, button_size)
+	button_pos = ((screen.get_width() - button_size[0]) / 2, (screen.get_height() - button_size[1]) / 2 - 50 + (button_size[1] + button_space) * index)
+	screen.blit(button, button_pos)
+	index += 1
+	button_pos = ((screen.get_width() - button_size[0]) / 2, (screen.get_height() - button_size[1]) / 2 - 50 + (button_size[1] + button_space) * index)
+	button = globals.icon(button_settings, button_size)
+	screen.blit(button, button_pos)
+	index += 1
+	button_pos = ((screen.get_width() - button_size[0]) / 2, (screen.get_height() - button_size[1]) / 2 - 50 + (button_size[1] + button_space) * index)
+	button = globals.icon(button_credit, button_size)
+	screen.blit(button, button_pos)
+	index += 1
+	button_pos = ((screen.get_width() - button_size[0]) / 2, (screen.get_height() - button_size[1]) / 2 - 50 + (button_size[1] + button_space) * index)
+	button = globals.icon(button_exit, button_size)
+	screen.blit(button, button_pos)
+
+
+	# font = globals.font(size = 24)
+	# text = font.render("Start", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.START.value else (255, 127, 0), None)
+	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.5))
+	# text = font.render("Setting", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.SETTING.value else (255, 127, 0), None)
+	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.6))
+	# text = font.render("Credit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.CREDIT.value else (255, 127, 0), None)
+	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.7))
+	# text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.EXIT.value else (255, 127, 0), None)
+	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
 
 def draw_setting(stage: Stage,screen: pygame.Surface):
 	screen.fill((127, 255, 0))
