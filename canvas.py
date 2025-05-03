@@ -4,6 +4,8 @@ import os
 from vector2 import Vector2
 from player import Player
 from entity import Entity
+from setting import Setting
+from out_statistics import Statistics
 
 
 class Canvas:
@@ -18,7 +20,9 @@ class Canvas:
 		self.round_pass = 0
 		self.enemy_wait = 8
 		self.new_enemy_count = 2
-		self.boss_wait = 20
+		self.boss_wait = 50
+		self.killed = 0
+		self.statistics = Statistics()
 		pass
 	def set_stage(self, stage: int):
 		self.previous_stage = self.stage
@@ -37,10 +41,10 @@ class Canvas:
 		screen.blit(entity.icon, position.to_tuple())
 		pass
 	def draw_bar(self, screen: pygame.Surface):
-		heart = pygame.transform.scale(pygame.image.load("./resource/image/redstone.png"), (50, 50))
+		heart = pygame.transform.scale(Setting.health_icon, (50, 50))
 		for i in range(self.player.hp):
 			screen.blit(heart, (heart.get_width() * 1.1 * i, 0))
-		gold = pygame.transform.scale(pygame.image.load("./resource/image/gold_ingot.png"), (50, 50))
+		gold = pygame.transform.scale(Setting.money_icon, (50, 50))
 		screen.blit(gold, (screen.get_width() - gold.get_width(), 0))
 		font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 48)
 		text = font.render(f"{self.player.money} ", 0, (0, 0, 0))

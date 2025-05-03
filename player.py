@@ -1,6 +1,7 @@
 import pygame
 from vector2 import Vector2
 from skill import Skill
+from setting import Setting
 import os
 # Player(x, y, width, height)
 
@@ -8,7 +9,7 @@ class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.pos = Vector2(0, 0)
-		self.icon = pygame.transform.scale(pygame.image.load("./resource/image/diamond.png"), (75, 75))
+		self.icon = pygame.transform.scale(Setting.player_icon, (50, 50))
 		self.money = 0
 		self.hp = 10
 		self.skills = [Skill(1, 3, 0)] # 預設為射程3傷害1的十字攻擊
