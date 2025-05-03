@@ -128,6 +128,8 @@ main path: ./resource/image/
     - shop/image_skill_level_1
     - shop/image_skill_level_2
     - shop/image_skill_level_3
+    - shop/image_exit_0
+    - shop/image_exit_1
 - 其他怪物
     - monsters/image_monster2_mob_move_right
     - monsters/image_monster2_mob_move_left

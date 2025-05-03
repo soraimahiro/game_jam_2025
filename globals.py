@@ -8,6 +8,10 @@ def init():
 	enemy_killed = 0
 	global icon_size
 	icon_size = (50, 50)
+	global screen_size
+	screen_size = (800, 600)
+	global screen_pos
+	screen_pos = (0, 0)
 	global color
 	color = "blue"
 	global player_img
