@@ -5,6 +5,11 @@ import globals
 from skill import AttackType
 import random
 import os
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from entity import Entity
+# Player(x, y, width, height)
+
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
@@ -17,11 +22,14 @@ class Player(pygame.sprite.Sprite):
 		pass
 
 
-	
+	def icon(self):
+		return pygame.transform.scale(globals.player_icon, globals.icon_size)
 	def attack(self, entities: list):
 		attackdata = set()
 		MAX_X=5
 		MAX_Y=3
+		if entity.hp <= 0:
+			return
 		for skill in self.skills:
 			if skill.attacktype == AttackType.POINT.value:
 				# 隨機 n 個位置

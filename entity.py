@@ -1,14 +1,15 @@
 # entity.py
 import pygame
 import random
-from vector2 import Vector2
+from vector2 import Vector2 
+import globals
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from player import Player
 
 class Entity(pygame.sprite.Sprite):
-	T_MOSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3; T_HIT = 4
-	def __init__(self, icon: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1):
+	T_MOSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT =4
+	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
 		self.type = type  # type of entity
 		self.hp = hp
@@ -19,6 +20,31 @@ class Entity(pygame.sprite.Sprite):
 		self.wait_time = wait_time  # how many rounds do the entity take to move
 		self.round_pass = 0  # how many rounds pass
 		self.value = value
+		self.direction = direction # 0b 0 0 0 0 -> 0b up down left right
+	def copy(self):
+		return Entity(self.img, self.type, self.hp, self.damage, self.pos, self.move, self.value, self.wait_time, self.direction)
+	def icon(self):
+		direction: dict[int, int | float] = {}
+		if self.direction & 0b1000 != 0: # moving up
+			direction[0b1000] = self.move * Vector2(0, -1)
+		if self.direction & 0b0100 != 0: # moving down
+			direction[0b0100] = self.move * Vector2(0, 1)
+		if self.direction & 0b0010 != 0: # moving left
+			direction[0b0010] = self.move * Vector2(-1, 0)
+		if self.direction & 0b0001 != 0: # moving right
+			direction[0b0001] = self.move * Vector2(1, 0)
+		maxat = 0b0000
+		if direction.keys():
+			maxat = max(direction.keys(), key= lambda k : direction.get(k))
+		if maxat == 0b1000:
+			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_up.png"), globals.icon_size)
+		if maxat == 0b0100:
+			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_down.png"), globals.icon_size)
+		if maxat == 0b0010:
+			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_left.png"), globals.icon_size)
+		if maxat == 0b0001:
+			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_right.png"), globals.icon_size)
+		return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}.png"), globals.icon_size)
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
@@ -69,4 +95,9 @@ class Entity(pygame.sprite.Sprite):
 		return Entity("./resource/image/lava_bucket.png", Entity.T_BOSS, 10, 2, Vector2(rx * -6, ry * -4), Vector2(1, 1), 10, 3)
 	@ classmethod
 	def shadow(self, pos: Vector2):
-		return Entity("./resource/image/emerald.png", Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))
+		return Entity(globals.shadow_img, Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))
+ENEMIES = [
+	Entity("type_simple/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 2, 0b0011),
+	Entity("type_simple/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
+	Entity("type_simple/image_shop", Entity.T_SHOP, -1, 0, Vector2(0, 0), Vector2(0, 0), 0, 1, 0b0000)
+]
