@@ -4,7 +4,6 @@ from player import Player
 from entity import Entity
 from stage import Stage, StageOption, TitleOption
 from setting import Setting
-from out_statistics import Statistics
 
 
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):

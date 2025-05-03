@@ -12,6 +12,7 @@ class Player(pygame.sprite.Sprite):
 		self.icon = pygame.transform.scale(Setting.player_icon, (50, 50))
 		self.money = 0
 		self.hp = 10
+		self.killed = 0
 		self.skills = [Skill(1, 3, 0)] # 預設為射程3傷害1的十字攻擊
 		pass
 	def attack(self, entity):
@@ -26,5 +27,6 @@ class Player(pygame.sprite.Sprite):
 					entity.hp -= skill.damage
 					print (f"entity hp = {entity.hp}")
 		if entity.hp <= 0:
-			self.money += 1 # 這個感覺可以換成+=entity.value，但目前沒有這個設定
-			print (f"money = {self.money}")
+			self.killed += 1
+			self.money += entity.value
+			# print (f"money = {self.money}")
