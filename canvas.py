@@ -137,6 +137,9 @@ def draw_win(screen: pygame.Surface):
 	font = get_font(12)
 	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
 	screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+	win_image = pygame.image.load("./resource/image/image_page_win.png")
+	win_page = pygame.transform.scale(win_image, (800, 600))
+	screen.blit(win_page, (0, 0))
 
 def draw_lose(screen: pygame.Surface):
 	screen.fill((72, 72, 72))
