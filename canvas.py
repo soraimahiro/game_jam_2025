@@ -5,9 +5,6 @@ from entity import Entity
 from stage import Stage, StageOption, TitleOption
 import globals
 
-def get_font(size: int):
-		return pygame.font.SysFont(globals.font_file, size * globals.font_scale)
-
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	HP_MAX = 18
 	width = screen.get_width()
@@ -21,29 +18,29 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	screen.blit(icon, position.to_tuple())
 	if isinstance(entity, Entity):
 		if (entity.type == Entity.T_MOSTER or entity.type == Entity.T_BOSS) and entity.hp > 0:
-			hp_image = pygame.image.load(f"./resource/image/type_simple/image_hp_large.png")
 			if entity.hp <= HP_MAX:
-				hp_image = pygame.image.load(f"./resource/image/type_simple/image_hp_{entity.hp}.png")
-			hp_icon = pygame.transform.scale(hp_image, (30, 30))
+				hp_icon = globals.icon(f"./resource/image/type_simple/image_hp_{entity.hp}.png", (30, 30))
+			else:
+				hp_icon = globals.icon(f"./resource/image/type_simple/image_hp_large.png", (30, 30))
 			screen.blit(hp_icon, position.to_tuple())
 
 
 def draw_bar(stage: Stage, screen: pygame.Surface):
-	heart = pygame.transform.scale(globals.health_icon, (50, 50))
+	heart = globals.health_icon
 	for i in range(stage.player.hp):
 		screen.blit(heart, (heart.get_width() * 1.1 * i, 0))
-	gold = pygame.transform.scale(globals.money_icon, (50, 50))
+	gold = globals.money_icon
 	screen.blit(gold, (screen.get_width() - gold.get_width(), 0))
-	font = get_font(12)
+	font = globals.font(size = 12)
 	text = font.render(f"{stage.player.money} ", 0, (0, 0, 0))
 	screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), gold.get_height() / 2 - text.get_height() / 3))
 
 def draw_title(stage: Stage, screen: pygame.Surface):
 	screen.fill((255, 255, 255))
-	font = get_font(32)
+	font = globals.font(size = 32)
 	text = font.render("Our Game", 0, (0, 0, 255), None)
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.25))
-	font = get_font(24)
+	font = globals.font(size = 24)
 	text = font.render("Start", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.START.value else (255, 127, 0), None)
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.5))
 	text = font.render("Setting", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.SETTING.value else (255, 127, 0), None)
@@ -55,7 +52,7 @@ def draw_title(stage: Stage, screen: pygame.Surface):
 
 def draw_setting(screen: pygame.Surface):
 	screen.fill((127, 255, 0))
-	font = get_font(16)
+	font = globals.font(size = 16)
 	text = font.render("Here is nothing you can set.", 0, (0, 0, 0), None)
 	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.5))
 	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
@@ -63,7 +60,7 @@ def draw_setting(screen: pygame.Surface):
 
 def draw_credit(screen: pygame.Surface):
 	screen.fill((180, 180, 0))
-	font = get_font(12)
+	font = globals.font(size = 12)
 	text = font.render("Credit", 0, (0, 0, 0), None)
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.15))
 	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
@@ -76,7 +73,7 @@ def draw_battle(stage:Stage, screen: pygame.Surface):
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
-	road_icon = pygame.transform.scale(pygame.image.load("./resource/image/type_simple/image_map.png"), (15, 15))
+	road_icon = globals.icon("./resource/image/type_simple/image_map.png", (15, 15))
 	delta = min((height - 50) / 8, width / 12)
 	shift = Vector2(road_icon.get_width(), road_icon.get_height()) / 2
 	for i in range(-5, 6):
@@ -108,7 +105,7 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
-	road_icon = pygame.transform.scale(pygame.image.load("./resource/image/type_simple/image_map.png"), (15, 15))
+	road_icon = globals.icon("./resource/image/type_simple/image_map.png", (15, 15))
 	delta = min((height - 50) / 8, width / 12)
 	shift = Vector2(road_icon.get_width(), road_icon.get_height()) / 2
 	for i in range(-5, 6):
@@ -130,27 +127,11 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 	draw_bar(stage, screen)
 
 def draw_win(screen: pygame.Surface):
-	# screen.fill((127, 127, 0))
-	# font = get_font(32)
-	# text = font.render("You Win!!", 0, (0, 0, 0), None)
-	# screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
-	# font = get_font(12)
-	# text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	# screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
-	image = pygame.image.load("./resource/image/image_page_win.png")
-	page = pygame.transform.scale(image, (800, 600))
+	page = globals.icon("./resource/image/image_page_win.png", (800, 600))
 	screen.blit(page, (0, 0))
 
 def draw_lose(screen: pygame.Surface):
-	# screen.fill((72, 72, 72))
-	# font = get_font(32)
-	# text = font.render("You Lose...", 0, (0, 0, 0), None)
-	# screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
-	# font = get_font(12)
-	# text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	# screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
-	image = pygame.image.load("./resource/image/image_page_lose.png")
-	page = pygame.transform.scale(image, (800, 600))
+	page = globals.icon("./resource/image/image_page_lose.png", (800, 600))
 	screen.blit(page, (0, 0))
 
 def draw_esc_menu(stage: Stage, screen: pygame.Surface):
@@ -158,7 +139,7 @@ def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	rect_x = (screen.get_width() - rect_width) // 2
 	rect_y = (screen.get_height() - rect_height) // 2
 	pygame.draw.rect(screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
-	font = get_font(16)
+	font = globals.font(size = 16)
 	text = font.render("Continue", 0, (255, 127, 0) if stage.esc_menu.option == 0 else (0, 0, 0), None)
 	screen.blit(text, (rect_x + 50, screen.get_height() /2 - 50))
 	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)

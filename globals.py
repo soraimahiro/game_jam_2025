@@ -21,6 +21,19 @@ def init():
 	global shadow_img
 	shadow_img = "type_simple/image_shadow_blue"
 
+font_set: set[tuple[str, int, pygame.font.Font]] = set()
+def font(file: str = None, size: int = 8, scale = None, bold: bool = False, italic: bool = False):
+	if file == None:
+		file = font_file
+	if scale == None:
+		scale = font_scale
+	for font in font_set:
+		if font[0] == file and font[1] == size * scale:
+			return font[2]
+	new = pygame.font.SysFont(file, size * scale, bold, italic)
+	font_set.add((file, size * scale, new))
+	return new
+
 icon_set: set[tuple[str, tuple[int, int], pygame.Surface]] = set()
 def icon(img: str, size: tuple[int, int] = None):
 	if size == None:
