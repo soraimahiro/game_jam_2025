@@ -5,7 +5,6 @@ import globals
 from skill import AttackType
 import random
 import os
-from setting import Setting
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
 	from entity import Entity
@@ -21,7 +20,7 @@ class Player(pygame.sprite.Sprite):
 		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
 		pass
 	def icon(self):
-		return pygame.transform.scale(Setting.player_icon, Setting.icon_size)
+		return pygame.transform.scale(globals.player_icon, globals.icon_size)
 	def attack(self, entity: 'Entity'):
 		if entity.hp <= 0:
 			return
