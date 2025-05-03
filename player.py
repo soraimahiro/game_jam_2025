@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
 		pass
 
 	def icon(self):
-		return globals.icon(globals.player_img)
+		return globals.icon(f"./resource/image/{globals.player_img}.png")
 	
 	def move(self, move: Vector2):
 		self.pre_pos = Vector2(self.pos.x, self.pos.y)
