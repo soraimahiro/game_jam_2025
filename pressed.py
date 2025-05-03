@@ -146,8 +146,11 @@ def pressed_shop(stage: Stage, key: int) -> bool:
 		if no == -1:
 			no = stage.player.skills.__len__()
 			stage.player.skills.append(Skill(1, 0, stage.shop_info.goods[stage.shop_info.option]))
-		if (stage.player.money >= stage.player.skills[no].cost()):
-			pass
+		the_cost = stage.player.skills[no].cost()
+		if stage.player.money >= the_cost:
+			stage.player.money -= the_cost
+			stage.player.skills[no].level += 1
+			stage.set_stage(stage.previous_stage)
 	elif key == pygame.K_ESCAPE:
 		stage.set_stage(stage.previous_stage)
 	stage.shop_info.option %= 3

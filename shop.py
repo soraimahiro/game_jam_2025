@@ -9,5 +9,8 @@ class Shop:
 		self.option = 0
 		weight = [10 for i in range(5)]
 		for skill in player.skills:
-			weight[skill.attacktype] += 10 - skill.level * 2
-		self.goods = random.choices(list(AttackType), weight, k = 3)
+			weight[skill.attacktype.value] += 10 - skill.level * 2
+		self.goods = list(AttackType)
+		self.goods.sort(key= lambda k : random.choice((True, False)))
+		for i in range(5):
+			print(self.goods[i])

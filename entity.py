@@ -172,11 +172,6 @@ ENEMIES = [
 	Entity("type_simple/image_boss_move",	Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111),
 	Entity("type_jam/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	1,	0b0011),
 	Entity("type_jam/image_boss_move",		Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011),
-	Entity("element/water",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1000),
-	Entity("element/fire",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0100),
-	Entity("element/earth",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0010),
-	Entity("element/none",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0001),
-	Entity("element/dark",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0000),
-	Entity("element/light",					Entity.T_BOSS,		3,	1,	Vector2(0, 0),	Vector2(2, 1),	2,	2,	0b0000),
+	Entity("element/element",				Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1111),
 	Entity("type_simple/image_shop",		Entity.T_SHOP,		-1,	0,	Vector2(0, 0),	Vector2(0, 0),	0,	1,	0b0000)
 ]
