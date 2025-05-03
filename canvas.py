@@ -15,9 +15,10 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	center = Vector2(width, height) / 2
 	# 共 7 條橫線和 11 條 直線，各分 8 塊和 12 塊
 	delta = min((height - 50) / 8, width / 12)
-	shift = Vector2(entity.icon.get_width(), entity.icon.get_height()) / 2
+	icon = entity.icon()
+	shift = Vector2(icon.get_width(), icon.get_height()) / 2
 	position = center + entity.pos * delta - shift
-	screen.blit(entity.icon, position.to_tuple())
+	screen.blit(icon, position.to_tuple())
 	if isinstance(entity, Entity):
 		if (entity.type == Entity.T_MOSTER or entity.type == Entity.T_BOSS) and entity.hp > 0:
 			hp_image = pygame.image.load(f"./resource/image/type_simple/image_hp_large.png")
@@ -25,6 +26,7 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 				hp_image = pygame.image.load(f"./resource/image/type_simple/image_hp_{entity.hp}.png")
 			hp_icon = pygame.transform.scale(hp_image, (30, 30))
 			screen.blit(hp_icon, position.to_tuple())
+
 
 def draw_bar(stage: Stage, screen: pygame.Surface):
 	heart = pygame.transform.scale(globals.health_icon, (50, 50))

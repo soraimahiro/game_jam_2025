@@ -35,5 +35,5 @@ class Hit:
 
 	@ classmethod
 	def hit(self, pos : Vector2, start_time : int):
-		entity = Entity("./resource/image/type_simple/image_hit.png", Entity.T_HIT, 1, 0, pos, {0, 0})
+		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, {0, 0})
 		return Hit(entity, Hit.HIT_DURATION, start_time)

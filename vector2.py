@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, overload
 
 class Vector2:
 	def __init__(self, x: int | float, y: int | float):
@@ -9,9 +9,13 @@ class Vector2:
 		return Vector2(self.x + other.x, self.y + other.y)
 	def __sub__(self, other: 'Vector2'):
 		return Vector2(self.x - other.x, self.y - other.y)
+	@ overload
+	def __mul__(self, scale: int | float) -> 'Vector2': ...
+	@overload
+	def __mul__(self, other: 'Vector2') -> int | float: ...
 	def __mul__(self, other: Union[int, float, 'Vector2']):
-		"""- int or float: Scaling the vector
-			- Vector2: Dot product"""
+		"""- `int | float`: Scaling the vector\n
+			- `Vector2`: Dot product"""
 		if isinstance(other, (int, float)):
 			return Vector2(self.x * other, self.y * other)
 		if isinstance(other, Vector2):
