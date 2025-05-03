@@ -70,3 +70,4 @@
     - image_HP
     - image_money
     - image_number
+    - image_hit

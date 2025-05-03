@@ -1,11 +1,13 @@
 # entity.py
 import pygame
 import random
-from vector2 import Vector2 
-from player import Player
+from vector2 import Vector2
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from player import Player
 
 class Entity(pygame.sprite.Sprite):
-	T_MOSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3
+	T_MOSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3; T_HIT = 4
 	def __init__(self, icon: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, wait_time: int = 1):
 		super().__init__()
 		self.type = type  # type of entity
@@ -18,7 +20,7 @@ class Entity(pygame.sprite.Sprite):
 		self.round_pass = 0  # how many rounds pass
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
-	def next_step(self, player: Player): # pass to next position 
+	def next_step(self, player : 'Player'): # pass to next position 
 		if self.type == Entity.T_MOSTER:
 			if self.pos.x < -6 or self.pos.x > 6 or self.pos.y < -4 or self.pos.y > 4:
 				self.hp = 0
