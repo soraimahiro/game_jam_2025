@@ -3,7 +3,7 @@ from vector2 import Vector2
 from player import Player
 from entity import Entity
 from skill import Skill
-from stage import Stage, StageOption, TitleOption
+from stage import Stage, StageOption, TitleOption, SettingOption
 import globals
 
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):
@@ -41,10 +41,8 @@ def draw_bar(stage: Stage, screen: pygame.Surface):
 		screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), screen.get_height() - gold.get_height() / 2 - text.get_height() / 3))
 
 def draw_title(stage: Stage, screen: pygame.Surface):
-	screen.fill((255, 255, 255))
-	font = globals.font(size = 32)
-	text = font.render("Our Game", 0, (0, 0, 255), None)
-	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.25))
+	page = globals.icon("./resource/image/image_page_start.png", globals.screen_size)
+	screen.blit(page, globals.screen_pos)
 	font = globals.font(size = 24)
 	text = font.render("Start", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.START.value else (255, 127, 0), None)
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.5))
@@ -55,26 +53,30 @@ def draw_title(stage: Stage, screen: pygame.Surface):
 	text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.EXIT.value else (255, 127, 0), None)
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
 
-def draw_setting(screen: pygame.Surface):
+def draw_setting(stage: Stage,screen: pygame.Surface):
 	screen.fill((127, 255, 0))
 	font = globals.font(size = 16)
-	text = font.render("Here is nothing you can set.", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.5))
-	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.6))
+	text = font.render("Setting", 0, (0, 0, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.15))
+
+	font = globals.font(size = 18)
+	text = font.render("Skin Color", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.SKIN.value else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.3))
+	text = font.render("Sound", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.SOUND.value else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.5))
+	text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.EXIT.value else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.7))
+	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if (stage.player.pos.x,stage.player.pos.y)!=(1,1)  else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.7, screen.get_height() * 0.5))
 
 def draw_credit(screen: pygame.Surface):
-	screen.fill((180, 180, 0))
-	font = globals.font(size = 12)
-	text = font.render("Credit", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.15))
-	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+	page = globals.icon("./resource/image/image_page_credits.png", globals.screen_size)
+	screen.blit(page, globals.screen_pos)
 
 def draw_battle(stage:Stage, screen: pygame.Surface):
 	# fill background
 	# screen.fill((255, 127, 127))
-	screen.fill((251, 219, 147))
+	screen.fill((247, 248, 190))
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
@@ -132,12 +134,12 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 	draw_bar(stage, screen)
 
 def draw_win(screen: pygame.Surface):
-	page = globals.icon("./resource/image/image_page_win.png", (800, 600))
-	screen.blit(page, (0, 0))
+	page = globals.icon("./resource/image/image_page_win.png", globals.screen_size)
+	screen.blit(page, globals.screen_pos)
 
 def draw_lose(screen: pygame.Surface):
-	page = globals.icon("./resource/image/image_page_lose.png", (800, 600))
-	screen.blit(page, (0, 0))
+	page = globals.icon("./resource/image/image_page_lose.png", globals.screen_size)
+	screen.blit(page, globals.screen_pos)
 
 def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	rect_width, rect_height = 400, 300
@@ -185,7 +187,7 @@ def draw(stage: Stage, screen: pygame.Surface):
 	if stage.stage == StageOption.TITLE:
 		draw_title(stage, screen)
 	elif stage.stage == StageOption.SETTING:
-		draw_setting(screen)
+		draw_setting(stage,screen)
 	elif stage.stage == StageOption.CREDITS:
 		draw_credit(screen)
 	elif stage.stage == StageOption.BATTLE_STORY:

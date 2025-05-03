@@ -26,6 +26,12 @@ class TitleOption(Enum):
 	CREDIT = 2
 	EXIT = 3
 
+class SettingOption(Enum):
+	SKIN = 0
+	SOUND = 1
+	EXIT = 2
+
+
 class Stage:
 	def __init__(self):
 		self.reset()
@@ -39,9 +45,13 @@ class Stage:
 		elif stage == StageOption.END:
 			globals.enemy_killed += self.player.killed
 			globals.step_moved += self.round_pass
+		if stage == StageOption.SETTING:
+			self.player.pos.x = 0
+			self.player.pos.y = 0
 		print(f"stage set from {self.previous_stage} to {self.stage}")
 		play_background_music(self)
-		change_music_volume(0) # default volume 50%
+		change_music_volume(globals.music_volume)
+		# change_sound_effect_volume(self.volume)
 		pass
 	
 	def next_round(self):

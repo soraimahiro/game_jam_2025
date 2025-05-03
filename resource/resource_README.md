@@ -89,6 +89,10 @@ main path: ./resource/image/
     - type_simple/image_number
     - type_simple/image_hit
 - 頁面
+    - image_page_start
+    - image_page_about
+    - image_page_credits
+    - image_page_settings
     - image_page_lose
     - image_page_win
 - 設定頁icon
@@ -124,6 +128,8 @@ main path: ./resource/image/
     - shop/image_skill_level_1
     - shop/image_skill_level_2
     - shop/image_skill_level_3
+    - shop/image_exit_0
+    - shop/image_exit_1
 - 其他怪物
     - monsters/image_monster2_mob_move_right
     - monsters/image_monster2_mob_move_left
