@@ -88,12 +88,6 @@ def draw_battle(stage:Stage, screen: pygame.Surface):
 			pos= Vector2(i, j)
 			position = center + pos * delta - shift
 			screen.blit(road_icon, position.to_tuple())
-	# Draw player
-	draw_unit(screen, stage.player)
-	# Draw shadows
-	for shadow in stage.shadows:
-		if not shadow.pos.y == stage.player.pos.y:
-			draw_unit(screen, shadow)
 	# Draw entities
 	for entity in stage.entities:
 		draw_unit(screen, entity)
@@ -104,6 +98,12 @@ def draw_battle(stage:Stage, screen: pygame.Surface):
 		skill.update(pygame.time.get_ticks())
 	# Draw upper bar
 	draw_bar(stage, screen)
+	# Draw shadows
+	for shadow in stage.shadows:
+		if not shadow.pos.y == stage.player.pos.y:
+			draw_unit(screen, shadow)
+	# Draw player
+	draw_unit(screen, stage.player)
 
 def draw_boss(stage: Stage, screen: pygame.Surface):
 	# fill background
@@ -166,15 +166,15 @@ def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 			stage.player.skills.append(Skill(1, 0, stage.shop_info.goods[i]))
 		the_type = stage.shop_info.goods[i].__repr__()
 		the_type = the_type[the_type.find('.') + 1:the_type.rfind(':')]
-		if stage.shop_info.option == i:
-			sell = Entity(f"shop/image_skill_{the_type}_1", Entity.T_GOODS, -1, 0, Vector2(i * 3 - 3, 0), Vector2(0, 0), 0, 1, 0)
-		else:
-			sell = Entity(f"shop/image_skill_{the_type}_0", Entity.T_GOODS, -1, 0, Vector2(i * 3 - 3, 0), Vector2(0, 0), 0, 1, 0)
-		cost = Entity("type_simple/image_money", Entity.T_DISPLAY, -1, 0, Vector2(i * 3 - 3, -1), Vector2(0, 0), 0, 1, 0)
-		level = Entity(f"shop/image_skill_level_{stage.player.skills[no].level}", Entity.T_DISPLAY, -1, 0, Vector2(i * 3 - 3, 1), Vector2(0, 0), 0, 1, 0)
-		draw_unit(screen, sell)
-		draw_unit(screen, cost)
-		draw_unit(screen, level)
+		good_icon = globals.icon(f"./resource/image/shop/image_skill_{the_type}_{1 if stage.shop_info.option == i else 0}.png", (128, 128))
+		cost_icon = globals.icon("./resource/image/type_simple/image_money.png")
+		cost_text = globals.font(size = 16).render(f"{stage.player.skills[no].cost()}", 0, (255, 255, 0))
+		level_icon = globals.icon(f"./resource/image/shop/image_skill_level_{stage.player.skills[no].level}.png")
+		pos = Vector2(screen.get_width() // 2, screen.get_height() // 2) + Vector2(screen.get_width() // 5, 0) * (i - 1)
+		screen.blit(good_icon, (pos - Vector2(good_icon.get_width() // 2, good_icon.get_height() // 2)).to_tuple())
+		screen.blit(cost_icon, (pos - Vector2(0, screen.get_height() // 9) - Vector2(cost_icon.get_width() // 2, cost_icon.get_height() // 2)).to_tuple())
+		screen.blit(cost_text, (pos - Vector2(0, screen.get_height() // 6) - Vector2(cost_text.get_width() // 2, cost_text.get_height() // 2)).to_tuple())
+		screen.blit(level_icon, (pos + Vector2(0, screen.get_height() // 9) - Vector2(level_icon.get_width() // 2, level_icon.get_height() // 2)).to_tuple())
 	return True
 
 def draw_story(screen: pygame.Surface):

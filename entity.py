@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class Entity(pygame.sprite.Sprite):
 	T_MONSTER = 0;	T_BOSS = 1;		T_SHADOW = 2;	T_SHOP = 3;	T_HIT = 4
-	T_GOODS = 5;	T_DISPLAY = 6;	T_REGEN = 7
+	T_REGEN = 7
 	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
@@ -50,8 +50,8 @@ class Entity(pygame.sprite.Sprite):
 				icon = globals.icon(f"./resource/image/{self.img}_left.png")
 			else: # maxat == 0b0001
 				icon = globals.icon(f"./resource/image/{self.img}_right.png")
-		elif self.type == Entity.T_GOODS:
-			icon = globals.icon(f"./resource/image/{self.img}.png", globals.goods_size)
+		elif self.type == Entity.T_SHADOW:
+			icon = globals.icon(f"./resource/image/{self.img}.png", (40, 40))
 		else:
 			icon = globals.icon(f"./resource/image/{self.img}.png")
 		icon.set_alpha(self.img_alpha)
