@@ -131,21 +131,27 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 
 def draw_win(screen: pygame.Surface):
 	screen.fill((127, 127, 0))
-	font = get_font(32)
-	text = font.render("You Win!!", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
-	font = get_font(12)
-	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+	# font = get_font(32)
+	# text = font.render("You Win!!", 0, (0, 0, 0), None)
+	# screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
+	# font = get_font(12)
+	# text = font.render("Press Enter to return", 0, (0, 0, 0), None)
+	# screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+	image = pygame.image.load("./resource/image/image_page_win.png")
+	page = pygame.transform.scale(image, (800, 600))
+	screen.blit(page, (0, 0))
 
 def draw_lose(screen: pygame.Surface):
 	screen.fill((72, 72, 72))
-	font = get_font(32)
-	text = font.render("You Lose...", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
-	font = get_font(12)
-	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+	# font = get_font(32)
+	# text = font.render("You Lose...", 0, (0, 0, 0), None)
+	# screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.15))
+	# font = get_font(12)
+	# text = font.render("Press Enter to return", 0, (0, 0, 0), None)
+	# screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
+	image = pygame.image.load("./resource/image/image_page_lose.png")
+	page = pygame.transform.scale(image, (800, 600))
+	screen.blit(page, (0, 0))
 
 def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	rect_width, rect_height = 400, 300
@@ -170,7 +176,7 @@ def draw(stage: Stage, screen: pygame.Surface):
 	elif stage.stage == StageOption.BOSS:
 		draw_boss(stage, screen)
 	elif stage.stage == StageOption.END:
-		if (stage.player.hp > 0):
+		if stage.player.hp > 0:
 			draw_win(screen)
 		else:
 			draw_lose(screen)

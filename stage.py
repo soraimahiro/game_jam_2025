@@ -39,9 +39,10 @@ class Stage:
 	
 	def next_round(self):
 		for entity in self.entities:
+			pre_pos = Vector2(entity.pos.x, entity.pos.y)
 			entity.next_step(self.player)
 			# check when boss move 
-			if entity.pos == self.player.pos:
+			if Vector2.intercept(self.player.pre_pos, self.player.pos, pre_pos, entity.pos):
 				self.player.hp -= entity.damage
 				print(f"hp = {self.player.hp}")
 		self.player.attack(self.entities)

@@ -43,3 +43,50 @@ class Vector2:
 		so: int | float = self * other
 		oo: int | float = other * other
 		return other * (so / oo)
+	def get_scale(self, other: 'Vector2'):
+		if not self.parallel(other):
+			return None
+		if other.x != 0:
+			return self.x / other.x
+		if other.y != 0:
+			return self.y / other.y
+		return None
+	@ classmethod
+	def intercept(self, A: 'Vector2', B: 'Vector2', C: 'Vector2', D: 'Vector2') -> bool:
+		if A == B:
+			return False
+		if B == D:
+			return True
+		if C == D:
+			return False
+		AB = B - A
+		AC = C - A
+		AD = D - A
+		d = AC.x * AD.y - AC.y * AD.x
+		if d != 0: # A not on CD
+			a = (AB.x * AD.y - AB.y * AD.x) / d
+			b = (AC.x * AB.y - AC.y * AB.x) / d
+			if a > 0 and b > 0:
+				return True
+			return False
+		if not AB.parallel(AC):
+			return False
+		if AC.x * AD.x < 0:
+			return True
+		i = AB.get_scale(AC)
+		j = AB.get_scale(AD)
+		if i == None: # AC == (0, 0)
+			if AB * AD > 0:
+				return True
+			return False
+		if j == None: # AD == (0, 0)
+			if AB * AC > 0:
+				return True
+			return False
+		if i < 0 or j < 0:
+			return False
+		if i > 1 and j < 1:
+			return True
+		if i < 1 and j > 1:
+			return True
+		return False
