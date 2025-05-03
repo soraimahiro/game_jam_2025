@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 	from player import Player
 
 class Entity(pygame.sprite.Sprite):
-	T_MONSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT = 4
-	T_GOODS = 5;	T_DISPLAY = 6
+	T_MONSTER = 0;	T_BOSS = 1;		T_SHADOW = 2;	T_SHOP = 3;	T_HIT = 4
+	T_GOODS = 5;	T_DISPLAY = 6;	T_REGEN = 7
 	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
@@ -104,9 +104,7 @@ class Entity(pygame.sprite.Sprite):
 		weight: list[int] = []
 		for enemy in ENEMIES:
 			difficulty = (enemy.damage * 3 + enemy.hp) * enemy.wait_time // (enemy.wait_time + 1)
-			if enemy.type == Entity.T_SHOP:
-				acc = acc * 1.05 // 1
-			elif enemy.type == Entity.T_BOSS: ...
+			if enemy.type == Entity.T_BOSS: ...
 			else:
 				tmp = 5 - abs(difficulty - lvl * 3)
 				acc += 0 if tmp < 0 else tmp
@@ -172,6 +170,5 @@ ENEMIES = [
 	Entity("type_simple/image_boss_move",	Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111),
 	Entity("type_jam/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	1,	0b0011),
 	Entity("type_jam/image_boss_move",		Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011),
-	Entity("element/element",				Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1111),
-	Entity("type_simple/image_shop",		Entity.T_SHOP,		-1,	0,	Vector2(0, 0),	Vector2(0, 0),	0,	1,	0b0000)
+	Entity("element/element",				Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1111)
 ]
