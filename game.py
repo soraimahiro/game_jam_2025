@@ -1,15 +1,18 @@
 import pygame
-import os
 from stage import Stage, StageOption, TitleOption
 from canvas import draw
 from pressed import pressed
+import globals
 
 pygame.init()
+globals.init()
 pygame.display.set_caption("Game Window")
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 stage = Stage()
 stage.set_stage(StageOption.TITLE)
+
+
 while True:
 	clock.tick(60)
 	draw(stage, screen)
