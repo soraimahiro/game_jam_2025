@@ -17,7 +17,7 @@ def init():
 	global color
 	color = "blue"
 	global player_img
-	player_img = f"./resource/image/type_simple/image_character_{color}.png"
+	player_img = f"type_simple/image_character_{color}"
 	global health_img
 	health_img = "./resource/image/type_simple/image_HP.png"
 	global money_img
