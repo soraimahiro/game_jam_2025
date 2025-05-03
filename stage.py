@@ -36,7 +36,7 @@ class Stage:
 			globals.step_moved += self.round_pass
 		print(f"stage set from {self.previous_stage} to {self.stage}")
 		play_background_music(self)
-		change_music_volume(50) # default volume 50%
+		change_music_volume(0) # default volume 50%
 		pass
 	
 	def next_round(self):
