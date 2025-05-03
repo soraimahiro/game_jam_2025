@@ -2,6 +2,7 @@ from vector2 import Vector2
 from player import Player
 from entity import Entity
 from music import play_background_music
+from music import change_music_volume
 from enum import Enum
 from setting import Esc_menu
 
@@ -35,6 +36,7 @@ class Stage:
 			globals.step_moved += self.round_pass
 		print(f"stage set from {self.previous_stage} to {self.stage}")
 		play_background_music(self)
+		change_music_volume(50) # default volume 50%
 		pass
 	
 	def next_round(self):
