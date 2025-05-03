@@ -31,9 +31,9 @@
 - 確認選擇
     - sound_button_press
 - 花錢
-    - sound_money_1 // 清脆
-    - sound_money_2 // 掉銅板的聲因
-    - sound_money_3 // 經典的花錢的聲音
+    - sound_money_add // 清脆
+    - sound_money_drop // 掉銅板的聲音
+    - sound_money_spend // 經典的花錢的聲音
 - 走路/打擊
     - sound_move
 - 怪死亡

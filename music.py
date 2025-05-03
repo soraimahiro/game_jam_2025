@@ -24,3 +24,9 @@ def play_background_music(stage):
         return
     pygame.mixer.music.load(os.path.join(bgm_path, bgm_file))
     pygame.mixer.music.play(-1)
+
+def play_sound_effect(sound_name:str):
+    sound_path = "./resource/sound/"
+    sound_file = f"sound_{sound_name}.mp3"
+    sound = pygame.mixer.Sound(os.path.join(sound_path, sound_file))
+    sound.play()
