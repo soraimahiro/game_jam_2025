@@ -35,7 +35,7 @@ def draw_bar(stage: Stage, screen: pygame.Surface):
 	text = font.render(f"{stage.player.money} ", 0, (0, 0, 0))
 	screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), gold.get_height() / 2 - text.get_height() / 3))
 	if stage.stage == StageOption.BATTLE:
-		step = globals.icon(globals.health_img)
+		step = globals.icon(globals.step_img)
 		screen.blit(step, (screen.get_width() - gold.get_width(), screen.get_height() - gold.get_height()))
 		text = font.render(f"{stage.round_pass}/{stage.boss_wait} ", 0, (0, 0, 0))
 		screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), screen.get_height() - gold.get_height() / 2 - text.get_height() / 3))
