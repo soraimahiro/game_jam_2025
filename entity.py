@@ -1,14 +1,14 @@
 # entity.py
 import pygame
 import random
-from vector2 import Vector2 
 import globals
+from vector2 import Vector2
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
 	from player import Player
 
 class Entity(pygame.sprite.Sprite):
-	T_MOSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT =4
+	T_MONSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT =4
 	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
@@ -58,7 +58,7 @@ class Entity(pygame.sprite.Sprite):
 	
 	def next_step(self, player : 'Player'): # pass to next position 
 		#print("next_step")
-		if self.type == Entity.T_MOSTER:
+		if self.type == Entity.T_MONSTER:
 			if self.pos.x < -6 or self.pos.x > 6 or self.pos.y < -4 or self.pos.y > 4:
 				self.hp = 0
 		elif self.type == Entity.T_BOSS:
@@ -164,9 +164,15 @@ class Entity(pygame.sprite.Sprite):
 		return Entity(globals.shadow_img, Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))
 
 ENEMIES = [
-	Entity("type_simple/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 2, 0b0011),
-	Entity("type_simple/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
-	Entity("type_jam/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 1, 0b0011),
-	Entity("type_jam/image_boss_move", Entity.T_BOSS, 10, 2, Vector2(0, 0), Vector2(1, 1), 10, 2, 0b0011),
-	Entity("type_simple/image_shop", Entity.T_SHOP, -1, 0, Vector2(0, 0), Vector2(0, 0), 0, 1, 0b0000)
+	Entity("type_simple/image_mob_move",	Entity.T_MONSTER,	2,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	2,	0b0011),
+	Entity("type_simple/image_boss_move",	Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111),
+	Entity("type_jam/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	1,	0b0011),
+	Entity("type_jam/image_boss_move",		Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011),
+	Entity("element/water",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1000),
+	Entity("element/fire",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0100),
+	Entity("element/earth",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0010),
+	Entity("element/none",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0001),
+	Entity("element/dark",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0000),
+	Entity("element/light",					Entity.T_BOSS,		3,	1,	Vector2(0, 0),	Vector2(2, 1),	2,	2,	0b0000),
+	Entity("type_simple/image_shop",		Entity.T_SHOP,		-1,	0,	Vector2(0, 0),	Vector2(0, 0),	0,	1,	0b0000)
 ]

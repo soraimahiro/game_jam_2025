@@ -17,7 +17,7 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	position = center + entity.pos * delta - shift
 	screen.blit(icon, position.to_tuple())
 	if isinstance(entity, Entity):
-		if (entity.type == Entity.T_MOSTER or entity.type == Entity.T_BOSS) and entity.hp > 0:
+		if (entity.type == Entity.T_MONSTER or entity.type == Entity.T_BOSS) and entity.hp > 0:
 			if entity.hp <= HP_MAX:
 				hp_icon = globals.icon(f"./resource/image/type_simple/image_hp_{entity.hp}.png", (30, 30))
 			else:
@@ -26,10 +26,10 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 
 
 def draw_bar(stage: Stage, screen: pygame.Surface):
-	heart = globals.health_icon
+	heart = globals.icon(globals.health_img)
 	for i in range(stage.player.hp):
 		screen.blit(heart, (heart.get_width() * 1.1 * i, 0))
-	gold = globals.money_icon
+	gold = globals.icon(globals.money_img)
 	screen.blit(gold, (screen.get_width() - gold.get_width(), 0))
 	font = globals.font(size = 12)
 	text = font.render(f"{stage.player.money} ", 0, (0, 0, 0))
