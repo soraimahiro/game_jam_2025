@@ -22,9 +22,11 @@ class Player(pygame.sprite.Sprite):
 			if skill.direction == 0:
 				if entity.pos.y == self.pos.y and entity.pos.x >= self.pos.x - skill.range and entity.pos.x <= self.pos.x + skill.range:
 					entity.hp -= skill.damage
+					skill.hit_enemy(entity.pos, pygame.time.get_ticks())
 					print (f"entity hp = {entity.hp}")
 				elif entity.pos.x == self.pos.x and entity.pos.y >= self.pos.y - skill.range and entity.pos.y <= self.pos.y + skill.range:
 					entity.hp -= skill.damage
+					skill.hit_enemy(entity.pos, pygame.time.get_ticks())
 					print (f"entity hp = {entity.hp}")
 		if entity.hp <= 0:
 			self.killed += 1

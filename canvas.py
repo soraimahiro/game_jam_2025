@@ -69,6 +69,11 @@ def draw_battle(stage:Stage, screen: pygame.Surface):
 	# Draw entities
 	for entity in stage.entities:
 		draw_unit(screen, entity)
+	# Draw hits
+	for skill in stage.player.skills:
+		for hit in skill.hits:
+			draw_unit(screen, hit.entity)
+		skill.update(pygame.time.get_ticks())
 	# Draw upper bar
 	draw_bar(stage, screen)
 
@@ -80,6 +85,11 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 	# Draw entities
 	for entity in stage.entities:
 		draw_unit(screen, entity)
+	# Draw hits
+	for skill in stage.player.skills:
+		for hit in skill.hits:
+			draw_unit(screen, hit.entity)
+		skill.update(pygame.time.get_ticks())
 	# Draw upper bar
 	draw_bar(stage, screen)
 
