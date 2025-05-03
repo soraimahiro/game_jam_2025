@@ -29,7 +29,9 @@ def pressed_credit(stage: Stage, key) -> bool:
     return True
 
 def pressed_battle(stage: Stage, key) -> bool:
-    if key in {pygame.K_w, pygame.K_UP}:
+    if key == pygame.K_ESCAPE:
+        stage.esc_menu.show = True
+    elif key in {pygame.K_w, pygame.K_UP}:
         if stage.player.pos.y > -3:
             stage.player.pos.y -= 1
             for shadow in stage.shadows:
@@ -68,7 +70,9 @@ def pressed_battle(stage: Stage, key) -> bool:
     return True
 
 def pressed_boss(stage: Stage, key) -> bool:
-    if key in {pygame.K_w, pygame.K_UP}:
+    if key == pygame.K_ESCAPE:
+        stage.esc_menu.show = True
+    elif key in {pygame.K_w, pygame.K_UP}:
         if stage.player.pos.y > -3:
             stage.player.pos.y -= 1
             for entity in stage.entities:
@@ -105,11 +109,24 @@ def pressed_boss(stage: Stage, key) -> bool:
 def pressed_end(stage: Stage, key) -> bool:
     if key == pygame.K_RETURN:
         stage.reset()
-        stage.set_stage(StageOption.TITLE)
+    return True
+
+def pressed_esc_menu(stage: Stage, key):
+    if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
+        stage.esc_menu.option -= 1
+    elif key in {pygame.K_s, pygame.K_DOWN, pygame.K_d, pygame.K_RIGHT}:
+        stage.esc_menu.option += 1
+    elif key == pygame.K_RETURN:
+        if stage.esc_menu.option == 0:
+            stage.esc_menu.show = False
+        elif stage.esc_menu.option == 1:
+            stage.reset()
     return True
 
 def pressed(stage: Stage, key) -> bool:
-    if stage.stage == StageOption.TITLE:
+    if stage.esc_menu.show:
+        return pressed_esc_menu(stage, key)
+    elif stage.stage == StageOption.TITLE:
         return pressed_title(stage, key)
     elif stage.stage == StageOption.SETTING:
         return pressed_setting(stage, key)

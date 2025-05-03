@@ -1,9 +1,11 @@
 from vector2 import Vector2
 from player import Player
 from entity import Entity
-from our_statistics import Statistics
 from music import play_background_music
 from enum import Enum
+from setting import Esc_menu
+
+import globals
 
 class StageOption(Enum):
 	TITLE = 0
@@ -29,8 +31,8 @@ class Stage:
 		self.previous_stage = self.stage
 		self.stage = stage
 		if stage == StageOption.END:
-			Statistics.enemy_killed += self.player.killed
-			Statistics.step_moved += self.round_pass
+			globals.enemy_killed += self.player.killed
+			globals.step_moved += self.round_pass
 		print(f"stage set from {self.previous_stage} to {self.stage}")
 		play_background_music(self)
 		pass		
@@ -69,4 +71,5 @@ class Stage:
 		self.enemy_wait = 8
 		self.new_enemy_count = 2
 		self.boss_wait = 50
-		self.statistics = Statistics()
+		self.esc_menu = Esc_menu()
+		play_background_music(self)

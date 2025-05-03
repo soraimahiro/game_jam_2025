@@ -1,17 +1,16 @@
 import pygame
 from vector2 import Vector2
 from skill import Skill
-from setting import Setting
+import globals
 from skill import AttackType
 import random
 import os
-# Player(x, y, width, height)
 
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.pos = Vector2(0, 0)
-		self.icon = pygame.transform.scale(Setting.player_icon, (50, 50))
+		self.icon = pygame.transform.scale(globals.player_icon, (50, 50))
 		self.money = 0
 		self.hp = 10
 		self.killed = 0
