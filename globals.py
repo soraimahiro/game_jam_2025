@@ -33,7 +33,7 @@ def init():
 def get_player_img():
 	return f"./resource/image/type_simple/image_character_{color[color_index]}.png"
 def get_shadow_img():
-	return f"./resource/image/type_simple/image_shadow_{color[color_index]}.png"
+	return f"./type_simple/image_shadow_{color[color_index]}"
 font_set: set[tuple[str, int, pygame.font.Font]] = set()
 def font(file: str = None, size: int = 8, scale = None, bold: bool = False, italic: bool = False):
 	if file == None:

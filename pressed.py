@@ -45,6 +45,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 				globals.color_index %= len(globals.color)
 			elif key in {pygame.K_RETURN}:
 				stage.player.pos.x = 0
+			print(f"color_index = {globals.color_index}")
 		elif stage.player.pos.y == SettingOption.SOUND.value:
 			if key in {pygame.K_w, pygame.K_UP}:
 				globals.music_volume += 1 if globals.music_volume < 100 else 0

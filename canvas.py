@@ -59,7 +59,8 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	icon_size = 150
 	skin_bg_icon_0 = globals.icon("resource/image/settings/image_character_box_0.png", (icon_size,icon_size))
 	skin_bg_icon_1 = globals.icon("resource/image/settings/image_character_box_1.png", (icon_size,icon_size))
-	skin_icon = globals.icon(globals.player_img, (icon_size-10,icon_size-10))
+	skin_chr_icon = globals.icon(globals.get_player_img(), (icon_size-10,icon_size-10))
+	# skin_shadow_icon = globals.icon(globals.get_shadow_img(), (icon_size-10,icon_size-10))
 	player_pos=(stage.player.pos.x,stage.player.pos.y)
 	screen.fill((127, 255, 0))
 	font = globals.font(size = 16)
@@ -81,7 +82,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	
 	screen.blit(skin_bg_icon_0 if (stage.player.pos.x,stage.player.pos.y)!=(1,0) else skin_bg_icon_1, (screen.get_width() * 0.55, screen.get_height() * 0.1))
 	# skin_icon = globals.icon(globals.player_img, (icon_size-10,icon_size-10))
-	screen.blit(skin_icon, (screen.get_width() * 0.55 + 5, screen.get_height() * 0.1 + 5))
+	screen.blit(skin_chr_icon, (screen.get_width() * 0.55 + 5, screen.get_height() * 0.1 + 5))
 def draw_credit(screen: pygame.Surface):
 	screen.fill((180, 180, 0))
 	font = globals.font(size = 12)
