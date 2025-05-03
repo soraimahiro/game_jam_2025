@@ -51,11 +51,11 @@ class Stage:
         for entity in self.entities:
             if entity.hp <= 0:
                 if entity.type == Entity.T_BOSS:
-                    self.stage = StageOption.END
+                    self.set_stage(StageOption.END)
                 self.entities.remove(entity)
         self.round_pass += 1
         if self.round_pass == self.boss_wait:
-            self.stage = StageOption.BOSS
+            self.set_stage(StageOption.BOSS)
             self.entities.append(Entity.random_boss())
             self.enemy_wait *= 2
         elif self.round_pass % self.enemy_wait == 0:
