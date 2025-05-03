@@ -45,7 +45,7 @@ class Stage:
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, pre_pos, entity.pos):
 				self.player.hp -= entity.damage
 				#print(f"hp = {self.player.hp}")
-			self.player.attack(self.entities)
+		self.player.attack(self.entities)
 		if not self.player.hp > 0:
 			self.set_stage(StageOption.END)
 		for entity in self.entities:
