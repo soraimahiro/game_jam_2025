@@ -26,6 +26,6 @@ def icon(img: str, size: tuple[int, int] = None):
 	for icon in icon_set:
 		if icon[0] == img and icon[1] == size:
 			return icon[2]
-	new = pygame.transform.scale(pygame.image.load(img), size)
+	new = pygame.transform.scale(pygame.image.load(img), size).convert_alpha()
 	icon_set.add((img, size, new))
 	return new

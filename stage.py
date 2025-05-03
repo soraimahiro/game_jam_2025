@@ -25,7 +25,8 @@ class TitleOption(Enum):
 class Stage:
 	def __init__(self):
 		self.reset()
-		pass
+		pass	
+	
 	def set_stage(self, stage: StageOption):
 		self.previous_stage = self.stage
 		self.stage = stage
@@ -34,16 +35,16 @@ class Stage:
 			globals.step_moved += self.round_pass
 		print(f"stage set from {self.previous_stage} to {self.stage}")
 		play_background_music(self)
-		pass
+		pass		
+	
 	def next_round(self):
 		for entity in self.entities:
-			pre_pos = Vector2(entity.pos.x, entity.pos.y)
 			entity.next_step(self.player)
 			# check when boss move 
-			if Vector2.intercept(self.player.pre_pos, self.player.pos, pre_pos, entity.pos):
+			if entity.pos == self.player.pos:
 				self.player.hp -= entity.damage
 				#print(f"hp = {self.player.hp}")
-			self.player.attack(entity)
+			self.player.attack(self.entities)
 		if not self.player.hp > 0:
 			self.set_stage(StageOption.END)
 		for entity in self.entities:
@@ -59,11 +60,11 @@ class Stage:
 				self.enemy_wait = self.enemy_wait * 3 // 2
 		if self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
-				self.entities.append(Entity.random_enemy(self.stage == StageOption.BOSS, 1))
+				self.entities.append(Entity.random_enemy(True, 1))
 		pass
 	def reset(self):
 		self.stage = StageOption.TITLE
-		self.entities = [Entity.random_enemy(False, 1) for i in range(3)]
+		self.entities = [Entity.random_enemy(False) for i in range(3)]
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
 		self.round_pass = 0

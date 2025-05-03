@@ -23,7 +23,7 @@ class Entity(pygame.sprite.Sprite):
 		self.direction = direction # 0b 0 0 0 0 -> 0b up down left right
 	def copy(self):
 		return Entity(self.img, self.type, self.hp, self.damage, self.pos, self.move, self.value, self.wait_time, self.direction)
-	def icon(self):
+	def icon(self, alpha: int = 255):
 		direction: dict[int, int | float] = {}
 		if self.direction & 0b1000 != 0: # moving up
 			direction[0b1000] = self.move * Vector2(0, -1)
@@ -37,17 +37,20 @@ class Entity(pygame.sprite.Sprite):
 		if direction.keys():
 			maxat = max(direction.keys(), key= lambda k : direction.get(k))
 		if maxat == 0b1000:
-			return globals.icon(f"./resource/image/{self.img}_up.png")
-		if maxat == 0b0100:
-			return globals.icon(f"./resource/image/{self.img}_down.png")
-		if maxat == 0b0010:
-			return globals.icon(f"./resource/image/{self.img}_left.png")
-		if maxat == 0b0001:
-			return globals.icon(f"./resource/image/{self.img}_right.png")
-		return globals.icon(f"./resource/image/{self.img}.png")
+			icon = globals.icon(f"./resource/image/{self.img}_up.png")
+		elif maxat == 0b0100:
+			icon = globals.icon(f"./resource/image/{self.img}_down.png")
+		elif maxat == 0b0010:
+			icon = globals.icon(f"./resource/image/{self.img}_left.png")
+		elif maxat == 0b0001:
+			icon = globals.icon(f"./resource/image/{self.img}_right.png")
+		else:
+			icon = globals.icon(f"./resource/image/{self.img}.png")
+		return icon.set_alpha(alpha)
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
+		print("next_step")
 		if self.type == Entity.T_MOSTER:
 			if self.pos.x < -6 or self.pos.x > 6 or self.pos.y < -4 or self.pos.y > 4:
 				self.hp = 0

@@ -19,8 +19,8 @@ class Skill:
 		pass
 	def __str__(self):
 		return f"Skill(damage={self.damage}, level={self.level}, direction={self.attacktype})"
-	def hit_enemy(self, pos : Vector2, start_time : int):
-		self.hits.append(Hit.hit(pos, start_time))
+	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int):
+		self.hits.append(Hit.hit(pos, start_time, is_hit))
 	def update(self, current_time : int):
 		for hit in self.hits:
 			if (current_time - hit.start_time >= hit.duration):
@@ -34,6 +34,14 @@ class Hit:
 		self.start_time = start_time
 
 	@ classmethod
-	def hit(self, pos : Vector2, start_time : int):
+	def hit(self, pos : Vector2, start_time : int, is_hit : int):
 		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, {0, 0})
+		if is_hit == 1:
+			#透明度設為255
+			entity.icon(255)
+			pass
+		else:
+			#透明度設為10
+			entity.icon(10)
+			pass
 		return Hit(entity, Hit.HIT_DURATION, start_time)
