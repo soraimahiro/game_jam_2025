@@ -60,14 +60,26 @@
     - image_character_yellow
     - image_character_green
     - image_character_purple
+    - image_shadow_gray
+    - image_shadow_blue
+    - image_shadow_red
+    - image_shadow_yellow
+    - image_shadow_green
+    - image_shadow_purple
 - 商城
     - image_shop
-- 路 (小怪地圖的)
-    - image_map_mob_road
-- boss地圖
-    - image_map_boss
+- 地圖
+    - image_map
+    - 路 (小怪地圖的)
+        - image_map_mob_road
+    - boss地圖
+        - image_map_boss
 - 其他icon
     - image_HP
+    - image_hp_[number]
     - image_money
     - image_number
     - image_hit
+- 頁面
+    - image_page_lose
+    - image_page_win

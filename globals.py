@@ -16,7 +16,7 @@ def init():
 	global font_file
 	font_file = "NOTOSANSTC-VARIABLEFONT_WGHT.TTF"
 	global shadow_img
-	shadow_img = "emerald"
+	shadow_img = "type_simple/image_shadow_blue"
 	global icon_size
 	icon_size = (50, 50)
 	
