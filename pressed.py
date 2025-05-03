@@ -126,6 +126,19 @@ def pressed_esc_menu(stage: Stage, key):
 	stage.esc_menu.option %= 2
 	return True
 
+def pressed_shop(stage: Stage, key: int) -> bool:
+	if key in {pygame.K_a, pygame.K_LEFT}:
+		stage.shop_info.option -= 1
+	elif key in {pygame.K_d, pygame.K_RIGHT}:
+		stage.shop_info.option += 1
+	elif key == pygame.K_RETURN:
+		if (stage.player.money >= stage.shop_info.goods[stage.shop_info.option].cost()):
+			pass
+	elif key == pygame.K_ESCAPE:
+		stage.set_stage(stage.previous_stage)
+	stage.shop_info.option %= 3
+	return True
+
 def pressed(stage: Stage, key) -> bool:
 	if stage.esc_menu.show:
 		return pressed_esc_menu(stage, key)
@@ -139,6 +152,8 @@ def pressed(stage: Stage, key) -> bool:
 		return pressed_battle(stage, key)
 	elif stage.stage == StageOption.BOSS:
 		return pressed_boss(stage, key)
+	elif stage.stage == StageOption.SHOP:
+		return pressed_shop(stage, key)
 	elif stage.stage == StageOption.END:
 		return pressed_end(stage, key)
 	return False

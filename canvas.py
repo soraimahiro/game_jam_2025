@@ -2,6 +2,7 @@ import pygame
 from vector2 import Vector2
 from player import Player
 from entity import Entity
+from skill import Skill
 from stage import Stage, StageOption, TitleOption
 import globals
 
@@ -23,7 +24,6 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 			else:
 				hp_icon = globals.icon(f"./resource/image/type_simple/image_hp_large.png", (30, 30))
 			screen.blit(hp_icon, position.to_tuple())
-
 
 def draw_bar(stage: Stage, screen: pygame.Surface):
 	heart = globals.icon(globals.health_img)
@@ -141,9 +141,28 @@ def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	pygame.draw.rect(screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
 	font = globals.font(size = 16)
 	text = font.render("Continue", 0, (255, 127, 0) if stage.esc_menu.option == 0 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() /2 - 50))
+	screen.blit(text, (rect_x + 50, screen.get_height() / 2 - 50))
 	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() /2 + 10))	
+	screen.blit(text, (rect_x + 50, screen.get_height() / 2 + 10))	
+
+def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
+	rect = pygame.Rect(screen.get_width() // 7, screen.get_height() // 7, screen.get_width() * 5 // 7, screen.get_height() * 5 // 7)
+	pygame.draw.rect(screen, (255, 255, 255), rect, screen.get_width() * 3 // 5)
+	for i in range(-1, 2):
+		no = -1
+		for j in range(3):
+			if stage.player.skills[j] == stage.shop_info.goods[i]:
+				no = j
+		if no == -1:
+			no = stage.player.skills.__len__()
+			stage.player.skills.append(Skill(1, 0, stage.shop_info.goods[i]))
+		sell = Entity("lava_bucket", Entity.T_GOODS, -1, 0, Vector2(i * 3, 0), Vector2(0, 0), 0, 1, 0)
+		cost = Entity("iron_ingot", Entity.T_DISPLAY, -1, 0, Vector2(i * 3, -2), Vector2(0, 0), 0, 1, 0)
+		level = Entity("diamond", Entity.T_DISPLAY, -1, 0, Vector2(i * 3, 2), Vector2(0, 0), 0, 1, 0)
+		draw_unit(sell)
+		draw_unit(cost)
+		draw_unit(level)
+	return True
 
 def draw(stage: Stage, screen: pygame.Surface):
 	if stage.stage == StageOption.TITLE:
@@ -154,6 +173,8 @@ def draw(stage: Stage, screen: pygame.Surface):
 		draw_credit(screen)
 	elif stage.stage == StageOption.BATTLE:
 		draw_battle(stage, screen)
+	elif stage.stage == StageOption.SHOP:
+		draw_shop(stage, screen)
 	elif stage.stage == StageOption.BOSS:
 		draw_boss(stage, screen)
 	elif stage.stage == StageOption.END:

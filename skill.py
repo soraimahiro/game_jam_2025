@@ -11,7 +11,7 @@ class AttackType(Enum):
     AREA = 4       # 面攻擊：以角色位置為參考點，角色周圍 n 單位皆受傷害 X
 
 class Skill:
-	def __init__(self, damage : int, level : int, attacktype : int):
+	def __init__(self, damage : int, level : int, attacktype : AttackType):
 		self.damage = damage
 		self.level = level
 		self.attacktype = attacktype
@@ -19,6 +19,8 @@ class Skill:
 		pass
 	def __str__(self):
 		return f"Skill(damage={self.damage}, level={self.level}, direction={self.attacktype})"
+	def cost(self):
+		return 10
 	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int):
 		self.hits.append(Hit.hit(pos, start_time, is_hit))
 	def update(self, current_time : int):

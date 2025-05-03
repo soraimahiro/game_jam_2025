@@ -8,6 +8,8 @@ def init():
 	enemy_killed = 0
 	global icon_size
 	icon_size = (50, 50)
+	global goods_size
+	goods_size = (125, 125)
 	global player_img
 	player_img = "./resource/image/type_simple/image_character_blue.png"
 	global health_img

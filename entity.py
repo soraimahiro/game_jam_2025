@@ -8,7 +8,8 @@ if TYPE_CHECKING:
 	from player import Player
 
 class Entity(pygame.sprite.Sprite):
-	T_MONSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT =4
+	T_MONSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT = 4
+	T_GOODS = 5
 	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
@@ -28,26 +29,29 @@ class Entity(pygame.sprite.Sprite):
 		return Entity(self.img, self.type, self.hp, self.damage, self.pos, self.move, self.value, self.wait_time, self.direction)
 	
 	def icon(self):
-		direction: dict[int, int | float] = {}
-		if (self.direction & 0b1000) != 0: # moving up
-			direction[0b1000] = self.move * Vector2(0, -1)
-		if (self.direction & 0b0100) != 0: # moving down
-			direction[0b0100] = self.move * Vector2(0, 1)
-		if (self.direction & 0b0010) != 0: # moving left
-			direction[0b0010] = self.move * Vector2(-1, 0)
-		if (self.direction & 0b0001) != 0: # moving right
-			direction[0b0001] = self.move * Vector2(1, 0)
-		maxat = 0b0000
-		if direction.keys():
-			maxat = max(direction.keys(), key= lambda k : direction.get(k))
-		if maxat == 0b1000:
-			icon = globals.icon(f"./resource/image/{self.img}_up.png")
-		elif maxat == 0b0100:
-			icon = globals.icon(f"./resource/image/{self.img}_down.png")
-		elif maxat == 0b0010:
-			icon = globals.icon(f"./resource/image/{self.img}_left.png")
-		elif maxat == 0b0001:
-			icon = globals.icon(f"./resource/image/{self.img}_right.png")
+		if self.direction != 0b0000:
+			direction: dict[int, int | float] = {}
+			if (self.direction & 0b1000) != 0: # moving up
+				direction[0b1000] = self.move * Vector2(0, -1)
+			if (self.direction & 0b0100) != 0: # moving down
+				direction[0b0100] = self.move * Vector2(0, 1)
+			if (self.direction & 0b0010) != 0: # moving left
+				direction[0b0010] = self.move * Vector2(-1, 0)
+			if (self.direction & 0b0001) != 0: # moving right
+				direction[0b0001] = self.move * Vector2(1, 0)
+			maxat = 0b0000
+			if direction.keys():
+				maxat = max(direction.keys(), key= lambda k : direction.get(k))
+			if maxat == 0b1000:
+				icon = globals.icon(f"./resource/image/{self.img}_up.png")
+			elif maxat == 0b0100:
+				icon = globals.icon(f"./resource/image/{self.img}_down.png")
+			elif maxat == 0b0010:
+				icon = globals.icon(f"./resource/image/{self.img}_left.png")
+			else: # maxat == 0b0001
+				icon = globals.icon(f"./resource/image/{self.img}_right.png")
+		elif self.type == Entity.T_GOODS:
+			icon = globals.icon(f"./resource/image/{self.img}.png", globals.goods_size)
 		else:
 			icon = globals.icon(f"./resource/image/{self.img}.png")
 		icon.set_alpha(self.img_alpha)

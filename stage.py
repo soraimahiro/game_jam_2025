@@ -1,6 +1,7 @@
 from vector2 import Vector2
 from player import Player
 from entity import Entity
+from shop import Shop
 from music import play_background_music
 from music import change_music_volume
 from enum import Enum
@@ -40,14 +41,19 @@ class Stage:
 		pass
 	
 	def next_round(self):
+		go_shop = False
 		for entity in self.entities:
 			pre_pos = Vector2(entity.pos.x, entity.pos.y)
 			entity.next_step(self.player)
 			# check when boss move 
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, pre_pos, entity.pos):
 				self.player.hp -= entity.damage
+				if entity.type == Entity.T_SHOP:
+					go_shop = True
 				#print(f"hp = {self.player.hp}")
 		self.player.attack(self.entities)
+		if go_shop:
+			self.set_stage(StageOption.SHOP)
 		if not self.player.hp > 0:
 			self.set_stage(StageOption.END)
 		for entity in self.entities:
@@ -56,7 +62,7 @@ class Stage:
 					self.set_stage(StageOption.END)
 				self.entities.remove(entity)
 		self.round_pass += 1
-		if self.stage != StageOption.END and self.round_pass >= self.boss_wait - self.player.killed:
+		if self.stage != StageOption.END and self.round_pass >= self.boss_wait:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
 				self.set_stage(StageOption.BOSS)
 				self.entities.append(Entity.random_boss())
@@ -67,7 +73,7 @@ class Stage:
 		pass
 	
 	def reset(self):
-		self.stage = StageOption.TITLE
+		self.stage = StageOption.SHOP
 		self.entities = [Entity.random_enemy(False) for i in range(3)]
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
@@ -76,4 +82,5 @@ class Stage:
 		self.new_enemy_count = 2
 		self.boss_wait = 50
 		self.esc_menu = Esc_menu()
+		self.shop_info = Shop()
 		play_background_music(self)
