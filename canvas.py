@@ -113,6 +113,17 @@ def draw_lose(screen: pygame.Surface):
 	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
 	screen.blit(text, (screen.get_width() * 0.95 - text.get_width(), screen.get_height() * 0.9))
 
+def draw_esc_menu(stage: Stage, screen: pygame.Surface):
+	rect_width, rect_height = 400, 300
+	rect_x = (screen.get_width() - rect_width) // 2
+	rect_y = (screen.get_height() - rect_height) // 2
+	pygame.draw.rect(screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
+	font = get_font(16)
+	text = font.render("Continue", 0, (255, 127, 0) if stage.esc_menu.option == 0 else (0, 0, 0), None)
+	screen.blit(text, (rect_x + 50, screen.get_height() /2 - 50))
+	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)
+	screen.blit(text, (rect_x + 50, screen.get_height() /2 + 10))	
+
 def draw(stage: Stage, screen: pygame.Surface):
 	if stage.stage == StageOption.TITLE:
 		draw_title(stage, screen)
@@ -129,3 +140,6 @@ def draw(stage: Stage, screen: pygame.Surface):
 			draw_win(screen)
 		else:
 			draw_lose(screen)
+	
+	if stage.esc_menu.show:
+		draw_esc_menu(stage, screen)
