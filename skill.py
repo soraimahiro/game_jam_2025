@@ -35,13 +35,13 @@ class Hit:
 
 	@ classmethod
 	def hit(self, pos : Vector2, start_time : int, is_hit : int):
-		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, {0, 0})
+		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, Vector2(0, 0))
 		if is_hit == 1:
 			#透明度設為255
-			entity.icon(255)
+			entity.img_alpha = 255
 			pass
 		else:
 			#透明度設為10
-			entity.icon(10)
+			entity.img_alpha = 10
 			pass
 		return Hit(entity, Hit.HIT_DURATION, start_time)
