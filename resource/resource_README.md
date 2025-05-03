@@ -45,41 +45,87 @@
 
 
 # image
+main path: ./resource/image/
+圖片檔名.png
+## 
 - 小怪
-    - image_mob_move_right
-    - image_mob_move_left
+    - type_simple/image_mob_move_right
+    - type_simple/image_mob_move_left
+    - type_jam/image_mob_move_right
+    - type_jam/image_mob_move_left
 - boss
-    - image_boss_move_right
-    - image_boss_move_left
-    - image_boss_move_up
-    - image_boss_move_down
+    - type_simple/image_boss_move_right
+    - type_simple/image_boss_move_left
+    - type_simple/image_boss_move_up
+    - type_simple/image_boss_move_down
+    - type_jam/image_boss_move_right
+    - type_jam/image_boss_move_left
 - 角色
-    - image_character_gray
-    - image_character_blue
-    - image_character_red
-    - image_character_yellow
-    - image_character_green
-    - image_character_purple
-    - image_shadow_gray
-    - image_shadow_blue
-    - image_shadow_red
-    - image_shadow_yellow
-    - image_shadow_green
-    - image_shadow_purple
+    - type_simple/image_character_gray
+    - type_simple/image_character_blue
+    - type_simple/image_character_red
+    - type_simple/image_character_yellow
+    - type_simple/image_character_green
+    - type_simple/image_character_purple
+    - type_simple/image_shadow_gray
+    - type_simple/image_shadow_blue
+    - type_simple/image_shadow_red
+    - type_simple/image_shadow_yellow
+    - type_simple/image_shadow_green
+    - type_simple/image_shadow_purple
 - 商城
-    - image_shop
+    - type_simple/image_shop
 - 地圖
-    - image_map
+    - type_simple/image_map
     - 路 (小怪地圖的)
-        - image_map_mob_road
+        - type_simple/image_map_mob_road
     - boss地圖
-        - image_map_boss
+        - type_simple/image_map_boss
 - 其他icon
-    - image_HP
-    - image_hp_[number]
-    - image_money
-    - image_number
-    - image_hit
+    - type_simple/image_HP
+    - type_simple/image_hp_[number]
+    - type_simple/image_money
+    - type_simple/image_step
+    - type_simple/image_number
+    - type_simple/image_hit
 - 頁面
     - image_page_lose
     - image_page_win
+- 設定頁icon
+    - 角色框裡的角色圖，用原本的image
+    - settings/image_voice_0 // false: not choose
+    - settings/image_voice_1 // true
+    - settings/image_character_box_0 // 框
+    - settings/image_character_box_1
+- 開始頁icon
+    - 這裡都是 1:2 的長方形
+    - startpage/image_start_0
+    - startpage/image_start_1
+    - startpage/image_settings_0
+    - startpage/image_settings_1
+    - startpage/image_about_0
+    - startpage/image_about_1
+    - startpage/image_credit_0
+    - startpage/image_credit_1
+    - startpage/image_exit_0
+    - startpage/image_exit_1
+- 商店icon
+    - shop/image_skill_POINT_0
+    - shop/image_skill_POINT_1
+    - shop/image_skill_LINE_X_0
+    - shop/image_skill_LINE_X_1
+    - shop/image_skill_LINE_Y_0
+    - shop/image_skill_LINE_Y_1
+    - shop/image_skill_LINE_XY_0
+    - shop/image_skill_LINE_XY_1
+    - shop/image_skill_AREA_0
+    - shop/image_skill_AREA_1
+    - shop/image_skill_level_0
+    - shop/image_skill_level_1
+    - shop/image_skill_level_2
+    - shop/image_skill_level_3
+- 其他怪物
+    - monsters/image_monster2_mob_move_right
+    - monsters/image_monster2_mob_move_left
+    - monsters/image_monster2_boss_move_right
+    - monsters/image_monster2_boss_move_left
