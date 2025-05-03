@@ -7,6 +7,7 @@ pygame.display.set_caption("Game Window")
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 canvas = Canvas()
+canvas.set_stage(0)
 while True:
 	clock.tick(60)
 	canvas.draw(screen)

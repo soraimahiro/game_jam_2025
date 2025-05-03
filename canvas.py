@@ -1,8 +1,10 @@
 import pygame
 import random
+import os
 from vector2 import Vector2
 from player import Player
 from entity import Entity
+
 
 class Canvas:
 	S_TITLE = 0;	S_SETTING = 1;	S_CREDITS = 2
@@ -22,6 +24,7 @@ class Canvas:
 		self.previous_stage = self.stage
 		self.stage = stage
 		print(f"stage set from {self.previous_stage} to {self.stage}")
+		self.play_background_music()
 		pass
 	def draw_unit(self, screen: pygame.Surface, entity: Player | Entity):
 		width = screen.get_width()
@@ -273,3 +276,24 @@ class Canvas:
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy())
 		pass
+	def play_background_music(self):
+		bgm_path = "./resource/bgm/"
+		if self.stage == Canvas.S_TITLE:
+			bgm_file = "bgm_menu_DustyRoadMagic.mp3"
+		elif self.stage == Canvas.S_SETTING:
+			bgm_file = "bgm_menu_LastCappuccinoInRio.mp3"
+		elif self.stage == Canvas.S_BATTLE:
+			bgm_file = "bgm_mob_Matterhorn.mp3"
+		elif self.stage == Canvas.S_BOSS:
+			bgm_file = "bgm_boss_Future.mp3"
+		elif self.stage == Canvas.S_END:
+			bgm_file = "bgm_menu_TreasureHunt.mp3"
+		elif self.stage == Canvas.S_CREDITS:
+			# todo: add credits music
+			pass
+		elif self.stage == Canvas.S_SHOP:
+			bgm_file = "bgm_shop_SunriseFromAMoonbeam.mp3"
+		else:
+			return
+		pygame.mixer.music.load(os.path.join(bgm_path, bgm_file))
+		pygame.mixer.music.play(-1)
