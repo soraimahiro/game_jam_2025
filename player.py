@@ -20,12 +20,15 @@ class Player(pygame.sprite.Sprite):
 		self.killed = 0
 		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
 		pass
+
 	def icon(self):
 		return globals.player_icon
+	
 	def move(self, move: Vector2):
 		self.pre_pos = Vector2(self.pos.x, self.pos.y)
 		self.pos += move
 		pass
+	
 	def attack(self, entities: list['Entity']):
 		for entity in entities:
 			attackdata = set()
