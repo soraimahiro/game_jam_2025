@@ -290,6 +290,7 @@ class Canvas:
 			bgm_file = "bgm_menu_TreasureHunt.mp3"
 		elif self.stage == Canvas.S_CREDITS:
 			# todo: add credits music
+			bgm_file = "bgm_menu_DustyRoadMagic.mp3"
 			pass
 		elif self.stage == Canvas.S_SHOP:
 			bgm_file = "bgm_shop_SunriseFromAMoonbeam.mp3"
