@@ -10,6 +10,8 @@ def init():
 	icon_size = (50, 50)
 	global button_size
 	button_size = (75, 75)
+	global goods_size
+	goods_size = (125, 125)
 	global screen_size
 	screen_size = (800, 600)
 	global screen_pos

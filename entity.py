@@ -8,7 +8,8 @@ if TYPE_CHECKING:
 	from player import Player
 
 class Entity(pygame.sprite.Sprite):
-	T_MONSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT =4
+	T_MONSTER = 0;	T_BOSS = 1;		T_SHADOW = 2;	T_SHOP = 3;	T_HIT = 4
+	T_REGEN = 7
 	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
@@ -28,26 +29,29 @@ class Entity(pygame.sprite.Sprite):
 		return Entity(self.img, self.type, self.hp, self.damage, self.pos, self.move, self.value, self.wait_time, self.direction)
 	
 	def icon(self):
-		direction: dict[int, int | float] = {}
-		if (self.direction & 0b1000) != 0: # moving up
-			direction[0b1000] = self.move * Vector2(0, -1)
-		if (self.direction & 0b0100) != 0: # moving down
-			direction[0b0100] = self.move * Vector2(0, 1)
-		if (self.direction & 0b0010) != 0: # moving left
-			direction[0b0010] = self.move * Vector2(-1, 0)
-		if (self.direction & 0b0001) != 0: # moving right
-			direction[0b0001] = self.move * Vector2(1, 0)
-		maxat = 0b0000
-		if direction.keys():
-			maxat = max(direction.keys(), key= lambda k : direction.get(k))
-		if maxat == 0b1000:
-			icon = globals.icon(f"./resource/image/{self.img}_up.png")
-		elif maxat == 0b0100:
-			icon = globals.icon(f"./resource/image/{self.img}_down.png")
-		elif maxat == 0b0010:
-			icon = globals.icon(f"./resource/image/{self.img}_left.png")
-		elif maxat == 0b0001:
-			icon = globals.icon(f"./resource/image/{self.img}_right.png")
+		if self.direction != 0b0000:
+			direction: dict[int, int | float] = {}
+			if (self.direction & 0b1000) != 0: # moving up
+				direction[0b1000] = self.move * Vector2(0, -1)
+			if (self.direction & 0b0100) != 0: # moving down
+				direction[0b0100] = self.move * Vector2(0, 1)
+			if (self.direction & 0b0010) != 0: # moving left
+				direction[0b0010] = self.move * Vector2(-1, 0)
+			if (self.direction & 0b0001) != 0: # moving right
+				direction[0b0001] = self.move * Vector2(1, 0)
+			maxat = 0b0000
+			if direction.keys():
+				maxat = max(direction.keys(), key= lambda k : direction.get(k))
+			if maxat == 0b1000:
+				icon = globals.icon(f"./resource/image/{self.img}_up.png")
+			elif maxat == 0b0100:
+				icon = globals.icon(f"./resource/image/{self.img}_down.png")
+			elif maxat == 0b0010:
+				icon = globals.icon(f"./resource/image/{self.img}_left.png")
+			else: # maxat == 0b0001
+				icon = globals.icon(f"./resource/image/{self.img}_right.png")
+		elif self.type == Entity.T_SHADOW:
+			icon = globals.icon(f"./resource/image/{self.img}.png", (40, 40))
 		else:
 			icon = globals.icon(f"./resource/image/{self.img}.png")
 		icon.set_alpha(self.img_alpha)
@@ -100,9 +104,7 @@ class Entity(pygame.sprite.Sprite):
 		weight: list[int] = []
 		for enemy in ENEMIES:
 			difficulty = (enemy.damage * 3 + enemy.hp) * enemy.wait_time // (enemy.wait_time + 1)
-			if enemy.type == Entity.T_SHOP:
-				acc = acc * 1.05 // 1
-			elif enemy.type == Entity.T_BOSS: ...
+			if enemy.type == Entity.T_BOSS: ...
 			else:
 				tmp = 5 - abs(difficulty - lvl * 3)
 				acc += 0 if tmp < 0 else tmp
@@ -112,7 +114,7 @@ class Entity(pygame.sprite.Sprite):
 		if boss and random.choice((True, False)) and (choice.direction == 0 or (choice.direction | 0b1100) != 0):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
-			print("here")
+			#print("here")
 			if ry == 3: # up type
 				choice.move = Vector2(choice.move.y, -choice.move.x)
 			else: # down type
@@ -168,11 +170,5 @@ ENEMIES = [
 	Entity("type_simple/image_boss_move",	Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111),
 	Entity("type_jam/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	1,	0b0011),
 	Entity("type_jam/image_boss_move",		Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011),
-	Entity("element/water",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1000),
-	Entity("element/fire",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0100),
-	Entity("element/earth",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0010),
-	Entity("element/none",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0001),
-	Entity("element/dark",					Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b0000),
-	Entity("element/light",					Entity.T_BOSS,		3,	1,	Vector2(0, 0),	Vector2(2, 1),	2,	2,	0b0000),
-	Entity("type_simple/image_shop",		Entity.T_SHOP,		-1,	0,	Vector2(0, 0),	Vector2(0, 0),	0,	1,	0b0000)
+	Entity("element/element",				Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1111)
 ]

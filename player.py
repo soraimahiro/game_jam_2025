@@ -15,10 +15,10 @@ class Player(pygame.sprite.Sprite):
 		super().__init__()
 		self.pos = Vector2(0, 0)
 		self.pre_pos = Vector2(0, 0)
-		self.money = 0
+		self.money = 100
 		self.hp = 10
 		self.killed = 0
-		self.skills = [Skill(1, 1, 3)] # 預設為射程3傷害1的十字攻擊
+		self.skills = [Skill(1, 1, AttackType.LINE_XY)] # 預設為射程3傷害1的十字攻擊
 		pass
 
 	def icon(self):
@@ -37,25 +37,25 @@ class Player(pygame.sprite.Sprite):
 		# if entity.hp <= 0:
 		# 	return
 		for skill in self.skills:
-			if skill.attacktype == AttackType.POINT.value:
+			if skill.attacktype == AttackType.POINT:
 				# 隨機 n 個位置
 				for i in range(skill.level):
 					x = random.randint(-MAX_X, MAX_X)
 					y = random.randint(-MAX_Y, MAX_Y)
 					attackdata.add((Vector2(x, y), skill.damage))
-			elif skill.attacktype == AttackType.LINE_X.value:
+			elif skill.attacktype == AttackType.LINE_X:
 				# x方向；以角色位置為參考點，x方向距離 n 單位內的敵人受傷害 X
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
 					if x < -MAX_X or x > MAX_X:
 						continue
 					attackdata.add((Vector2(x, self.pos.y), skill.damage))
-			elif skill.attacktype == AttackType.LINE_Y.value:
+			elif skill.attacktype == AttackType.LINE_Y:
 				# y方向；以角色位置為參考點，y方向距離 n 單位內的敵人受傷害 X
 				for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
 					if y < -MAX_Y or y > MAX_Y:
 						continue
 					attackdata.add((Vector2(self.pos.x, y), skill.damage))
-			elif skill.attacktype == AttackType.LINE_XY.value:
+			elif skill.attacktype == AttackType.LINE_XY:
 				# xy方向;以角色位置為參考點，xy方向距離 n 單位內的敵人受傷害 X
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
 					if x < -MAX_X or x > MAX_X:
@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
 						continue
 					attackdata.add((Vector2(self.pos.x, y), skill.damage))
 				# print(f"attackdata = {attackdata}")
-			elif skill.attacktype == AttackType.AREA.value:
+			elif skill.attacktype == AttackType.AREA:
 				# 以角色位置為參考點，角色周圍 n 單位皆受傷害 X
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
 					if x < -MAX_X or x > MAX_X:

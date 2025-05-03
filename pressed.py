@@ -2,6 +2,8 @@ import pygame
 from stage import Stage, StageOption, TitleOption, SettingOption
 from music import change_music_volume
 import globals
+from skill import Skill
+
 def pressed_title(stage: Stage, key) -> bool:
 	if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
 		stage.player.pos.y -= 1
@@ -176,6 +178,30 @@ def pressed_story(stage: Stage, key) -> bool:
 		stage.set_stage(StageOption.BATTLE)
 	return True
 
+def pressed_shop(stage: Stage, key: int) -> bool:
+	if key in {pygame.K_a, pygame.K_LEFT}:
+		stage.shop_info.option -= 1
+	elif key in {pygame.K_d, pygame.K_RIGHT}:
+		stage.shop_info.option += 1
+	elif key == pygame.K_RETURN:
+		no = -1
+		for i in range(stage.player.skills.__len__()):
+			if stage.player.skills[i].attacktype == stage.shop_info.goods[stage.shop_info.option]:
+				no = i
+				break
+		if no == -1:
+			no = stage.player.skills.__len__()
+			stage.player.skills.append(Skill(1, 0, stage.shop_info.goods[stage.shop_info.option]))
+		the_cost = stage.player.skills[no].cost()
+		if stage.player.money >= the_cost:
+			stage.player.money -= the_cost
+			stage.player.skills[no].level += 1
+			stage.set_stage(stage.previous_stage)
+	elif key == pygame.K_ESCAPE:
+		stage.set_stage(stage.previous_stage)
+	stage.shop_info.option %= 3
+	return True
+
 def pressed(stage: Stage, key) -> bool:
 	if stage.esc_menu.show:
 		return pressed_esc_menu(stage, key)
@@ -191,6 +217,8 @@ def pressed(stage: Stage, key) -> bool:
 		return pressed_battle(stage, key)
 	elif stage.stage == StageOption.BOSS:
 		return pressed_boss(stage, key)
+	elif stage.stage == StageOption.SHOP:
+		return pressed_shop(stage, key)
 	elif stage.stage == StageOption.END:
 		return pressed_end(stage, key)
 	return False
