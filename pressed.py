@@ -40,9 +40,14 @@ def pressed_setting(stage: Stage, key) -> bool:
 	elif stage.player.pos.x == 1:
 		if stage.player.pos.y == SettingOption.SKIN.value:
 			if key in {pygame.K_w, pygame.K_UP}:
-				pass
+				globals.color_index += 1
+				globals.color_index %= len(globals.color)
 			elif key in {pygame.K_s, pygame.K_DOWN}:
-				pass
+				globals.color_index -= 1
+				globals.color_index %= len(globals.color)
+			elif key in {pygame.K_RETURN}:
+				stage.player.pos.x = 0
+			print(f"color_index = {globals.color_index}")
 		elif stage.player.pos.y == SettingOption.SOUND.value:
 			if key in {pygame.K_w, pygame.K_UP}:
 				globals.music_volume += 1 if globals.music_volume < 100 else 0
@@ -62,7 +67,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 				stage.player.pos.x = 0
 			change_music_volume(globals.music_volume)
 	print(f"x,y = {stage.player.pos.x,stage.player.pos.y}, volume = {globals.music_volume}")
-	
+	stage.player.pos.y %= 3
 	if key == pygame.K_ESCAPE:
 		stage.player.pos.x = 0
 		stage.player.pos.y = 1
