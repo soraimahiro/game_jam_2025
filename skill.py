@@ -27,7 +27,7 @@ class Skill:
 				self.hits.remove(hit)
 	
 class Hit:
-	HIT_DURATION = 300
+	HIT_DURATION = 100
 	def __init__(self, entity : Entity, duration : int, start_time : int):
 		self.entity = entity
 		self.duration = duration
@@ -35,11 +35,13 @@ class Hit:
 
 	@ classmethod
 	def hit(self, pos : Vector2, start_time : int, is_hit : int):
-		entity = Entity("./resource/image/type_simple/image_hit.png", Entity.T_HIT, 1, 0, pos, {0, 0})
+		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, {0, 0})
 		if is_hit == 1:
 			#透明度設為255
-			entity.icon.set_alpha(255)
+			# entity.icon.set_alpha(255)
+			pass
 		else:
 			#透明度設為10
-			entity.icon.set_alpha(10)
+			# entity.icon.set_alpha(10)
+			pass
 		return Hit(entity, Hit.HIT_DURATION, start_time)

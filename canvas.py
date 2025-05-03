@@ -15,7 +15,8 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	center = Vector2(width, height) / 2
 	# 共 7 條橫線和 11 條 直線，各分 8 塊和 12 塊
 	delta = min((height - 50) / 8, width / 12)
-	shift = Vector2(entity.icon.get_width(), entity.icon.get_height()) / 2
+	icon = entity.icon()
+	shift = Vector2(icon.get_width(), icon.get_height()) / 2
 	position = center + entity.pos * delta - shift
 	screen.blit(icon, position.to_tuple())
 	if isinstance(entity, Entity):
