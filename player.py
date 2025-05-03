@@ -23,7 +23,11 @@ class Player(pygame.sprite.Sprite):
 
 	def icon(self):
 		return pygame.transform.scale(globals.player_icon, globals.icon_size)
-	def attack(self, entities: list):
+	def move(self, move: Vector2):
+		self.pre_pos = Vector2(self.pos.x, self.pos.y)
+		self.pos += move
+		pass
+	def attack(self, entities: list['Entity']):
 		for entity in entities:
 			attackdata = set()
 			MAX_X=5

@@ -37,20 +37,17 @@ class Entity(pygame.sprite.Sprite):
 		if direction.keys():
 			maxat = max(direction.keys(), key= lambda k : direction.get(k))
 		if maxat == 0b1000:
-			filename = f"./resource/image/{self.img}_up.png"
+			icon = globals.icon(f"./resource/image/{self.img}_up.png")
 		elif maxat == 0b0100:
-			filename = f"./resource/image/{self.img}_down.png"
+			icon = globals.icon(f"./resource/image/{self.img}_down.png")
 		elif maxat == 0b0010:
-			filename = f"./resource/image/{self.img}_left.png"
+			icon = globals.icon(f"./resource/image/{self.img}_left.png")
 		elif maxat == 0b0001:
-			filename = f"./resource/image/{self.img}_right.png"
+			icon = globals.icon(f"./resource/image/{self.img}_right.png")
 		else:
-			filename = f"./resource/image/{self.img}.png"
-
-		# 載入、轉換、設 alpha、縮放
-		image = pygame.image.load(filename).convert_alpha()
-		image.set_alpha(alpha)
-		return pygame.transform.scale(image, globals.icon_size)
+			icon = globals.icon(f"./resource/image/{self.img}.png")
+		icon.set_alpha(alpha)
+		return icon
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
@@ -104,8 +101,8 @@ class Entity(pygame.sprite.Sprite):
 				acc += 0 if tmp < 0 else tmp
 			weight.append(acc)
 		choice: Entity = random.choices(ENEMIES, cum_weights= weight, k= 1)[0].copy()
-		print(choice.img)
-		if boss and random.choice((True, False)):
+		#print(choice.img)
+		if boss and random.choice((True, False)) and (choice.direction == 0 or choice.direction | 0b1100 != 0):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
 			if ry == 3: # up type
@@ -136,7 +133,7 @@ class Entity(pygame.sprite.Sprite):
 					tmp = 0
 				weight.append(max(tmp, 0))
 		choice: Entity = random.choices(ENEMIES, weights= weight, k= 1)[0].copy()
-		print(choice.img)
+		#print(choice.img)
 		if random.choice((True, False)):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
