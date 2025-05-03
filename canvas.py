@@ -92,7 +92,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	icon_size = 150
 	skin_bg_icon_0 = globals.icon("resource/image/settings/image_character_box_0.png", (icon_size,icon_size))
 	skin_bg_icon_1 = globals.icon("resource/image/settings/image_character_box_1.png", (icon_size,icon_size))
-	skin_chr_icon = globals.icon(globals.get_player_img(), (icon_size-10,icon_size-10))
+	skin_chr_icon = globals.icon(os.path.join ("./resource/image/", f"{globals.get_player_img()}.png"), (icon_size-10,icon_size-10))
 	# skin_shadow_icon = globals.icon(globals.get_shadow_img(), (icon_size-10,icon_size-10))
 	player_pos=(stage.player.pos.x,stage.player.pos.y)
 	screen.fill((127, 255, 0))
