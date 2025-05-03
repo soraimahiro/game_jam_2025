@@ -30,25 +30,25 @@ class Entity(pygame.sprite.Sprite):
 			better = self.move
 			most_dot = self.move * sight
 			possible = Vector2(-self.move.x, self.move.y)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			possible = Vector2(self.move.x, -self.move.y)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			possible = Vector2(-self.move.x, -self.move.y)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			possible = Vector2(self.move.y, self.move.x)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			possible = Vector2(-self.move.y, self.move.x)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			possible = Vector2(self.move.y, -self.move.x)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			possible = Vector2(-self.move.y, -self.move.x)
-			if (possible * sight > most_dot):
+			if possible * sight > most_dot:
 				better = Vector2(possible.x, possible.y)
 			self.move = better
 		self.round_pass += 1
