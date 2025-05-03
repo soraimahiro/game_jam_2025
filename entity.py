@@ -54,6 +54,7 @@ class Entity(pygame.sprite.Sprite):
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
+		print("next_step")
 		if self.type == Entity.T_MOSTER:
 			if self.pos.x < -6 or self.pos.x > 6 or self.pos.y < -4 or self.pos.y > 4:
 				self.hp = 0

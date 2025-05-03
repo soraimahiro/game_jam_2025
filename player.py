@@ -78,9 +78,10 @@ class Player(pygame.sprite.Sprite):
 						entity.hp -= attack[1]
 						skill.hit_enemy(entity.pos, pygame.time.get_ticks(),1)
 					else:
+						# 註解拿掉會變很卡
+						# skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
 						pass
-						skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
 					if entity.hp <= 0:
 						self.killed += 1
 						self.money += entity.value
-				
+			
