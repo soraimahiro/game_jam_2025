@@ -40,6 +40,8 @@
     - sound_enemy_dead
 - 損血
     - sound_blood_loss
+- 補血
+    - sound_blood_add
 
 
 # image
