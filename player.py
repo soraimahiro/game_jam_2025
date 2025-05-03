@@ -15,6 +15,9 @@ class Player(pygame.sprite.Sprite):
 		self.killed = 0
 		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
 		pass
+
+
+	
 	def attack(self, entities: list):
 		attackdata = set()
 		MAX_X=5
