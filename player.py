@@ -18,9 +18,14 @@ class Player(pygame.sprite.Sprite):
 		self.hp = 10
 		self.killed = 0
 		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
+		self.pre_pos = Vector2(0, 0)
 		pass
 	def icon(self):
 		return pygame.transform.scale(globals.player_icon, globals.icon_size)
+	def move(self, move: Vector2):
+		self.pre_pos = Vector2(self.pos.x, self.pos.y)
+		self.pos += move
+		pass
 	def attack(self, entity: 'Entity'):
 		if entity.hp <= 0:
 			return

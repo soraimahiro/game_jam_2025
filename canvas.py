@@ -173,7 +173,7 @@ def draw(stage: Stage, screen: pygame.Surface):
 	elif stage.stage == StageOption.BOSS:
 		draw_boss(stage, screen)
 	elif stage.stage == StageOption.END:
-		if (stage.player.hp > 0):
+		if stage.player.hp > 0:
 			draw_win(screen)
 		else:
 			draw_lose(screen)
