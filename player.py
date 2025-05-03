@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
 		self.money = 0
 		self.hp = 10
 		self.killed = 0
-		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
+		self.skills = [Skill(1, 1, 3)] # 預設為射程3傷害1的十字攻擊
 		pass
 
 	def icon(self):
@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
 					skill.hit_enemy(entity.pos, pygame.time.get_ticks(),1)
 				else:
 					# 註解拿掉會變很卡
-					# skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
+					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
 					pass
 				if entity.hp <= 0:
 					self.killed += 1
