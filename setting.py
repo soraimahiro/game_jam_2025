@@ -6,6 +6,6 @@ class Setting:
 	money_icon = pygame.image.load("./resource/image/type_simple/image_money.png")
 	shadow_img = "emerald"
 	font_scale = 4
-	icon_size = (100, 100)
+	icon_size = (50, 50)
 	def font(size: int):
 		return pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", size * Setting.font_scale)

@@ -87,7 +87,7 @@ class Entity(pygame.sprite.Sprite):
 		acc = 0
 		weight: list[int] = []
 		for enemy in ENEMIES:
-			difficulty = enemy.damage * 3 + enemy.hp * enemy.wait_time // (enemy.wait_time + 1)
+			difficulty = (enemy.damage * 3 + enemy.hp) * enemy.wait_time // (enemy.wait_time + 1)
 			if enemy.type == Entity.T_SHOP:
 				acc = acc * 1.05 // 1
 			elif enemy.type == Entity.T_BOSS: ...
@@ -95,10 +95,9 @@ class Entity(pygame.sprite.Sprite):
 				tmp = 5 - abs(difficulty - lvl * 3)
 				acc += 0 if tmp < 0 else tmp
 			weight.append(acc)
-			print(acc)
 		choice: Entity = random.choices(ENEMIES, cum_weights= weight, k= 1)[0].copy()
 		print(choice.img)
-		if boss and random.choice(True, False):
+		if boss and random.choice((True, False)):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
 			if ry == 3: # up type
@@ -113,15 +112,43 @@ class Entity(pygame.sprite.Sprite):
 		choice.pos = Vector2(rx, ry)
 		return choice
 	@ classmethod
-	def random_boss(self):
-		rx = random.choice((-1, 1))
-		ry = random.choice((-1, 1))
-		return Entity("lava_bucket", Entity.T_BOSS, 10, 2, Vector2(rx * -6, ry * -4), Vector2(1, 1), 10, 3)
+	def random_boss(self, lvl: int = 0):
+		weight: list[int] = []
+		for enemy in ENEMIES:
+			difficulty = (enemy.damage * 3 + enemy.hp) * enemy.wait_time // (enemy.wait_time + 1)
+			if enemy.type == Entity.T_SHOP:
+				weight.append(0)
+			else:
+				tmp = 25 - abs(difficulty - lvl * 10)
+				if enemy.damage >= 3:
+					tmp += enemy.damage // 2
+				if enemy.hp >= 10:
+					tmp += enemy.hp // 5
+				else:
+					tmp = 0
+				weight.append(max(tmp, 0))
+		choice: Entity = random.choices(ENEMIES, weights= weight, k= 1)[0].copy()
+		print(choice.img)
+		if random.choice((True, False)):
+			rx = random.randint(-5, 5)
+			ry = random.choice((-3, 3))
+			if ry == 3: # up type
+				choice.move = Vector2(choice.move.y, -choice.move.x)
+			else: # down type
+				choice.move = Vector2(choice.move.y, choice.move.x)
+		else:
+			rx = random.choice((-5, 5))
+			ry = random.randint(-3, 3)
+			if rx == 5: # left type
+				choice.move = Vector2(-choice.move.x, choice.move.y)
+		choice.pos = Vector2(rx, ry)
+		choice.type = Entity.T_BOSS
+		return choice
 	@ classmethod
 	def shadow(self, pos: Vector2):
 		return Entity(Setting.shadow_img, Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))
 ENEMIES = [
 	Entity("type_simple/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 2, 0b0011),
-	Entity("type_simple/image_boss_move", Entity.T_BOSS, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
+	Entity("type_simple/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
 	Entity("type_simple/image_shop", Entity.T_SHOP, -1, 0, Vector2(0, 0), Vector2(0, 0), 0, 1, 0b0000)
 ]
