@@ -12,7 +12,6 @@ clock = pygame.time.Clock()
 stage = Stage()
 #stage.set_stage(StageOption.TITLE)
 
-
 while True:
 	clock.tick(60)
 	draw(stage, screen)
