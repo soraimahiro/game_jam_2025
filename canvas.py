@@ -3,6 +3,7 @@ from vector2 import Vector2
 from player import Player
 from entity import Entity
 from stage import Stage, StageOption, TitleOption
+from setting import Setting
 
 
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):
@@ -16,10 +17,10 @@ def draw_unit(screen: pygame.Surface, entity: Player | Entity):
 	screen.blit(entity.icon, position.to_tuple())
 
 def draw_bar(stage: Stage, screen: pygame.Surface):
-	heart = pygame.transform.scale(pygame.image.load("./resource/image/redstone.png"), (50, 50))
+	heart = pygame.transform.scale(Setting.health_icon, (50, 50))
 	for i in range(stage.player.hp):
 		screen.blit(heart, (heart.get_width() * 1.1 * i, 0))
-	gold = pygame.transform.scale(pygame.image.load("./resource/image/gold_ingot.png"), (50, 50))
+	gold = pygame.transform.scale(Setting.money_icon, (50, 50))
 	screen.blit(gold, (screen.get_width() - gold.get_width(), 0))
 	font = pygame.font.SysFont("NOTOSANSTC-VARIABLEFONT_WGHT.TTF", 48)
 	text = font.render(f"{stage.player.money} ", 0, (0, 0, 0))
