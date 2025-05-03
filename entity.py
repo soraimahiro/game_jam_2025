@@ -155,5 +155,7 @@ class Entity(pygame.sprite.Sprite):
 ENEMIES = [
 	Entity("type_simple/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 2, 0b0011),
 	Entity("type_simple/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
+	Entity("type_jam/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 1, 0b0011),
+	Entity("type_jam/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(1, 1), 10, 2, 0b0011),
 	Entity("type_simple/image_shop", Entity.T_SHOP, -1, 0, Vector2(0, 0), Vector2(0, 0), 0, 1, 0b0000)
 ]
