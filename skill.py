@@ -38,10 +38,10 @@ class Hit:
 		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, {0, 0})
 		if is_hit == 1:
 			#透明度設為255
-			# entity.icon.set_alpha(255)
+			entity.icon(255)
 			pass
 		else:
 			#透明度設為10
-			# entity.icon.set_alpha(10)
+			entity.icon(10)
 			pass
 		return Hit(entity, Hit.HIT_DURATION, start_time)

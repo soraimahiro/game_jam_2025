@@ -23,7 +23,7 @@ class Entity(pygame.sprite.Sprite):
 		self.direction = direction # 0b 0 0 0 0 -> 0b up down left right
 	def copy(self):
 		return Entity(self.img, self.type, self.hp, self.damage, self.pos, self.move, self.value, self.wait_time, self.direction)
-	def icon(self,alpha: int = 255):
+	def icon(self, alpha: int = 255):
 		direction: dict[int, int | float] = {}
 		if self.direction & 0b1000 != 0: # moving up
 			direction[0b1000] = self.move * Vector2(0, -1)
@@ -37,14 +37,20 @@ class Entity(pygame.sprite.Sprite):
 		if direction.keys():
 			maxat = max(direction.keys(), key= lambda k : direction.get(k))
 		if maxat == 0b1000:
-			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_up.png"), globals.icon_size)
-		if maxat == 0b0100:
-			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_down.png"), globals.icon_size)
-		if maxat == 0b0010:
-			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_left.png"), globals.icon_size)
-		if maxat == 0b0001:
-			return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}_right.png"), globals.icon_size)
-		return pygame.transform.scale(pygame.image.load(f"./resource/image/{self.img}.png"), globals.icon_size)
+			filename = f"./resource/image/{self.img}_up.png"
+		elif maxat == 0b0100:
+			filename = f"./resource/image/{self.img}_down.png"
+		elif maxat == 0b0010:
+			filename = f"./resource/image/{self.img}_left.png"
+		elif maxat == 0b0001:
+			filename = f"./resource/image/{self.img}_right.png"
+		else:
+			filename = f"./resource/image/{self.img}.png"
+
+		# 載入、轉換、設 alpha、縮放
+		image = pygame.image.load(filename).convert_alpha()
+		image.set_alpha(alpha)
+		return pygame.transform.scale(image, globals.icon_size)
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
