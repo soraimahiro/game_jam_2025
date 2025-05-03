@@ -26,6 +26,8 @@ class Vector2:
 		return Vector2(-self.x, -self.y)
 	def __repr__(self):
 		return f"Vector2({self.x}, {self.y})"
+	def __hash__(self):
+		return hash((self.x, self.y))
 	def add(self, other: 'Vector2'):
 		return self + other
 	def sub(self, other: 'Vector2'):
