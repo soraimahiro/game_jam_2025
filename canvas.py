@@ -77,17 +77,6 @@ def draw_title(stage: Stage, screen: pygame.Surface):
 	button = globals.icon(button_exit, button_size)
 	screen.blit(button, button_pos)
 
-
-	# font = globals.font(size = 24)
-	# text = font.render("Start", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.START.value else (255, 127, 0), None)
-	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.5))
-	# text = font.render("Setting", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.SETTING.value else (255, 127, 0), None)
-	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.6))
-	# text = font.render("Credit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.CREDIT.value else (255, 127, 0), None)
-	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.7))
-	# text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.EXIT.value else (255, 127, 0), None)
-	# screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
-
 def draw_setting(stage: Stage,screen: pygame.Surface):
 	icon_size = 150
 	skin_bg_icon_0 = globals.icon("resource/image/settings/image_character_box_0.png", (icon_size,icon_size))
