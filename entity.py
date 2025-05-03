@@ -51,7 +51,7 @@ class Entity(pygame.sprite.Sprite):
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
 	def next_step(self, player : 'Player'): # pass to next position 
-		print("next_step")
+		#print("next_step")
 		if self.type == Entity.T_MOSTER:
 			if self.pos.x < -6 or self.pos.x > 6 or self.pos.y < -4 or self.pos.y > 4:
 				self.hp = 0
@@ -105,6 +105,7 @@ class Entity(pygame.sprite.Sprite):
 		if boss and random.choice((True, False)) and (choice.direction == 0 or choice.direction | 0b1100 != 0):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
+			print("here")
 			if ry == 3: # up type
 				choice.move = Vector2(choice.move.y, -choice.move.x)
 			else: # down type
@@ -156,6 +157,6 @@ ENEMIES = [
 	Entity("type_simple/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 2, 0b0011),
 	Entity("type_simple/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
 	Entity("type_jam/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 1, 0b0011),
-	Entity("type_jam/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(1, 1), 10, 2, 0b0011),
+	Entity("type_jam/image_boss_move", Entity.T_BOSS, 10, 2, Vector2(0, 0), Vector2(1, 1), 10, 2, 0b0011),
 	Entity("type_simple/image_shop", Entity.T_SHOP, -1, 0, Vector2(0, 0), Vector2(0, 0), 0, 1, 0b0000)
 ]

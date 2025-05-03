@@ -61,7 +61,7 @@ class Stage:
 				self.enemy_wait = self.enemy_wait * 3 // 2
 		if self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
-				self.entities.append(Entity.random_enemy(True, 1))
+				self.entities.append(Entity.random_enemy(self.stage == StageOption.BOSS, 1))
 		pass
 	
 	def reset(self):
