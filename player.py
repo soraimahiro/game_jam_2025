@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
 	
 	def attack(self, entities: list['Entity']):
 		# for entity in entities:
-		attackdata = set()
+		attackdata: set[tuple[Vector2, int]] = set()
 		MAX_X=5
 		MAX_Y=3
 		# if entity.hp <= 0:
@@ -84,11 +84,9 @@ class Player(pygame.sprite.Sprite):
 					continue
 				if entity.pos == attack[0]:
 					entity.hp -= attack[1]
-					skill.hit_enemy(entity.pos, pygame.time.get_ticks(),1)
+					skill.hit_enemy(entity.pos, pygame.time.get_ticks(), 1)
 				else:
-					# 註解拿掉會變很卡
 					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
-					pass
 				if entity.hp <= 0:
 					self.killed += 1
 					self.money += entity.value

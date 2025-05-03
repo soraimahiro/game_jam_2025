@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 class Entity(pygame.sprite.Sprite):
 	T_MOSTER = 0;	T_BOSS = 1;	T_SHADOW = 2;	T_SHOP = 3;	T_HIT =4
+	
 	def __init__(self, img: str, type: int, hp: int, damage: int, pos: Vector2, mov: Vector2, value: int = 1, wait_time: int = 1, direction: int = 0b0000):
 		super().__init__()
 		self.type = type  # type of entity
@@ -16,22 +17,25 @@ class Entity(pygame.sprite.Sprite):
 		self.damage = damage
 		self.pos = pos
 		self.img = img
+		self.img_alpha = 255
 		self.move = mov # how long do the entity move
 		self.wait_time = wait_time  # how many rounds do the entity take to move
 		self.round_pass = 0  # how many rounds pass
 		self.value = value
 		self.direction = direction # 0b 0 0 0 0 -> 0b up down left right
+	
 	def copy(self):
 		return Entity(self.img, self.type, self.hp, self.damage, self.pos, self.move, self.value, self.wait_time, self.direction)
-	def icon(self, alpha: int = 255):
+	
+	def icon(self):
 		direction: dict[int, int | float] = {}
-		if self.direction & 0b1000 != 0: # moving up
+		if (self.direction & 0b1000) != 0: # moving up
 			direction[0b1000] = self.move * Vector2(0, -1)
-		if self.direction & 0b0100 != 0: # moving down
+		if (self.direction & 0b0100) != 0: # moving down
 			direction[0b0100] = self.move * Vector2(0, 1)
-		if self.direction & 0b0010 != 0: # moving left
+		if (self.direction & 0b0010) != 0: # moving left
 			direction[0b0010] = self.move * Vector2(-1, 0)
-		if self.direction & 0b0001 != 0: # moving right
+		if (self.direction & 0b0001) != 0: # moving right
 			direction[0b0001] = self.move * Vector2(1, 0)
 		maxat = 0b0000
 		if direction.keys():
@@ -46,12 +50,14 @@ class Entity(pygame.sprite.Sprite):
 			icon = globals.icon(f"./resource/image/{self.img}_right.png")
 		else:
 			icon = globals.icon(f"./resource/image/{self.img}.png")
-		icon.set_alpha(alpha)
+		icon.set_alpha(self.img_alpha)
 		return icon
+	
 	def __repr__(self):
 		return f"Entity type {self.type} at {self.pos}"
+	
 	def next_step(self, player : 'Player'): # pass to next position 
-		print("next_step")
+		#print("next_step")
 		if self.type == Entity.T_MOSTER:
 			if self.pos.x < -6 or self.pos.x > 6 or self.pos.y < -4 or self.pos.y > 4:
 				self.hp = 0
@@ -87,6 +93,7 @@ class Entity(pygame.sprite.Sprite):
 			self.pos.y += self.move.y
 			self.round_pass -= self.wait_time
 		pass
+	
 	@ classmethod
 	def random_enemy(self, boss: bool, lvl: int = 0):
 		acc = 0
@@ -102,9 +109,10 @@ class Entity(pygame.sprite.Sprite):
 			weight.append(acc)
 		choice: Entity = random.choices(ENEMIES, cum_weights= weight, k= 1)[0].copy()
 		#print(choice.img)
-		if boss and random.choice((True, False)) and (choice.direction == 0 or choice.direction | 0b1100 != 0):
+		if boss and random.choice((True, False)) and (choice.direction == 0 or (choice.direction | 0b1100) != 0):
 			rx = random.randint(-5, 5)
 			ry = random.choice((-3, 3))
+			print("here")
 			if ry == 3: # up type
 				choice.move = Vector2(choice.move.y, -choice.move.x)
 			else: # down type
@@ -116,6 +124,7 @@ class Entity(pygame.sprite.Sprite):
 				choice.move = Vector2(-choice.move.x, choice.move.y)
 		choice.pos = Vector2(rx, ry)
 		return choice
+	
 	@ classmethod
 	def random_boss(self, lvl: int = 0):
 		weight: list[int] = []
@@ -149,13 +158,15 @@ class Entity(pygame.sprite.Sprite):
 		choice.pos = Vector2(rx, ry)
 		choice.type = Entity.T_BOSS
 		return choice
+	
 	@ classmethod
 	def shadow(self, pos: Vector2):
 		return Entity(globals.shadow_img, Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))
+
 ENEMIES = [
 	Entity("type_simple/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 2, 0b0011),
 	Entity("type_simple/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(2, 0), 10, 3, 0b1111),
 	Entity("type_jam/image_mob_move", Entity.T_MOSTER, 2, 1, Vector2(0, 0), Vector2(1, 0), 1, 1, 0b0011),
-	Entity("type_jam/image_boss_move", Entity.T_MOSTER, 10, 2, Vector2(0, 0), Vector2(1, 1), 10, 2, 0b0011),
+	Entity("type_jam/image_boss_move", Entity.T_BOSS, 10, 2, Vector2(0, 0), Vector2(1, 1), 10, 2, 0b0011),
 	Entity("type_simple/image_shop", Entity.T_SHOP, -1, 0, Vector2(0, 0), Vector2(0, 0), 0, 1, 0b0000)
 ]
