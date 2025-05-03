@@ -89,6 +89,10 @@ main path: ./resource/image/
     - type_simple/image_number
     - type_simple/image_hit
 - 頁面
+    - image_page_start
+    - image_page_about
+    - image_page_credits
+    - image_page_settings
     - image_page_lose
     - image_page_win
 - 設定頁icon
