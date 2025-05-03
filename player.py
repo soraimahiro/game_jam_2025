@@ -18,11 +18,11 @@ class Player(pygame.sprite.Sprite):
 		self.money = 0
 		self.hp = 10
 		self.killed = 0
-		self.skills = [Skill(1, 3, 3)] # 預設為射程3傷害1的十字攻擊
+		self.skills = [Skill(1, 1, 3)] # 預設為射程3傷害1的十字攻擊
 		pass
 
 	def icon(self):
-		return globals.player_icon
+		return globals.icon(globals.player_img)
 	
 	def move(self, move: Vector2):
 		self.pre_pos = Vector2(self.pos.x, self.pos.y)
@@ -57,7 +57,6 @@ class Player(pygame.sprite.Sprite):
 					attackdata.add((Vector2(self.pos.x, y), skill.damage))
 			elif skill.attacktype == AttackType.LINE_XY.value:
 				# xy方向;以角色位置為參考點，xy方向距離 n 單位內的敵人受傷害 X
-				
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
 					if x < -MAX_X or x > MAX_X:
 						continue
@@ -68,7 +67,6 @@ class Player(pygame.sprite.Sprite):
 						continue
 					attackdata.add((Vector2(self.pos.x, y), skill.damage))
 				# print(f"attackdata = {attackdata}")
-				
 			elif skill.attacktype == AttackType.AREA.value:
 				# 以角色位置為參考點，角色周圍 n 單位皆受傷害 X
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):

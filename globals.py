@@ -8,12 +8,12 @@ def init():
 	enemy_killed = 0
 	global icon_size
 	icon_size = (50, 50)
-	global player_icon
-	player_icon = icon("./resource/image/type_simple/image_character_blue.png")
-	global health_icon
-	health_icon = icon("./resource/image/type_simple/image_HP.png")
-	global money_icon
-	money_icon = icon("./resource/image/type_simple/image_money.png")
+	global player_img
+	player_img = "./resource/image/type_simple/image_character_blue.png"
+	global health_img
+	health_img = "./resource/image/type_simple/image_HP.png"
+	global money_img
+	money_img = "./resource/image/type_simple/image_money.png"
 	global font_scale
 	font_scale = 4
 	global font_file
