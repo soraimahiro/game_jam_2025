@@ -2,7 +2,7 @@ import pygame
 from vector2 import Vector2
 from player import Player
 from entity import Entity
-from stage import Stage, StageOption, TitleOption
+from stage import Stage, StageOption, TitleOption, SettingOption
 import globals
 
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):
@@ -50,13 +50,21 @@ def draw_title(stage: Stage, screen: pygame.Surface):
 	text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != TitleOption.EXIT.value else (255, 127, 0), None)
 	screen.blit(text, (screen.get_width() * 0.15, screen.get_height() * 0.8))
 
-def draw_setting(screen: pygame.Surface):
+def draw_setting(stage: Stage,screen: pygame.Surface):
 	screen.fill((127, 255, 0))
 	font = globals.font(size = 16)
-	text = font.render("Here is nothing you can set.", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.5))
-	text = font.render("Press Enter to return", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() / 2 - text.get_width() / 2, screen.get_height() * 0.6))
+	text = font.render("Setting", 0, (0, 0, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.15))
+
+	font = globals.font(size = 18)
+	text = font.render("Skin Color", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.SKIN.value else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.3))
+	text = font.render("Sound", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.SOUND.value else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.5))
+	text = font.render("Exit", 0, (0, 0, 0) if stage.player.pos.y != SettingOption.EXIT.value else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.7))
+	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if (stage.player.pos.x,stage.player.pos.y)!=(1,1)  else (255, 127, 0), None)
+	screen.blit(text, (screen.get_width() * 0.7, screen.get_height() * 0.5))
 
 def draw_credit(screen: pygame.Surface):
 	screen.fill((180, 180, 0))
@@ -149,7 +157,7 @@ def draw(stage: Stage, screen: pygame.Surface):
 	if stage.stage == StageOption.TITLE:
 		draw_title(stage, screen)
 	elif stage.stage == StageOption.SETTING:
-		draw_setting(screen)
+		draw_setting(stage,screen)
 	elif stage.stage == StageOption.CREDITS:
 		draw_credit(screen)
 	elif stage.stage == StageOption.BATTLE:
