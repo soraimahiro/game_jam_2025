@@ -34,6 +34,11 @@ def draw_bar(stage: Stage, screen: pygame.Surface):
 	font = globals.font(size = 12)
 	text = font.render(f"{stage.player.money} ", 0, (0, 0, 0))
 	screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), gold.get_height() / 2 - text.get_height() / 3))
+	if stage.stage == StageOption.BATTLE:
+		step = globals.icon(globals.health_img)
+		screen.blit(step, (screen.get_width() - gold.get_width(), screen.get_height() - gold.get_height()))
+		text = font.render(f"{stage.round_pass}/{stage.boss_wait} ", 0, (0, 0, 0))
+		screen.blit(text, (screen.get_width() - gold.get_width() - text.get_width(), screen.get_height() - gold.get_height() / 2 - text.get_height() / 3))
 
 def draw_title(stage: Stage, screen: pygame.Surface):
 	screen.fill((255, 255, 255))
@@ -145,6 +150,12 @@ def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)
 	screen.blit(text, (rect_x + 50, screen.get_height() /2 + 10))	
 
+def draw_story(screen: pygame.Surface):
+	screen.fill((251, 219, 147))
+	font = globals.font(size = 16)
+	text = font.render("sadasddassd\ndsadasdasd\nasadasda", 0, (0, 0, 0), None)
+	screen.blit(text, (50, 50))
+
 def draw(stage: Stage, screen: pygame.Surface):
 	if stage.stage == StageOption.TITLE:
 		draw_title(stage, screen)
@@ -152,6 +163,8 @@ def draw(stage: Stage, screen: pygame.Surface):
 		draw_setting(screen)
 	elif stage.stage == StageOption.CREDITS:
 		draw_credit(screen)
+	elif stage.stage == StageOption.BATTLE_STORY:
+		draw_story(screen)
 	elif stage.stage == StageOption.BATTLE:
 		draw_battle(stage, screen)
 	elif stage.stage == StageOption.BOSS:
