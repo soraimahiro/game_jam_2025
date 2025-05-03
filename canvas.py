@@ -59,7 +59,19 @@ def draw_credit(screen: pygame.Surface):
 
 def draw_battle(stage:Stage, screen: pygame.Surface):
 	# fill background
-	screen.fill((255, 127, 127))
+	# screen.fill((255, 127, 127))
+	screen.fill((251, 219, 147))
+	width = screen.get_width()
+	height = screen.get_height()
+	center = Vector2(width, height) / 2
+	road_icon = pygame.transform.scale(pygame.image.load("./resource/image/type_simple/image_map.png"), (15, 15))
+	delta = min((height - 50) / 8, width / 12)
+	shift = Vector2(road_icon.get_width(), road_icon.get_height()) / 2
+	for i in range(-5, 6):
+		for j in range(-3, 4):
+			pos= Vector2(i, j)
+			position = center + pos * delta - shift
+			screen.blit(road_icon, position.to_tuple())
 	# Draw player
 	draw_unit(screen, stage.player)
 	# Draw shadows
@@ -79,7 +91,19 @@ def draw_battle(stage:Stage, screen: pygame.Surface):
 
 def draw_boss(stage: Stage, screen: pygame.Surface):
 	# fill background
-	screen.fill((255, 0, 0))
+	# screen.fill((255, 0, 0))
+	screen.fill((190, 91, 80))
+	width = screen.get_width()
+	height = screen.get_height()
+	center = Vector2(width, height) / 2
+	road_icon = pygame.transform.scale(pygame.image.load("./resource/image/type_simple/image_map.png"), (15, 15))
+	delta = min((height - 50) / 8, width / 12)
+	shift = Vector2(road_icon.get_width(), road_icon.get_height()) / 2
+	for i in range(-5, 6):
+		for j in range(-3, 4):
+			pos= Vector2(i, j)
+			position = center + pos * delta - shift
+			screen.blit(road_icon, position.to_tuple())
 	# Draw player
 	draw_unit(screen, stage.player)
 	# Draw entities
