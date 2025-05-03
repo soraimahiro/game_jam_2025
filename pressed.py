@@ -104,6 +104,7 @@ def pressed_boss(stage: Stage, key) -> bool:
 
 def pressed_end(stage: Stage, key) -> bool:
     if key == pygame.K_RETURN:
+        stage.reset()
         stage.set_stage(StageOption.TITLE)
     return True
 

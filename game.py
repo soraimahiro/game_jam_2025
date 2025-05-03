@@ -19,8 +19,7 @@ while True:
 			exit()
 		elif event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
-				stage = Stage()
-				stage.set_stage(StageOption.TITLE)
+				stage.reset()
 			if not pressed(stage, event.key):
 				pygame.quit()
 				exit()

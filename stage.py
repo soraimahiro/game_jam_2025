@@ -22,15 +22,7 @@ class TitleOption(Enum):
 
 class Stage:
 	def __init__(self):
-		self.stage = StageOption.TITLE
-		self.entities = [Entity.random_enemy() for i in range(3)]
-		self.player = Player()
-		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
-		self.round_pass = 0
-		self.enemy_wait = 8
-		self.new_enemy_count = 2
-		self.boss_wait = 50
-		self.statistics = Statistics()
+		self.reset()
 		pass	
 	
 	def set_stage(self, stage: StageOption):
@@ -67,3 +59,14 @@ class Stage:
 		elif self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy())
+	
+	def reset(self):
+		self.stage = StageOption.TITLE
+		self.entities = [Entity.random_enemy() for i in range(3)]
+		self.player = Player()
+		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
+		self.round_pass = 0
+		self.enemy_wait = 8
+		self.new_enemy_count = 2
+		self.boss_wait = 50
+		self.statistics = Statistics()
