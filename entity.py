@@ -51,7 +51,7 @@ class Entity(pygame.sprite.Sprite):
 			else: # maxat == 0b0001
 				icon = globals.icon(f"./resource/image/{self.img}_right.png")
 		elif self.type == Entity.T_SHADOW:
-			icon = globals.icon(f"./resource/image/{self.img}.png", (40, 40))
+			icon = globals.icon(f"./resource/image/{globals.get_shadow_img()}.png", (40, 40))
 		else:
 			icon = globals.icon(f"./resource/image/{self.img}.png")
 		icon.set_alpha(self.img_alpha)
