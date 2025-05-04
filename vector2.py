@@ -64,7 +64,7 @@ class Vector2:
 		if d != 0: # A not on CD
 			a = (AB.x * AD.y - AB.y * AD.x) / d
 			b = (AC.x * AB.y - AC.y * AB.x) / d
-			if a > 0 and b > 0:
+			if a > 0 and b > 0 and a + b > 1:
 				return True
 			return False
 		if not AB.parallel(AC) and not AB.parallel(AD): # A on CD but B doesn't
