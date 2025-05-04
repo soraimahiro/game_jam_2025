@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
 					for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
 						if y < -MAX_Y or y > MAX_Y:
 							continue
-						attackdata.append((Vector2(x, y), skill.damage,AttackType.AREA))
+						attackdata.append((Vector2(x, y), skill.damage))
 		for attack in attackdata:
 			for entity in entities:
 				if entity.hp <= 0:
