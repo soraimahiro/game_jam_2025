@@ -111,6 +111,8 @@ def pressed_battle(stage: Stage, key) -> bool:
 			for shadow in stage.shadows:
 				if stage.player.pos.y == shadow.pos.y:
 					stage.player.pos.x = shadow.pos.x
+					stage.player.pos = shadow.pos.copy()
+					break
 			stage.next_round()
 	elif key in {pygame.K_s, pygame.K_DOWN}:
 		if stage.player.pos.y < 3:
@@ -118,14 +120,12 @@ def pressed_battle(stage: Stage, key) -> bool:
 			for shadow in stage.shadows:
 				if stage.player.pos.y == shadow.pos.y:
 					stage.player.pos.x = shadow.pos.x
+					stage.player.pos = shadow.pos.copy()
+					break
 			stage.next_round()
 	elif key in {pygame.K_a, pygame.K_LEFT}:
 		if (stage.player.pos.x > -5):
 			stage.player.pos.x -= 1
-			for entity in stage.entities:
-				if entity.pos == stage.player.pos and entity.move.x > 0:
-					stage.player.hp -= entity.damage
-					print(f"hp = {stage.player.hp}")
 			for shadow in stage.shadows:
 				if shadow.pos.y == stage.player.pos.y:
 					shadow.pos.x = stage.player.pos.x
@@ -133,10 +133,6 @@ def pressed_battle(stage: Stage, key) -> bool:
 	elif key in {pygame.K_d, pygame.K_RIGHT}:
 		if (stage.player.pos.x < 5):
 			stage.player.pos.x += 1
-			for entity in stage.entities:
-				if entity.pos == stage.player.pos and entity.move.x < 0:
-					stage.player.hp -= entity.damage
-					print(f"hp = {stage.player.hp}")
 			for shadow in stage.shadows:
 				if shadow.pos.y == stage.player.pos.y:
 					shadow.pos.x = stage.player.pos.x
@@ -149,34 +145,18 @@ def pressed_boss(stage: Stage, key) -> bool:
 	elif key in {pygame.K_w, pygame.K_UP}:
 		if stage.player.pos.y > -3:
 			stage.player.pos.y -= 1
-			for entity in stage.entities:
-				if entity.pos == stage.player.pos and entity.move.y < 0 and entity.move.x == 0:
-					stage.player.hp -= entity.damage
-					print(f"hp = {stage.player.hp}")
 			stage.next_round()
 	elif key in {pygame.K_s, pygame.K_DOWN}:
 		if stage.player.pos.y < 3:
 			stage.player.pos.y += 1
-			for entity in stage.entities:
-				if entity.pos == stage.player.pos and entity.move.y > 0 and entity.move.x == 0:
-					stage.player.hp -= entity.damage
-					print(f"hp = {stage.player.hp}")
 			stage.next_round()
 	elif key in {pygame.K_a, pygame.K_LEFT}:
 		if (stage.player.pos.x > -5):
 			stage.player.pos.x -= 1
-			for entity in stage.entities:
-				if entity.pos == stage.player.pos and entity.move.x > 0 and entity.move.y == 0:
-					stage.player.hp -= entity.damage
-					print(f"hp = {stage.player.hp}")
 			stage.next_round()
 	elif key in {pygame.K_d, pygame.K_RIGHT}:
 		if (stage.player.pos.x < 5):
 			stage.player.pos.x += 1
-			for entity in stage.entities:
-				if entity.pos == stage.player.pos and entity.move.x < 0 and entity.move.y == 0:
-					stage.player.hp -= entity.damage
-					print(f"hp = {stage.player.hp}")
 			stage.next_round()
 	return True
 

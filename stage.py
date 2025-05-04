@@ -57,32 +57,33 @@ class Stage:
 	def next_round(self):
 		go_shop = False
 		for entity in self.entities:
-			pre_pos = Vector2(entity.pos.x, entity.pos.y)
+			entity.pre_pos = Vector2(entity.pos.x, entity.pos.y)
 			entity.next_step(self.player)
-			# check when boss move 
-			if Vector2.intercept(self.player.pre_pos, self.player.pos, pre_pos, entity.pos):
-				self.player.hp -= entity.damage
-				if entity.type == Entity.T_SHOP:
-					go_shop = True
-					entity.hp = 0
-				elif entity.type == Entity.T_REGEN:
-					entity.hp = 0
-					play_sound_effect("blood_add")
-				else:
-					play_sound_effect("blood_loss")
-				#print(f"hp = {self.player.hp}")
 		self.player.attack(self.entities)
-		if go_shop:
-			self.set_stage(StageOption.SHOP)
-		if not self.player.hp > 0:
-			self.set_stage(StageOption.END)
 		for entity in self.entities:
-			if entity.type == Entity.T_SHOP:
-				entity.hp -= 5
 			if entity.hp <= 0:
 				if entity.type == Entity.T_BOSS:
 					self.set_stage(StageOption.END)
 				self.entities.remove(entity)
+			if entity.type == Entity.T_SHOP:
+				entity.hp -= 5
+			if Vector2.intercept(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos):
+				if entity.damage > 0:
+					self.player.hp -= entity.damage
+					play_sound_effect("blood_loss")
+					print(f"{entity} from {entity.pos} / from {self.player.pre_pos} to {self.player.pos}")
+				elif entity.damage < 0:
+					if entity.type == Entity.T_REGEN:
+						entity.hp = 0
+					play_sound_effect("blood_add")
+				if entity.type == Entity.T_SHOP:
+					go_shop = True
+					entity.hp = 0
+				#print(f"hp = {self.player.hp}")
+		if go_shop:
+			self.set_stage(StageOption.SHOP)
+		if not self.player.hp > 0:
+			self.set_stage(StageOption.END)
 		self.round_pass += 1
 		if self.stage != StageOption.END and self.round_pass >= self.boss_wait:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:

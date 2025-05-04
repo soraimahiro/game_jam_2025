@@ -51,6 +51,8 @@ class Vector2:
 		if other.y != 0:
 			return self.y / other.y
 		return None
+	def copy(self):
+		return Vector2(self.x, self.y)
 	@ classmethod
 	def intercept(self, A: 'Vector2', B: 'Vector2', C: 'Vector2', D: 'Vector2') -> bool:
 		if A == B:

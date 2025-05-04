@@ -17,6 +17,7 @@ class Entity(pygame.sprite.Sprite):
 		self.hp = hp
 		self.damage = damage
 		self.pos = pos
+		self.pre_pos = pos.copy()
 		self.img = img
 		self.img_alpha = 255
 		self.move = mov # how long do the entity move
@@ -58,7 +59,7 @@ class Entity(pygame.sprite.Sprite):
 		return icon
 	
 	def __repr__(self):
-		return f"Entity type {self.type} at {self.pos}"
+		return f"Entity {self.img} type {self.type} at {self.pos}"
 	
 	def next_step(self, player : 'Player'): # pass to next position 
 		#print("next_step")
@@ -163,7 +164,7 @@ class Entity(pygame.sprite.Sprite):
 	
 	@ classmethod
 	def shadow(self, pos: Vector2):
-		return Entity(globals.shadow_img, Entity.T_SHADOW, -1, 0, pos, Vector2(0, 0))
+		return Entity(globals.shadow_img, Entity.T_SHADOW, 100000, 0, pos, Vector2(0, 0))
 
 ENEMIES = [
 	Entity("type_simple/image_mob_move",	Entity.T_MONSTER,	2,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	2,	0b0011),
