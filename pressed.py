@@ -207,8 +207,10 @@ def pressed_story(stage: Stage, key) -> bool:
 
 def pressed_shop(stage: Stage, key: int) -> bool:
 	if key in {pygame.K_a, pygame.K_LEFT}:
+		play_sound_effect("button_switch")
 		stage.shop_info.option -= 1
 	elif key in {pygame.K_d, pygame.K_RIGHT}:
+		play_sound_effect("button_switch")
 		stage.shop_info.option += 1
 	elif key == pygame.K_RETURN:
 		no = -1
@@ -223,6 +225,7 @@ def pressed_shop(stage: Stage, key: int) -> bool:
 		if stage.player.money >= the_cost:
 			stage.player.money -= the_cost
 			stage.player.skills[no].level += 1
+			play_sound_effect("button_press")
 			stage.set_stage(stage.previous_stage)
 	elif key == pygame.K_ESCAPE:
 		stage.set_stage(stage.previous_stage)
