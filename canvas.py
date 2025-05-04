@@ -258,7 +258,7 @@ def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 	return True
 
 def draw_story(stage: Stage, screen: pygame.Surface):
-	print(f"draw_story: {stage.story_count}")
+	# print(f"draw_story: {stage.story_count}")
 	if globals.story_list[stage.story_count] == 0:
 		print("error in draw_story")
 		return
