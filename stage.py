@@ -46,6 +46,8 @@ class Stage:
 		if stage == StageOption.SETTING:
 			self.player.pos.x = 0
 			self.player.pos.y = 0
+		if stage == StageOption.BATTLE_STORY or stage == StageOption.BOSS_STORY:
+			self.story_count += 1
 		print(f"stage set from {self.previous_stage} to {self.stage}")
 		play_background_music(self)
 		change_music_volume(globals.music_volume)
@@ -70,7 +72,7 @@ class Stage:
 					for shadow in self.shadows:
 						if shadow.pos == self.player.pos:
 							shadow.pos = self.player.pos.copy()
-					self.set_stage(StageOption.BATTLE)
+					self.set_stage(StageOption.BATTLE_STORY)
 					if self.level == 5:
 						self.set_stage(StageOption.END)
 				else:	
@@ -99,10 +101,7 @@ class Stage:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
 				self.entities.append(Entity.random_boss(self.level))
 				self.enemy_wait = self.enemy_wait * 3 // 2
-				if self.level == 1:
-					self.set_stage(StageOption.BOSS_STORY)
-				else:
-					self.set_stage(StageOption.BOSS)
+				self.set_stage(StageOption.BOSS_STORY)
 		if self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy(self.stage == StageOption.BOSS, self.level))
@@ -133,6 +132,6 @@ class Stage:
 		self.boss_wait = 50
 		self.esc_menu = Esc_menu()
 		self.shop_info = Shop(self.player)
-		self.story_count = 0
+		self.story_count = -1
 		self.level = 1
 		play_background_music(self)
