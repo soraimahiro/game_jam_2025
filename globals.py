@@ -36,7 +36,7 @@ def init():
 	global shadow_img
 	shadow_img = get_shadow_img()
 	global music_volume
-	music_volume = 50
+	music_volume = 10
 	global sound_volume
 	sound_volume = music_volume
 	global music_file_path
