@@ -68,8 +68,8 @@ class Stage:
 			if entity.type == Entity.T_SHOP:
 				entity.hp -= 5
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos):
+				self.player.hp -= entity.damage
 				if entity.damage > 0:
-					self.player.hp -= entity.damage
 					play_sound_effect("blood_loss")
 					print(f"{entity} from {entity.pos} / from {self.player.pre_pos} to {self.player.pos}")
 				elif entity.damage < 0:
@@ -110,7 +110,7 @@ class Stage:
 	def reset(self):
 		self.stage = StageOption.TITLE
 		self.previous_stage = self.stage
-		self.entities = [Entity.random_enemy(False) for i in range(3)]
+		self.entities = [Entity.random_enemy(False, 1) for i in range(3)]
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
 		self.round_pass = 0
