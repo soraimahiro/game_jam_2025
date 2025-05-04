@@ -125,7 +125,7 @@ class Entity(pygame.sprite.Sprite):
 	def random_boss(self, lvl: int = 0):
 		if lvl not in range(1, 5):
 			return ENEMIES[1][1].copy()
-		choice: Entity = ENEMIES[lvl][0].copy()
+		choice: Entity = ENEMIES[lvl][1].copy()
 		#print(choice.img)
 		if random.choice((True, False)) and (choice.direction == 0 or (choice.direction | 0b1100) != 0):
 			rx = random.randint(-5, 5)

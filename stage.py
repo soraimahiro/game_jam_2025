@@ -65,6 +65,8 @@ class Stage:
 				if entity.type == Entity.T_BOSS:
 					self.set_stage(StageOption.BOSS_STORY)
 					self.level += 1
+					self.round_pass = 0
+					self.player.killed = 0
 				self.entities.remove(entity)
 			if entity.type == Entity.T_SHOP:
 				entity.hp -= 5
