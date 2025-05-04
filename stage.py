@@ -71,7 +71,6 @@ class Stage:
 				self.player.hp -= entity.damage
 				if entity.damage > 0:
 					play_sound_effect("blood_loss")
-					print(f"{entity} from {entity.pos} / from {self.player.pre_pos} to {self.player.pos}")
 				elif entity.damage < 0:
 					if entity.type == Entity.T_REGEN:
 						entity.hp = 0
@@ -114,7 +113,7 @@ class Stage:
 		self.player = Player()
 		self.shadows = [Entity.shadow(Vector2(0, i)) for i in range(-3, 4)]
 		self.round_pass = 0
-		self.enemy_wait = 4
+		self.enemy_wait = 8
 		self.new_enemy_count = 2
 		self.recover_wait = 6
 		self.boss_wait = 50
