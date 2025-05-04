@@ -20,7 +20,21 @@ class Skill:
 	def __str__(self):
 		return f"Skill(damage={self.damage}, level={self.level}, direction={self.attacktype})"
 	def cost(self):
-		return 10
+		if self.attacktype == AttackType.AREA:
+			if self.level in {0, 1, 2}:
+				return 15 + 5 * self.level
+			return 50
+		if self.attacktype in {AttackType.LINE_X, AttackType.LINE_Y}:
+			if self.level in {0, 1, 2}:
+				return 5 + 3 * self.level
+			return 15
+		if self.attacktype == AttackType.LINE_XY:
+			if self.level in {0, 1, 2}:
+				return 7 + 4 * self.level
+			return 20
+		if self.attacktype == AttackType.POINT:
+			return 3 + 3 * self.level
+		return 65535
 	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int):
 		self.hits.append(Hit.hit(pos, start_time, is_hit))
 	def update(self, current_time : int):
