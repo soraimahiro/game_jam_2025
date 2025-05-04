@@ -223,8 +223,8 @@ def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	if stage.esc_menu.option == 2:
 		button_back = os.path.join(button_path, "image_esc_back_1.png")
 
-	button_size_x = 210;
-	button_size_y = 70;
+	button_size_x = 210
+	button_size_y = 70
 	button = globals.icon(button_continue, (button_size_x, button_size_y))
 	screen.blit(button, ((screen.get_width() - button_size_x) / 2, rect_y + 22.5 ))
 	button = globals.icon(button_settings, (button_size_x, button_size_y))
@@ -234,8 +234,10 @@ def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 
 
 def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
-	rect = pygame.Rect(screen.get_width() // 7, screen.get_height() // 7, screen.get_width() * 5 // 7, screen.get_height() * 5 // 7)
-	pygame.draw.rect(screen, (255, 255, 255), rect, screen.get_width() * 3 // 5)
+	size = Vector2(screen.get_width() * 5 // 7, screen.get_height() * 5 // 7)
+	rect = (Vector2(screen.get_width(), screen.get_height()) - size) // 2
+	background = globals.icon("./resource/image/esc_menu/image_esc_beckground.png", size.to_tuple())
+	screen.blit(background, rect.to_tuple())
 	for i in range(3):
 		no = -1
 		for j in range(stage.player.skills.__len__()):
@@ -249,7 +251,7 @@ def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 		the_type = the_type[the_type.find('.') + 1:the_type.rfind(':')]
 		good_icon = globals.icon(f"./resource/image/shop/image_skill_{the_type}_{1 if stage.shop_info.option == i else 0}.png", (128, 128))
 		cost_icon = globals.icon("./resource/image/type_simple/image_money.png")
-		cost_text = globals.font(size = 16).render(f"{stage.player.skills[no].cost()}", 0, (255, 255, 0))
+		cost_text = globals.font(size = 16).render(f"{stage.player.skills[no].cost()}", 0, (80, 11, 52))
 		the_level = stage.player.skills[no].level
 		level_icon = globals.icon(f"./resource/image/shop/image_skill_level_{the_level if the_level in range(3) else 'max'}.png")
 		pos = Vector2(screen.get_width() // 2, screen.get_height() // 2) + Vector2(screen.get_width() // 5, 0) * (i - 1)
