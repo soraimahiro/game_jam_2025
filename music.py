@@ -31,5 +31,5 @@ def play_sound_effect(sound_name:str):
 	# sound_path = "./resource/sound/"
 	sound_file = f"sound_{sound_name}.mp3"
 	sound = pygame.mixer.Sound(os.path.join(globals.sound_file_path, sound_file))
-	sound.set_volume(globals.sound_volume / 100)
+	sound.set_volume((globals.sound_volume / 100)*2.5)
 	sound.play()

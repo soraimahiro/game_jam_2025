@@ -2,8 +2,7 @@ from vector2 import Vector2
 from player import Player
 from entity import Entity
 from shop import Shop
-from music import play_background_music
-from music import change_music_volume
+from music import play_background_music,change_music_volume,play_sound_effect
 from enum import Enum, auto
 from setting import Esc_menu
 import random
@@ -67,6 +66,9 @@ class Stage:
 					entity.hp = 0
 				elif entity.type == Entity.T_REGEN:
 					entity.hp = 0
+					play_sound_effect("blood_add")
+				else:
+					play_sound_effect("blood_loss")
 				#print(f"hp = {self.player.hp}")
 		self.player.attack(self.entities)
 		if go_shop:

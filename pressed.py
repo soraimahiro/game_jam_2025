@@ -7,8 +7,10 @@ from skill import Skill
 def pressed_title(stage: Stage, key) -> bool:
 	if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
 		stage.player.pos.y -= 1
+		play_sound_effect("button_switch")
 	elif key in {pygame.K_s, pygame.K_DOWN, pygame.K_d, pygame.K_RIGHT}:
 		stage.player.pos.y += 1
+		play_sound_effect("button_switch")
 	elif key == pygame.K_RETURN:
 		if stage.player.pos.y == TitleOption.START.value:
 			stage.set_stage(StageOption.BATTLE)
@@ -18,8 +20,9 @@ def pressed_title(stage: Stage, key) -> bool:
 			stage.set_stage(StageOption.CREDITS)
 		elif stage.player.pos.y == TitleOption.EXIT.value:
 			return False
+		play_sound_effect("button_press")
 	stage.player.pos.y %= 4
-	# play_sound_effect("move")
+	
 	return True
 
 def pressed_setting(stage: Stage, key) -> bool:
@@ -27,8 +30,10 @@ def pressed_setting(stage: Stage, key) -> bool:
 	if stage.player.pos.x == 0:
 		if key in {pygame.K_w, pygame.K_UP}:
 			stage.player.pos.y -= 1
+			play_sound_effect("button_switch")
 		elif key in {pygame.K_s, pygame.K_DOWN}:
 			stage.player.pos.y += 1
+			play_sound_effect("button_switch")
 		elif key in {pygame.K_RETURN}:
 			if stage.player.pos.y == SettingOption.SKIN.value:
 				stage.player.pos.x = 1
@@ -38,34 +43,49 @@ def pressed_setting(stage: Stage, key) -> bool:
 				stage.player.pos.x = 0
 				stage.player.pos.y = 1
 				stage.set_stage(StageOption.TITLE)
+			play_sound_effect("button_press")
 	elif stage.player.pos.x == 1:
 		if stage.player.pos.y == SettingOption.SKIN.value:
 			if key in {pygame.K_w, pygame.K_UP}:
 				globals.color_index += 1
 				globals.color_index %= len(globals.color)
+				play_sound_effect("button_switch")
 			elif key in {pygame.K_s, pygame.K_DOWN}:
 				globals.color_index -= 1
 				globals.color_index %= len(globals.color)
+				play_sound_effect("button_switch")
 			elif key in {pygame.K_RETURN}:
 				stage.player.pos.x = 0
-			print(f"color_index = {globals.color_index}")
+				play_sound_effect("button_press")
+			# print(f"color_index = {globals.color_index}")
 		elif stage.player.pos.y == SettingOption.SOUND.value:
 			if key in {pygame.K_w, pygame.K_UP}:
-				globals.music_volume += 1 if globals.music_volume < 100 else 0
+				if globals.music_volume < 100:
+					globals.music_volume += 1
+					play_sound_effect("button_switch")
+				else:
+					globals.music_volume = 100
 			elif key in {pygame.K_s, pygame.K_DOWN}:
-				globals.music_volume -= 1 if globals.music_volume > 0 else 0
+				if globals.music_volume > 0:
+					globals.music_volume -= 1
+					play_sound_effect("button_switch")
+				else:
+					globals.music_volume = 0
 			elif key in {pygame.K_d, pygame.K_RIGHT}:
 				if globals.music_volume < 96:
 					globals.music_volume += 5
+					play_sound_effect("button_switch")
 				else:
 					globals.music_volume = 100
 			elif key in {pygame.K_a, pygame.K_LEFT}:
 				if globals.music_volume > 4:
 					globals.music_volume -= 5
+					play_sound_effect("button_switch")
 				else:
 					globals.music_volume = 0
 			elif key in {pygame.K_RETURN}:
 				stage.player.pos.x = 0
+				play_sound_effect("button_press")
 			globals.sound_volume = globals.music_volume
 			change_music_volume(globals.music_volume)
 	print(f"x,y = {stage.player.pos.x,stage.player.pos.y}, volume = {globals.music_volume}")

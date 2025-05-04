@@ -6,6 +6,7 @@ from skill import AttackType
 import random
 import os
 from typing import TYPE_CHECKING
+from music import play_sound_effect
 if TYPE_CHECKING:
 	from entity import Entity
 # Player(x, y, width, height)
@@ -34,6 +35,7 @@ class Player(pygame.sprite.Sprite):
 		attackdata: set[tuple[Vector2, int]] = set()
 		MAX_X=5
 		MAX_Y=3
+		KILLED = False
 		# if entity.hp <= 0:
 		# 	return
 		for skill in self.skills:
@@ -87,5 +89,9 @@ class Player(pygame.sprite.Sprite):
 					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
 				if entity.hp <= 0:
 					self.killed += 1
+					KILLED = True
 					self.money += entity.value
-			
+		if KILLED:
+			play_sound_effect("enemy_dead")
+		else:
+			play_sound_effect("move")
