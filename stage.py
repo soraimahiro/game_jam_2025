@@ -66,12 +66,12 @@ class Stage:
 					self.level += 1
 					self.round_pass = 0
 					self.boss_wait = 25 + self.level * 25
-					self.enemy_wait = 8 - self.level
+					self.enemy_wait = max(8 - self.level, 2)
 					self.new_enemy_count = 2 + self.level // 2
+					self.entities.clear()
 					self.set_stage(StageOption.BATTLE)
 					if self.level == 5:
 						self.set_stage(StageOption.END)
-				self.entities.remove(entity)
 			if entity.type == Entity.T_SHOP:
 				entity.hp -= 5
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos):
