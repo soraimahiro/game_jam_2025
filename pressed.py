@@ -194,11 +194,13 @@ def pressed_battle_story(stage: Stage, key) -> bool:
 		stage.story_count += 1
 		if stage.story_count >= 3:
 			stage.set_stage(StageOption.BATTLE)
+		play_sound_effect("button_press")
 	return True
 
 def pressed_boss_story(stage: Stage, key) -> bool:
 	if key == pygame.K_RETURN:	
 		stage.set_stage(StageOption.BOSS)
+		play_sound_effect("button_press")
 	return True
 
 def pressed_shop(stage: Stage, key: int) -> bool:
