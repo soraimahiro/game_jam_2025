@@ -95,7 +95,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	player_pos=(stage.player.pos.x,stage.player.pos.y)
 
 	# player_pos=(0, 0) 
-	font = globals.font(size = 18)
+	font = globals.font(size = 30)
 	if player_pos != (0, SettingOption.SKIN.value):
 		skin_color_icon = globals.icon(skin_color_path_0, (icon_size,icon_size))
 	else:
@@ -130,7 +130,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	screen.blit(skin_shadow_icon, (shadow_bg_pos[0]+10,shadow_bg_pos[1]+10))
 	# player_pos=(1, 1)
 	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if player_pos!=(1,1)  else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.6, screen.get_height() * 0.7))
+	screen.blit(text, (screen.get_width() * 0.55, screen.get_height() * 0.65))
 	
 def draw_credit(screen: pygame.Surface):
 	page = globals.icon("./resource/image/image_page_credits.png", globals.screen_size)
