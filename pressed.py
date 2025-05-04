@@ -42,7 +42,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 			elif stage.player.pos.y == SettingOption.EXIT.value:
 				stage.player.pos.x = 0
 				stage.player.pos.y = 1
-				stage.set_stage(StageOption.TITLE)
+				stage.set_stage(stage.previous_stage)
 			play_sound_effect("button_press")
 	elif stage.player.pos.x == 1:
 		if stage.player.pos.y == SettingOption.SKIN.value:
@@ -93,7 +93,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 	if key == pygame.K_ESCAPE:
 		stage.player.pos.x = 0
 		stage.player.pos.y = 1
-		stage.set_stage(StageOption.TITLE)
+		stage.set_stage(stage.previous_stage)
 	
 	return True
 
@@ -104,6 +104,7 @@ def pressed_credit(stage: Stage, key) -> bool:
 
 def pressed_battle(stage: Stage, key) -> bool:
 	if key == pygame.K_ESCAPE:
+		play_sound_effect("button_switch")
 		stage.esc_menu.show = True
 	elif key in {pygame.K_w, pygame.K_UP}:
 		if stage.player.pos.y > -3:
@@ -141,6 +142,7 @@ def pressed_battle(stage: Stage, key) -> bool:
 
 def pressed_boss(stage: Stage, key) -> bool:
 	if key == pygame.K_ESCAPE:
+		play_sound_effect("button_switch")
 		stage.esc_menu.show = True
 	elif key in {pygame.K_w, pygame.K_UP}:
 		if stage.player.pos.y > -3:
@@ -168,16 +170,23 @@ def pressed_end(stage: Stage, key) -> bool:
 def pressed_esc_menu(stage: Stage, key):
 	if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
 		stage.esc_menu.option -= 1
+		play_sound_effect("button_switch")
 	elif key in {pygame.K_s, pygame.K_DOWN, pygame.K_d, pygame.K_RIGHT}:
 		stage.esc_menu.option += 1
+		play_sound_effect("button_switch")
 	elif key == pygame.K_ESCAPE:
+		play_sound_effect("button_switch")
 		stage.esc_menu.show = False
 	elif key == pygame.K_RETURN:
+		play_sound_effect("button_switch")
 		if stage.esc_menu.option == 0:
 			stage.esc_menu.show = False
 		elif stage.esc_menu.option == 1:
+			stage.set_stage(StageOption.SETTING)
+			stage.esc_menu.show = False
+		elif stage.esc_menu.option == 2:
 			stage.reset()
-	stage.esc_menu.option %= 2
+	stage.esc_menu.option %= 3
 	return True
 
 def pressed_battle_story(stage: Stage, key) -> bool:

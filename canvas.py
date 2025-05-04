@@ -214,9 +214,11 @@ def draw_esc_menu(stage: Stage, screen: pygame.Surface):
 	pygame.draw.rect(screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
 	font = globals.font(size = 16)
 	text = font.render("Continue", 0, (255, 127, 0) if stage.esc_menu.option == 0 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() / 2 - 50))
-	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() / 2 + 10))	
+	screen.blit(text, (rect_x + 50, screen.get_height() / 2 - 100))
+	text = font.render("setting", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)
+	screen.blit(text, (rect_x + 50, screen.get_height() / 2 - text.get_height() / 3))	
+	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 2 else (0, 0, 0), None)
+	screen.blit(text, (rect_x + 50, screen.get_height() / 2 + 50 + text.get_height() / 3))	
 
 def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 	rect = pygame.Rect(screen.get_width() // 7, screen.get_height() // 7, screen.get_width() * 5 // 7, screen.get_height() * 5 // 7)
