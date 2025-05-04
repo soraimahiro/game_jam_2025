@@ -15,6 +15,7 @@ class StageOption(Enum):
 	CREDITS = auto()
 	BATTLE_STORY = auto()
 	BATTLE = auto()
+	BOSS_STORY = auto()
 	BOSS = auto()
 	SHOP = auto()
 	END = auto()
@@ -85,7 +86,7 @@ class Stage:
 		self.round_pass += 1
 		if self.stage != StageOption.END and self.round_pass >= self.boss_wait:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
-				self.set_stage(StageOption.BOSS)
+				self.set_stage(StageOption.BOSS_STORY)
 				self.entities.append(Entity.random_boss())
 				self.enemy_wait = self.enemy_wait * 3 // 2
 		if self.round_pass % self.enemy_wait == 0:
@@ -118,4 +119,5 @@ class Stage:
 		self.boss_wait = 50
 		self.esc_menu = Esc_menu()
 		self.shop_info = Shop(self.player)
+		self.story_count = 0
 		play_background_music(self)

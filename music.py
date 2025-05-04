@@ -7,9 +7,9 @@ def play_background_music(stage):
 		bgm_file = "bgm_menu_DustyRoadMagic.mp3"
 	elif stage.stage == StageOption.SETTING:
 		bgm_file = "bgm_menu_LastCappuccinoInRio.mp3"
-	elif stage.stage == StageOption.BATTLE:
+	elif stage.stage == StageOption.BATTLE or stage.stage == StageOption.BATTLE_STORY:
 		bgm_file = "bgm_mob_Matterhorn.mp3"
-	elif stage.stage == StageOption.BOSS:
+	elif stage.stage == StageOption.BOSS or stage.stage == StageOption.BOSS_STORY:
 		bgm_file = "bgm_boss_Future.mp3"
 	elif stage.stage == StageOption.END:
 		bgm_file = "bgm_menu_TreasureHunt.mp3"

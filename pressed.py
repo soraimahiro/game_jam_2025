@@ -13,7 +13,7 @@ def pressed_title(stage: Stage, key) -> bool:
 		play_sound_effect("button_switch")
 	elif key == pygame.K_RETURN:
 		if stage.player.pos.y == TitleOption.START.value:
-			stage.set_stage(StageOption.BATTLE)
+			stage.set_stage(StageOption.BATTLE_STORY)
 		elif stage.player.pos.y == TitleOption.SETTING.value:
 			stage.set_stage(StageOption.SETTING)
 		elif stage.player.pos.y == TitleOption.CREDIT.value:
@@ -200,9 +200,16 @@ def pressed_esc_menu(stage: Stage, key):
 	stage.esc_menu.option %= 2
 	return True
 
-def pressed_story(stage: Stage, key) -> bool:
+def pressed_battle_story(stage: Stage, key) -> bool:
 	if key == pygame.K_RETURN:
-		stage.set_stage(StageOption.BATTLE)
+		stage.story_count += 1
+		if stage.story_count >= 3:
+			stage.set_stage(StageOption.BATTLE)
+	return True
+
+def pressed_boss_story(stage: Stage, key) -> bool:
+	if key == pygame.K_RETURN:	
+		stage.set_stage(StageOption.BOSS)
 	return True
 
 def pressed_shop(stage: Stage, key: int) -> bool:
@@ -242,9 +249,11 @@ def pressed(stage: Stage, key) -> bool:
 	elif stage.stage == StageOption.CREDITS:
 		return pressed_credit(stage, key)
 	elif stage.stage == StageOption.BATTLE_STORY:
-		return pressed_story(stage, key)
+		return pressed_battle_story(stage, key)
 	elif stage.stage == StageOption.BATTLE:
 		return pressed_battle(stage, key)
+	elif stage.stage == StageOption.BOSS_STORY:
+		return pressed_boss_story(stage, key)
 	elif stage.stage == StageOption.BOSS:
 		return pressed_boss(stage, key)
 	elif stage.stage == StageOption.SHOP:
