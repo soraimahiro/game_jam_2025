@@ -1,5 +1,6 @@
 import pygame
 import pygame.image
+from os.path import exists
 
 def init():
 	global step_moved
@@ -42,7 +43,7 @@ def init():
 	music_file_path = "./resource/bgm/"
 	global sound_file_path
 	sound_file_path = "./resource/sound/"
-	
+
 def get_player_img():
 	return f"type_simple/image_character_{color[color_index]}"
 
@@ -69,6 +70,10 @@ def icon(img: str, size: tuple[int, int] = None):
 	for icon in icon_set:
 		if icon[0] == img and icon[1] == size:
 			return icon[2].copy()
-	new = pygame.transform.scale(pygame.image.load(img), size).convert_alpha()
+	if exists(img):
+		new = pygame.transform.scale(pygame.image.load(img), size).convert_alpha()
+	else:
+		print(f"{img} not exists")
+		new = pygame.transform.scale(pygame.image.load("./resource/image/error.png"), size).convert_alpha()
 	icon_set.add((img, size, new))
 	return new.copy()
