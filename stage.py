@@ -70,7 +70,7 @@ class Stage:
 					self.new_enemy_count = 2 + self.level // 2
 					self.entities.clear()
 					for shadow in self.shadows:
-						if shadow.pos == self.player.pos:
+						if shadow.pos.y == self.player.pos.y:
 							shadow.pos = self.player.pos.copy()
 					self.set_stage(StageOption.BATTLE_STORY)
 					if self.level == 5:
