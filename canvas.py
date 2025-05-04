@@ -8,7 +8,7 @@ import globals
 import os
 
 def draw_unit(screen: pygame.Surface, entity: Player | Entity):
-	HP_MAX = 18
+	HP_MAX = 50
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
