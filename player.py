@@ -83,9 +83,9 @@ class Player(pygame.sprite.Sprite):
 					continue
 				if entity.pos == attack[0]:
 					entity.hp -= attack[1]
-					skill.hit_enemy(entity.pos, pygame.time.get_ticks(), 1)
+					skill.hit_enemy(entity.pos, pygame.time.get_ticks(), 1,attack[2])
 				else:
-					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
+					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0,attack[2])
 				if entity.hp <= 0:
 					self.killed += 1
 					KILLED = True
