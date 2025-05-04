@@ -106,7 +106,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	
 	# player_pos=(0, 1)
 	# text = font.render("Sound", 0, (0, 0, 0) if player_pos !=(0, SettingOption.SOUND.value) else (255, 127, 0), None)
-	sound_pos = (screen.get_width() * 0.2, screen.get_height() * 0.5)
+	sound_pos = (screen.get_width() * 0.2, screen.get_height() * 0.60)
 	if player_pos != (0, SettingOption.SOUND.value):
 		sound_icon = globals.icon(sound_icon_path_0, (icon_size,icon_size))
 	else:
@@ -130,7 +130,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	screen.blit(skin_shadow_icon, (shadow_bg_pos[0]+10,shadow_bg_pos[1]+10))
 	# player_pos=(1, 1)
 	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if player_pos!=(1,1)  else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.55, screen.get_height() * 0.5))
+	screen.blit(text, (screen.get_width() * 0.6, screen.get_height() * 0.7))
 	
 def draw_credit(screen: pygame.Surface):
 	page = globals.icon("./resource/image/image_page_credits.png", globals.screen_size)
@@ -183,8 +183,6 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 			pos= Vector2(i, j)
 			position = center + pos * delta - shift
 			screen.blit(road_icon, position.to_tuple())
-	# Draw player
-	draw_unit(screen, stage.player)
 	# Draw entities
 	for entity in stage.entities:
 		draw_unit(screen, entity)
@@ -195,6 +193,9 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 		skill.update(pygame.time.get_ticks())
 	# Draw upper bar
 	draw_bar(stage, screen)
+	# Draw player
+	draw_unit(screen, stage.player)
+	
 
 def draw_win(screen: pygame.Surface):
 	page = globals.icon("./resource/image/image_page_win.png", globals.screen_size)

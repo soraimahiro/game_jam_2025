@@ -26,7 +26,7 @@ def pressed_title(stage: Stage, key) -> bool:
 	return True
 
 def pressed_setting(stage: Stage, key) -> bool:
-	print(f"x,y = {stage.player.pos.x,stage.player.pos.y}")
+	#print(f"x,y = {stage.player.pos.x,stage.player.pos.y}")
 	if stage.player.pos.x == 0:
 		if key in {pygame.K_w, pygame.K_UP}:
 			stage.player.pos.y -= 1
@@ -88,7 +88,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 				play_sound_effect("button_press")
 			globals.sound_volume = globals.music_volume
 			change_music_volume(globals.music_volume)
-	print(f"x,y = {stage.player.pos.x,stage.player.pos.y}, volume = {globals.music_volume}")
+	#print(f"x,y = {stage.player.pos.x,stage.player.pos.y}, volume = {globals.music_volume}")
 	stage.player.pos.y %= 3
 	if key == pygame.K_ESCAPE:
 		stage.player.pos.x = 0
