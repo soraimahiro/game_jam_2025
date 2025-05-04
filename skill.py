@@ -47,3 +47,4 @@ class Hit:
 			entity.img_alpha = 10
 			pass
 		return Hit(entity, Hit.HIT_DURATION, start_time)
+	

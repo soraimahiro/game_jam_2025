@@ -101,16 +101,9 @@ class Entity(pygame.sprite.Sprite):
 	
 	@ classmethod
 	def random_enemy(self, boss: bool, lvl: int = 0):
-		acc = 0
-		weight: list[int] = []
-		for enemy in ENEMIES:
-			difficulty = (enemy.damage * 3 + enemy.hp) * enemy.wait_time // (enemy.wait_time + 1)
-			if enemy.type == Entity.T_BOSS: ...
-			else:
-				tmp = 5 - abs(difficulty - lvl * 3)
-				acc += 0 if tmp < 0 else tmp
-			weight.append(acc)
-		choice: Entity = random.choices(ENEMIES, cum_weights= weight, k= 1)[0].copy()
+		if lvl not in range(1, 5):
+			return ENEMIES[1][0].copy()
+		choice: Entity = ENEMIES[lvl][0].copy()
 		#print(choice.img)
 		if boss and random.choice((True, False)) and (choice.direction == 0 or (choice.direction | 0b1100) != 0):
 			rx = random.randint(-5, 5)
@@ -130,21 +123,9 @@ class Entity(pygame.sprite.Sprite):
 	
 	@ classmethod
 	def random_boss(self, lvl: int = 0):
-		weight: list[int] = []
-		for enemy in ENEMIES:
-			difficulty = (enemy.damage * 3 + enemy.hp) * enemy.wait_time // (enemy.wait_time + 1)
-			if enemy.type == Entity.T_SHOP:
-				weight.append(0)
-			else:
-				tmp = 25 - abs(difficulty - lvl * 10)
-				if enemy.damage >= 3:
-					tmp += enemy.damage // 2
-				if enemy.hp >= 10:
-					tmp += enemy.hp // 5
-				else:
-					tmp = 0
-				weight.append(max(tmp, 0))
-		choice: Entity = random.choices(ENEMIES, weights= weight, k= 1)[0].copy()
+		if lvl not in range(1, 5):
+			return ENEMIES[1][1].copy()
+		choice: Entity = ENEMIES[lvl][0].copy()
 		#print(choice.img)
 		if random.choice((True, False)):
 			rx = random.randint(-5, 5)
@@ -166,10 +147,21 @@ class Entity(pygame.sprite.Sprite):
 	def shadow(self, pos: Vector2):
 		return Entity(globals.shadow_img, Entity.T_SHADOW, 100000, 0, pos, Vector2(0, 0))
 
-ENEMIES = [
-	Entity("type_simple/image_mob_move",	Entity.T_MONSTER,	2,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	2,	0b0011),
-	Entity("type_simple/image_boss_move",	Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111),
-	Entity("type_jam/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	1,	0b0011),
-	Entity("type_jam/image_boss_move",		Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011),
-	Entity("element/element",				Entity.T_MONSTER,	3,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	2,	0b1111)
-]
+ENEMIES = {
+	1: (
+		Entity("type_jam/image_mob_move",			Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	2,	0b0011),
+		Entity("type_jam/image_boss_move",			Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011)
+	),
+	2: (
+		Entity("type_simple/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	1,	0b1111),
+		Entity("type_simple/image_boss_move",		Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111)
+	),
+	3: (
+		Entity("element/element",					Entity.T_MONSTER,	2,	1,	Vector2(0, 0),	Vector2(1, 0),	3,	2,	0b1111),
+		Entity("element/boss",						Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(2, 2),	10,	2,	0b1111)
+	),
+	4: (
+		Entity("monsters/image_monster2_mob_move",	Entity.T_BOSS,		2,	1,	Vector2(0, 0),	Vector2(1, 0),	4,	1,	0b0011),
+		Entity("monsters/image_monster2_boss_move",	Entity.T_BOSS,		10,	3,	Vector2(0, 0),	Vector2(2, 1),	10,	2,	0b0011)
+	)
+}
