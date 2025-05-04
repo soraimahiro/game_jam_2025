@@ -95,7 +95,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	player_pos=(stage.player.pos.x,stage.player.pos.y)
 
 	# player_pos=(0, 0) 
-	font = globals.font(size = 18)
+	font = globals.font(size = 30)
 	if player_pos != (0, SettingOption.SKIN.value):
 		skin_color_icon = globals.icon(skin_color_path_0, (icon_size,icon_size))
 	else:
@@ -130,7 +130,7 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	screen.blit(skin_shadow_icon, (shadow_bg_pos[0]+10,shadow_bg_pos[1]+10))
 	# player_pos=(1, 1)
 	text = font.render(f"{globals.music_volume}%", 0, (0, 0, 0) if player_pos!=(1,1)  else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.6, screen.get_height() * 0.7))
+	screen.blit(text, (screen.get_width() * 0.55, screen.get_height() * 0.65))
 	
 def draw_credit(screen: pygame.Surface):
 	page = globals.icon("./resource/image/image_page_credits.png", globals.screen_size)
@@ -206,17 +206,30 @@ def draw_lose(screen: pygame.Surface):
 	screen.blit(page, globals.screen_pos)
 
 def draw_esc_menu(stage: Stage, screen: pygame.Surface):
-	rect_width, rect_height = 400, 300
-	rect_x = (screen.get_width() - rect_width) // 2
-	rect_y = (screen.get_height() - rect_height) // 2
-	pygame.draw.rect(screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
-	font = globals.font(size = 16)
-	text = font.render("Continue", 0, (255, 127, 0) if stage.esc_menu.option == 0 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() / 2 - 100))
-	text = font.render("setting", 0, (255, 127, 0) if stage.esc_menu.option == 1 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() / 2 - text.get_height() / 3))	
-	text = font.render("Back to Title", 0, (255, 127, 0) if stage.esc_menu.option == 2 else (0, 0, 0), None)
-	screen.blit(text, (rect_x + 50, screen.get_height() / 2 + 50 + text.get_height() / 3))	
+	rect_x = (screen.get_width() - 400) // 2
+	rect_y = (screen.get_height() - 300) // 2
+	background = globals.icon("./resource/image/esc_menu/image_esc_beckground.png", (400, 300))
+	screen.blit(background, (rect_x, rect_y))
+	button_path    = "./resource/image/esc_menu/"
+	button_continue = os.path.join(button_path, "image_esc_continue_0.png")
+	button_settings = os.path.join(button_path, "image_esc_settings_0.png")
+	button_back     = os.path.join(button_path, "image_esc_back_0.png")
+	if stage.esc_menu.option == 0:
+		button_continue = os.path.join(button_path, "image_esc_continue_1.png")
+	if stage.esc_menu.option == 1:
+		button_settings = os.path.join(button_path, "image_esc_settings_1.png")
+	if stage.esc_menu.option == 2:
+		button_back = os.path.join(button_path, "image_esc_back_1.png")
+
+	button_size_x = 210;
+	button_size_y = 70;
+	button = globals.icon(button_continue, (button_size_x, button_size_y))
+	screen.blit(button, ((screen.get_width() - button_size_x) / 2, rect_y + 22.5 ))
+	button = globals.icon(button_settings, (button_size_x, button_size_y))
+	screen.blit(button, ((screen.get_width() - button_size_x) / 2, rect_y + button_size_y + 22.5 * 2 ))
+	button = globals.icon(button_back, (button_size_x, button_size_y))
+	screen.blit(button, ((screen.get_width() - button_size_x) / 2, rect_y + button_size_y * 2 + 22.5 * 3 ))
+
 
 def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 	rect = pygame.Rect(screen.get_width() // 7, screen.get_height() // 7, screen.get_width() * 5 // 7, screen.get_height() * 5 // 7)

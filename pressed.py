@@ -39,10 +39,6 @@ def pressed_setting(stage: Stage, key) -> bool:
 				stage.player.pos.x = 1
 			elif stage.player.pos.y == SettingOption.SOUND.value:
 				stage.player.pos.x = 1
-			elif stage.player.pos.y == SettingOption.EXIT.value:
-				stage.player.pos.x = 0
-				stage.player.pos.y = 1
-				stage.set_stage(stage.previous_stage)
 			play_sound_effect("button_press")
 	elif stage.player.pos.x == 1:
 		if stage.player.pos.y == SettingOption.SKIN.value:
@@ -89,7 +85,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 			globals.sound_volume = globals.music_volume
 			change_music_volume(globals.music_volume)
 	#print(f"x,y = {stage.player.pos.x,stage.player.pos.y}, volume = {globals.music_volume}")
-	stage.player.pos.y %= 3
+	stage.player.pos.y %= 2
 	if key == pygame.K_ESCAPE:
 		stage.player.pos.x = 0
 		stage.player.pos.y = 1
