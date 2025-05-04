@@ -185,7 +185,9 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 			screen.blit(road_icon, position.to_tuple())
 	# Draw entities
 	for entity in stage.entities:
-		draw_unit(screen, entity)
+		if entity.type in {Entity.T_BOSS, Entity.T_MONSTER} and entity.hp <= 0: ...
+		else:
+			draw_unit(screen, entity)
 	# Draw hits
 	for skill in stage.player.skills:
 		for hit in skill.hits:

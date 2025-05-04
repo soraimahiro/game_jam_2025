@@ -161,7 +161,7 @@ ENEMIES = {
 		Entity("element/boss",						Entity.T_BOSS,		50,		2,	Vector2(0, 0),	Vector2(2, 1),	20,	2,	0b1111)
 	),
 	4: (
-		Entity("monsters/image_monster2_mob_move",	Entity.T_BOSS,		7, 		1,	Vector2(0, 0),	Vector2(1, 0),	5,	1,	0b0011),
+		Entity("monsters/image_monster2_mob_move",	Entity.T_MONSTER,	7, 		1,	Vector2(0, 0),	Vector2(1, 0),	5,	1,	0b0011),
 		Entity("monsters/image_monster2_boss_move",	Entity.T_BOSS,		125,	3,	Vector2(0, 0),	Vector2(3, 0),	35,	3,	0b0011)
 	)
 }

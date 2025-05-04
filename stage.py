@@ -70,6 +70,8 @@ class Stage:
 					self.set_stage(StageOption.BATTLE)
 					if self.level == 5:
 						self.set_stage(StageOption.END)
+				else:	
+					self.entities.remove(entity)
 			if entity.type == Entity.T_SHOP:
 				entity.hp -= 5
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos):
