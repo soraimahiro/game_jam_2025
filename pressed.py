@@ -3,6 +3,7 @@ from stage import Stage, StageOption, TitleOption, SettingOption
 from music import change_music_volume, play_sound_effect
 import globals
 from skill import Skill
+from vector2 import Vector2
 
 def pressed_title(stage: Stage, key) -> bool:
 	if key in {pygame.K_w, pygame.K_UP, pygame.K_a, pygame.K_LEFT}:
@@ -107,7 +108,7 @@ def pressed_battle(stage: Stage, key) -> bool:
 		stage.esc_menu.show = True
 	elif key in {pygame.K_w, pygame.K_UP}:
 		if stage.player.pos.y > -3:
-			stage.player.pos.y -= 1
+			stage.player.move(Vector2(0, -1))
 			for shadow in stage.shadows:
 				if stage.player.pos.y == shadow.pos.y:
 					stage.player.pos.x = shadow.pos.x
@@ -117,7 +118,7 @@ def pressed_battle(stage: Stage, key) -> bool:
 			stage.next_round()
 	elif key in {pygame.K_s, pygame.K_DOWN}:
 		if stage.player.pos.y < 3:
-			stage.player.pos.y += 1
+			stage.player.move(Vector2(0, 1))
 			for shadow in stage.shadows:
 				if stage.player.pos.y == shadow.pos.y:
 					stage.player.pos.x = shadow.pos.x
@@ -127,14 +128,14 @@ def pressed_battle(stage: Stage, key) -> bool:
 			stage.next_round()
 	elif key in {pygame.K_a, pygame.K_LEFT}:
 		if (stage.player.pos.x > -5):
-			stage.player.pos.x -= 1
+			stage.player.move(Vector2(-1, 0))
 			for shadow in stage.shadows:
 				if shadow.pos.y == stage.player.pos.y:
 					shadow.pos.x = stage.player.pos.x
 			stage.next_round()
 	elif key in {pygame.K_d, pygame.K_RIGHT}:
 		if (stage.player.pos.x < 5):
-			stage.player.pos.x += 1
+			stage.player.move(Vector2(1, 0))
 			for shadow in stage.shadows:
 				if shadow.pos.y == stage.player.pos.y:
 					shadow.pos.x = stage.player.pos.x
@@ -147,19 +148,19 @@ def pressed_boss(stage: Stage, key) -> bool:
 		stage.esc_menu.show = True
 	elif key in {pygame.K_w, pygame.K_UP}:
 		if stage.player.pos.y > -3:
-			stage.player.pos.y -= 1
+			stage.player.move(Vector2(0, -1))
 			stage.next_round()
 	elif key in {pygame.K_s, pygame.K_DOWN}:
 		if stage.player.pos.y < 3:
-			stage.player.pos.y += 1
+			stage.player.move(Vector2(0, 1))
 			stage.next_round()
 	elif key in {pygame.K_a, pygame.K_LEFT}:
 		if (stage.player.pos.x > -5):
-			stage.player.pos.x -= 1
+			stage.player.move(Vector2(-1, 0))
 			stage.next_round()
 	elif key in {pygame.K_d, pygame.K_RIGHT}:
 		if (stage.player.pos.x < 5):
-			stage.player.pos.x += 1
+			stage.player.move(Vector2(1, 0))
 			stage.next_round()
 	return True
 
