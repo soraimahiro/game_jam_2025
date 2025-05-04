@@ -35,8 +35,8 @@ class Skill:
 		if self.attacktype == AttackType.POINT:
 			return 3 + 3 * self.level
 		return 65535
-	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int):
-		self.hits.append(Hit.hit(pos, start_time, is_hit))
+	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int, attacktype : AttackType):
+		self.hits.append(Hit.hit(pos, start_time, is_hit, attacktype))
 	def update(self, current_time : int):
 		for hit in self.hits:
 			if (current_time - hit.start_time >= hit.duration):
@@ -50,8 +50,20 @@ class Hit:
 		self.start_time = start_time
 
 	@ classmethod
-	def hit(self, pos : Vector2, start_time : int, is_hit : int):
-		entity = Entity("type_simple/image_hit", Entity.T_HIT, 1, 0, pos, Vector2(0, 0))
+	def hit(self, pos : Vector2, start_time : int, is_hit : int, attacktype : AttackType):
+		file_path = "type_simple/image_hit"
+		if attacktype == AttackType.POINT:
+			file_path = "type_simple/image_hit_dot"
+		elif attacktype == AttackType.LINE_X:
+			file_path = "type_simple/image_hit_line"
+		elif attacktype == AttackType.LINE_Y:
+			file_path = "type_simple/image_hit_line"
+		elif attacktype == AttackType.LINE_XY:
+			file_path = "type_simple/image_hit_line"
+		elif attacktype == AttackType.AREA:
+			file_path = "type_simple/image_hit_area"
+		
+		entity = Entity(file_path, Entity.T_HIT, 1, 0, pos, Vector2(0, 0))
 		if is_hit == 1:
 			#透明度設為255
 			entity.img_alpha = 255

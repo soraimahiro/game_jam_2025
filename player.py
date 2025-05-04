@@ -76,16 +76,16 @@ class Player(pygame.sprite.Sprite):
 					for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
 						if y < -MAX_Y or y > MAX_Y:
 							continue
-						attackdata.append((Vector2(x, y), skill.damage))
+						attackdata.append((Vector2(x, y), skill.damage,AttackType.AREA))
 		for attack in attackdata:
 			for entity in entities:
 				if entity.hp <= 0:
 					continue
 				if entity.pos == attack[0]:
 					entity.hp -= attack[1]
-					skill.hit_enemy(entity.pos, pygame.time.get_ticks(), 1)
+					skill.hit_enemy(entity.pos, pygame.time.get_ticks(), 1,attack[2])
 				else:
-					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0)
+					skill.hit_enemy(attack[0], pygame.time.get_ticks(),0,attack[2])
 				if entity.hp <= 0:
 					self.killed += 1
 					KILLED = True
