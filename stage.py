@@ -69,10 +69,11 @@ class Stage:
 			if entity.type == Entity.T_SHOP:
 				entity.hp -= 5
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos):
-				self.player.hp -= entity.damage
-				if entity.damage > 0:
+				if entity.damage > 0 and entity.hp > 0:
+					self.player.hp -= entity.damage
 					play_sound_effect("blood_loss")
 				elif entity.damage < 0:
+					self.player.hp -= entity.damage
 					if entity.type == Entity.T_REGEN:
 						entity.hp = 0
 					play_sound_effect("blood_add")

@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
 					if x < -MAX_X or x > MAX_X:
 						continue
-					attackdata.add((Vector2(x, self.pos.y), skill.damage, AttackType.LINE_X))
+					attackdata.append((Vector2(x, self.pos.y), skill.damage, AttackType.LINE_X))
 			elif skill.attacktype == AttackType.LINE_Y:
 				# y方向；以角色位置為參考點，y方向距離 n 單位內的敵人受傷害 X
 				for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
 					for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
 						if y < -MAX_Y or y > MAX_Y:
 							continue
-						attackdata.add((Vector2(x, y), skill.damage))
+						attackdata.append((Vector2(x, y), skill.damage))
 		for attack in attackdata:
 			for entity in entities:
 				if entity.hp <= 0:
