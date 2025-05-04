@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
 		self.money = 100
 		self.hp = 10
 		self.killed = 0
-		self.skills = [Skill(1, 1, AttackType.LINE_XY)] # 預設為射程3傷害1的十字攻擊
+		self.skills = [Skill(1, 1, AttackType.LINE_X)] # 預設為射程3傷害1的十字攻擊
 		pass
 
 	def icon(self):
