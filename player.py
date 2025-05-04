@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
 		self.money = 100
 		self.hp = 10
 		self.killed = 0
-		self.skills = [Skill(1, 1, AttackType.LINE_X)] # 預設為射程3傷害1的十字攻擊
+		self.skills = [Skill(1, 1, AttackType.LINE_XY)] # 預設為射程3傷害1的十字攻擊
 		pass
 
 	def icon(self):
@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
 	
 	def attack(self, entities: list['Entity']):
 		# for entity in entities:
-		attackdata: set[tuple[Vector2, int]] = set()
+		attackdata: list[tuple[Vector2, int ,int]] =list()
 		MAX_X=5
 		MAX_Y=3
 		KILLED = False
@@ -40,34 +40,33 @@ class Player(pygame.sprite.Sprite):
 		# 	return
 		for skill in self.skills:
 			if skill.attacktype == AttackType.POINT:
-				# 隨機 n 個位置
-				for i in range(skill.level):
-					x = random.randint(-MAX_X, MAX_X)
-					y = random.randint(-MAX_Y, MAX_Y)
-					attackdata.add((Vector2(x, y), skill.damage))
+				# 隨機 n 個位置*3
+				for i in range(3*skill.level):
+					x = random.randint(max(-MAX_X,self.pos.x-(1+skill.level)), min(MAX_X,self.pos.x+(1+skill.level)))
+					y = random.randint(max(-MAX_Y,self.pos.y-(1+skill.level)), min(MAX_Y,self.pos.y+(1+skill.level)))
+					attackdata.append((Vector2(x, y), skill.damage, AttackType.POINT))
 			elif skill.attacktype == AttackType.LINE_X:
 				# x方向；以角色位置為參考點，x方向距離 n 單位內的敵人受傷害 X
 				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
 					if x < -MAX_X or x > MAX_X:
 						continue
-					attackdata.add((Vector2(x, self.pos.y), skill.damage))
+					attackdata.add((Vector2(x, self.pos.y), skill.damage, AttackType.LINE_X))
 			elif skill.attacktype == AttackType.LINE_Y:
 				# y方向；以角色位置為參考點，y方向距離 n 單位內的敵人受傷害 X
 				for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
 					if y < -MAX_Y or y > MAX_Y:
 						continue
-					attackdata.add((Vector2(self.pos.x, y), skill.damage))
+					attackdata.append((Vector2(self.pos.x, y), skill.damage, AttackType.LINE_Y))
 			elif skill.attacktype == AttackType.LINE_XY:
-				# xy方向;以角色位置為參考點，xy方向距離 n 單位內的敵人受傷害 X
-				for x in range(self.pos.x - skill.level, self.pos.x + skill.level + 1):
-					if x < -MAX_X or x > MAX_X:
+				# xy方向;以角色位置為參考點，對角線方向距離 n 單位內的敵人受傷害 X
+				for x,y in zip(range(self.pos.x - skill.level, self.pos.x + skill.level + 1), range(self.pos.y - skill.level, self.pos.y + skill.level + 1)):
+					if x < -MAX_X or x > MAX_X or y < -MAX_Y or y > MAX_Y:
 						continue
-					attackdata.add((Vector2(x, self.pos.y), skill.damage))
-				# print(f"attackdata = {attackdata}")
-				for y in range(self.pos.y - skill.level, self.pos.y + skill.level + 1):
-					if y < -MAX_Y or y > MAX_Y:
+					attackdata.append((Vector2(x, y), skill.damage,AttackType.LINE_XY))
+				for x,y in zip(range(self.pos.x - skill.level, self.pos.x + skill.level + 1), range(self.pos.y + skill.level, self.pos.y - skill.level - 1, -1)):
+					if x < -MAX_X or x > MAX_X or y < -MAX_Y or y > MAX_Y:
 						continue
-					attackdata.add((Vector2(self.pos.x, y), skill.damage))
+					attackdata.append((Vector2(x, y), skill.damage,AttackType.LINE_XY))
 				# print(f"attackdata = {attackdata}")
 			elif skill.attacktype == AttackType.AREA:
 				# 以角色位置為參考點，角色周圍 n 單位皆受傷害 X
