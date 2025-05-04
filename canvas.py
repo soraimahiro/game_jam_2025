@@ -234,7 +234,8 @@ def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 		good_icon = globals.icon(f"./resource/image/shop/image_skill_{the_type}_{1 if stage.shop_info.option == i else 0}.png", (128, 128))
 		cost_icon = globals.icon("./resource/image/type_simple/image_money.png")
 		cost_text = globals.font(size = 16).render(f"{stage.player.skills[no].cost()}", 0, (255, 255, 0))
-		level_icon = globals.icon(f"./resource/image/shop/image_skill_level_{stage.player.skills[no].level}.png")
+		the_level = stage.player.skills[no].level
+		level_icon = globals.icon(f"./resource/image/shop/image_skill_level_{the_level if the_level in range(3) else 'max'}.png")
 		pos = Vector2(screen.get_width() // 2, screen.get_height() // 2) + Vector2(screen.get_width() // 5, 0) * (i - 1)
 		screen.blit(good_icon, (pos - Vector2(good_icon.get_width() // 2, good_icon.get_height() // 2)).to_tuple())
 		screen.blit(cost_icon, (pos - Vector2(0, screen.get_height() // 9) - Vector2(cost_icon.get_width() // 2, cost_icon.get_height() // 2)).to_tuple())
