@@ -107,7 +107,7 @@ class Stage:
 					random.choice([x for x in range(-5, 6) if abs(x - self.player.pos.x) > 2]),
 					random.choice([y for y in range(-3, 4) if abs(y - self.player.pos.y) > 2]))
 				self.entities.append(Entity("shop/image_blood_add_1", Entity.T_REGEN, 100, -1, randpos, Vector2(0, 0), 0, 1, 0))
-		if self.player.money >= 10 and self.player.killed > 5 + self.level * 10 and not Entity.T_SHOP in [e.type for e in self.entities]:
+		if self.player.money >= 10 and self.player.killed > -5 + self.level * 10 and not Entity.T_SHOP in [e.type for e in self.entities]:
 			if random.randint(0, 9) < 2:
 				randpos = Vector2(
 					random.choice([x for x in range(-5, 6) if abs(x - self.player.pos.x) > 2]),

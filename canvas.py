@@ -183,8 +183,6 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 			pos= Vector2(i, j)
 			position = center + pos * delta - shift
 			screen.blit(road_icon, position.to_tuple())
-	# Draw player
-	draw_unit(screen, stage.player)
 	# Draw entities
 	for entity in stage.entities:
 		draw_unit(screen, entity)
@@ -195,6 +193,9 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 		skill.update(pygame.time.get_ticks())
 	# Draw upper bar
 	draw_bar(stage, screen)
+	# Draw player
+	draw_unit(screen, stage.player)
+	
 
 def draw_win(screen: pygame.Surface):
 	page = globals.icon("./resource/image/image_page_win.png", globals.screen_size)
