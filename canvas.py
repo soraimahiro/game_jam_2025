@@ -78,32 +78,35 @@ def draw_title(stage: Stage, screen: pygame.Surface):
 	screen.blit(button, button_pos)
 
 def draw_setting(stage: Stage,screen: pygame.Surface):
+	page = globals.icon("./resource/image/image_page_settings.png", globals.screen_size)
+	screen.blit(page, globals.screen_pos)
 	img_source_path = "./resource/image"
 	img_setting_path = os.path.join(img_source_path, "settings")
 	bg_icon_path_0 = os.path.join(img_setting_path, "image_character_box_0.png")
 	bg_icon_path_1 = os.path.join(img_setting_path, "image_character_box_1.png")
 	sound_icon_path_0 = os.path.join(img_setting_path, "image_voice_0.png")
 	sound_icon_path_1 = os.path.join(img_setting_path, "image_voice_1.png")
-	bottom_exit_path_0= os.path.join(img_setting_path, "image_exit_0.png")
-	bottom_exit_path_1= os.path.join(img_setting_path, "image_exit_1.png")
+	skin_color_path_0 = os.path.join(img_setting_path, "image_skincolor_0.png")
+	skin_color_path_1 = os.path.join(img_setting_path, "image_skincolor_1.png")
 
 	icon_size = 150
 	skin_chr_icon = globals.icon(os.path.join(img_source_path, f"{globals.get_player_img()}.png"), (icon_size-20,icon_size-20))
 	skin_shadow_icon = globals.icon(os.path.join(img_source_path, f"{globals.get_shadow_img()}.png"), (icon_size-20,icon_size-20))
 	player_pos=(stage.player.pos.x,stage.player.pos.y)
-	screen.fill((127, 255, 0))
-	font = globals.font(size = 16)
-	text = font.render("Settings", 0, (0, 0, 0), None)
-	screen.blit(text, (screen.get_width() * 0.38, screen.get_height() * 0))
 
 	# player_pos=(0, 0) 
 	font = globals.font(size = 18)
-	text = font.render("Skin Color", 0, (0, 0, 0) if player_pos !=(0, SettingOption.SKIN.value) else (255, 127, 0), None)
-	screen.blit(text, (screen.get_width() * 0.1, screen.get_height() * 0.2))
+	if player_pos != (0, SettingOption.SKIN.value):
+		skin_color_icon = globals.icon(skin_color_path_0, (icon_size,icon_size))
+	else:
+		skin_color_icon = globals.icon(skin_color_path_1, (icon_size,icon_size))
+	# text = font.render("Skin Color", 0, (0, 0, 0) if player_pos !=(0, SettingOption.SKIN.value) else (255, 127, 0), None)
+	skin_color_pos = (screen.get_width() * 0.2, screen.get_height() * 0.3+5)
+	screen.blit(skin_color_icon, skin_color_pos)
 	
 	# player_pos=(0, 1)
 	# text = font.render("Sound", 0, (0, 0, 0) if player_pos !=(0, SettingOption.SOUND.value) else (255, 127, 0), None)
-	sound_pos = (screen.get_width() * 0.2, screen.get_height() * 0.4)
+	sound_pos = (screen.get_width() * 0.2, screen.get_height() * 0.5)
 	if player_pos != (0, SettingOption.SOUND.value):
 		sound_icon = globals.icon(sound_icon_path_0, (icon_size,icon_size))
 	else:
@@ -112,15 +115,9 @@ def draw_setting(stage: Stage,screen: pygame.Surface):
 	
 	# player_pos=(0, 2)
 	# text = font.render("Exit", 0, (0, 0, 0) if player_pos != (0,SettingOption.EXIT.value) else (255, 127, 0), None)
-	exit_pos = (screen.get_width() * 0.3, screen.get_height() * 0.7)
-	if player_pos != (0, SettingOption.EXIT.value):
-		exit_icon = globals.icon(bottom_exit_path_0, (icon_size*2,icon_size))
-	else:
-		exit_icon = globals.icon(bottom_exit_path_1, (icon_size*2,icon_size))
-	screen.blit(exit_icon, exit_pos)
 
 	# player_pos=(1, 0)
-	skin_bg_pos = (screen.get_width() * 0.45+5, screen.get_height() * 0.1+5)
+	skin_bg_pos = (screen.get_width() * 0.45+5, screen.get_height() * 0.3+5)
 	shadow_bg_pos = (skin_bg_pos[0]+icon_size+10, skin_bg_pos[1])
 	if player_pos != (1, SettingOption.SKIN.value):
 		skin_bg_icon = globals.icon(bg_icon_path_0, (icon_size,icon_size))
