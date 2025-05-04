@@ -143,7 +143,7 @@ def draw_battle(stage:Stage, screen: pygame.Surface):
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
-	road_icon = globals.icon("./resource/image/type_simple/image_map.png", (15, 15))
+	road_icon = globals.icon("./resource/image/type_simple/image_map_battle.png", (75, 75))
 	delta = min((height - 50) / 8, width / 12)
 	shift = Vector2(road_icon.get_width(), road_icon.get_height()) / 2
 	for i in range(-5, 6):
@@ -175,7 +175,7 @@ def draw_boss(stage: Stage, screen: pygame.Surface):
 	width = screen.get_width()
 	height = screen.get_height()
 	center = Vector2(width, height) / 2
-	road_icon = globals.icon("./resource/image/type_simple/image_map.png", (15, 15))
+	road_icon = globals.icon("./resource/image/type_simple/image_map.png", (75, 75))
 	delta = min((height - 50) / 8, width / 12)
 	shift = Vector2(road_icon.get_width(), road_icon.get_height()) / 2
 	for i in range(-5, 6):
