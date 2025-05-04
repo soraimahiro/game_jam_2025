@@ -67,6 +67,9 @@ class Stage:
 					self.enemy_wait = max(8 - self.level, 2)
 					self.new_enemy_count = 2 + self.level // 2
 					self.entities.clear()
+					for shadow in self.shadows:
+						if shadow.pos == self.player.pos:
+							shadow.pos = self.player.pos.copy()
 					self.set_stage(StageOption.BATTLE)
 					if self.level == 5:
 						self.set_stage(StageOption.END)
