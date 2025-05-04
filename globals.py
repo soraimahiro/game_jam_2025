@@ -38,6 +38,11 @@ def init():
 	music_volume = 50
 	global sound_volume
 	sound_volume = music_volume
+	global music_file_path
+	music_file_path = "./resource/bgm/"
+	global sound_file_path
+	sound_file_path = "./resource/sound/"
+	
 def get_player_img():
 	return f"type_simple/image_character_{color[color_index]}"
 def get_shadow_img():

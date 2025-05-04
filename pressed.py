@@ -1,6 +1,6 @@
 import pygame
 from stage import Stage, StageOption, TitleOption, SettingOption
-from music import change_music_volume
+from music import change_music_volume, play_sound_effect
 import globals
 from skill import Skill
 
@@ -19,6 +19,7 @@ def pressed_title(stage: Stage, key) -> bool:
 		elif stage.player.pos.y == TitleOption.EXIT.value:
 			return False
 	stage.player.pos.y %= 4
+	# play_sound_effect("move")
 	return True
 
 def pressed_setting(stage: Stage, key) -> bool:
@@ -65,6 +66,7 @@ def pressed_setting(stage: Stage, key) -> bool:
 					globals.music_volume = 0
 			elif key in {pygame.K_RETURN}:
 				stage.player.pos.x = 0
+			globals.sound_volume = globals.music_volume
 			change_music_volume(globals.music_volume)
 	print(f"x,y = {stage.player.pos.x,stage.player.pos.y}, volume = {globals.music_volume}")
 	stage.player.pos.y %= 3
