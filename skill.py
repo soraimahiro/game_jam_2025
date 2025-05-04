@@ -22,18 +22,18 @@ class Skill:
 	def cost(self):
 		if self.attacktype == AttackType.AREA:
 			if self.level in {0, 1, 2}:
-				return 15 + 5 * self.level
-			return 50
+				return 15 + 20 * self.level
+			return 100
 		if self.attacktype in {AttackType.LINE_X, AttackType.LINE_Y}:
 			if self.level in {0, 1, 2}:
-				return 5 + 3 * self.level
-			return 15
+				return 5 + 7 * self.level
+			return 25
 		if self.attacktype == AttackType.LINE_XY:
 			if self.level in {0, 1, 2}:
-				return 7 + 4 * self.level
-			return 20
+				return 7 + 10 * self.level
+			return 35
 		if self.attacktype == AttackType.POINT:
-			return 3 + 3 * self.level
+			return 3 + 5 * self.level
 		return 65535
 	def hit_enemy(self, pos : Vector2, start_time : int, is_hit : int, attacktype : AttackType):
 		self.hits.append(Hit.hit(pos, start_time, is_hit, attacktype))
