@@ -149,19 +149,19 @@ class Entity(pygame.sprite.Sprite):
 
 ENEMIES = {
 	1: (
-		Entity("type_jam/image_mob_move",			Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	1,	2,	0b0011),
-		Entity("type_jam/image_boss_move",			Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011)
+		Entity("type_jam/image_mob_move",			Entity.T_MONSTER,	1,		1,	Vector2(0, 0),	Vector2(1, 0),	1,	2,	0b0011),
+		Entity("type_jam/image_boss_move",			Entity.T_BOSS,		10,		2,	Vector2(0, 0),	Vector2(1, 1),	10,	2,	0b0011)
 	),
 	2: (
-		Entity("type_simple/image_mob_move",		Entity.T_MONSTER,	1,	1,	Vector2(0, 0),	Vector2(1, 0),	2,	1,	0b1111),
-		Entity("type_simple/image_boss_move",		Entity.T_MONSTER,	10,	2,	Vector2(0, 0),	Vector2(2, 0),	10,	3,	0b1111)
+		Entity("type_simple/image_mob_move",		Entity.T_MONSTER,	3,		1,	Vector2(0, 0),	Vector2(1, 0),	2,	1,	0b1111),
+		Entity("type_simple/image_boss_move",		Entity.T_MONSTER,	25,		2,	Vector2(0, 0),	Vector2(2, 0),	15,	3,	0b1111)
 	),
 	3: (
-		Entity("element/element",					Entity.T_MONSTER,	2,	1,	Vector2(0, 0),	Vector2(1, 0),	3,	2,	0b1111),
-		Entity("element/boss",						Entity.T_BOSS,		10,	2,	Vector2(0, 0),	Vector2(2, 2),	10,	2,	0b1111)
+		Entity("element/element",					Entity.T_MONSTER,	7,		1,	Vector2(0, 0),	Vector2(1, 0),	4,	2,	0b1111),
+		Entity("element/boss",						Entity.T_BOSS,		50,		2,	Vector2(0, 0),	Vector2(2, 2),	20,	2,	0b1111)
 	),
 	4: (
-		Entity("monsters/image_monster2_mob_move",	Entity.T_BOSS,		2,	1,	Vector2(0, 0),	Vector2(1, 0),	4,	1,	0b0011),
-		Entity("monsters/image_monster2_boss_move",	Entity.T_BOSS,		10,	3,	Vector2(0, 0),	Vector2(2, 1),	10,	2,	0b0011)
+		Entity("monsters/image_monster2_mob_move",	Entity.T_BOSS,		15, 	1,	Vector2(0, 0),	Vector2(1, 0),	8,	1,	0b0011),
+		Entity("monsters/image_monster2_boss_move",	Entity.T_BOSS,		125,	3,	Vector2(0, 0),	Vector2(2, 1),	35,	2,	0b0011)
 	)
 }
