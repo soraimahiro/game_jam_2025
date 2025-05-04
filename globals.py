@@ -57,13 +57,13 @@ def init():
 		0,
 		"./resource/image/story/image_level_2_2.png",
 		0,
-		"./resource/image/story/image_level_3-1.png",
+		"./resource/image/story/image_level_3_1.png",
 		0,
-		"./resource/image/story/image_level_3-2.png",
+		"./resource/image/story/image_level_3_2.png",
 		0,
-		"./resource/image/story/image_level_4-1.png",
+		"./resource/image/story/image_level_4_1.png",
 		0,
-		"./resource/image/story/image_level_4-2.png",
+		"./resource/image/story/image_level_4_2.png",
 		0,
 	]
 
