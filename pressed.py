@@ -61,18 +61,21 @@ def pressed_setting(stage: Stage, key) -> bool:
 					play_sound_effect("button_switch")
 				else:
 					globals.music_volume = 100
+					play_sound_effect("cannot")
 			elif key in {pygame.K_s, pygame.K_DOWN}:
 				if globals.music_volume > 0:
 					globals.music_volume -= 1
 					play_sound_effect("button_switch")
 				else:
 					globals.music_volume = 0
+					play_sound_effect("cannot")
 			elif key in {pygame.K_d, pygame.K_RIGHT}:
 				if globals.music_volume < 96:
 					globals.music_volume += 5
 					play_sound_effect("button_switch")
 				else:
 					globals.music_volume = 100
+					play_sound_effect("cannot")
 			elif key in {pygame.K_a, pygame.K_LEFT}:
 				if globals.music_volume > 4:
 					globals.music_volume -= 5
@@ -221,6 +224,8 @@ def pressed_shop(stage: Stage, key: int) -> bool:
 			stage.player.skills[no].level += 1
 			play_sound_effect("button_press")
 			stage.set_stage(stage.previous_stage)
+		else:
+			play_sound_effect("cannot")
 	elif key == pygame.K_ESCAPE:
 		stage.set_stage(stage.previous_stage)
 	stage.shop_info.option %= 3
