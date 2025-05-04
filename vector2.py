@@ -55,8 +55,6 @@ class Vector2:
 		return Vector2(self.x, self.y)
 	@ classmethod
 	def intercept(self, A: 'Vector2', B: 'Vector2', C: 'Vector2', D: 'Vector2') -> bool:
-		if A == B:
-			return False
 		if B == D:
 			return True
 		AB = B - A
@@ -69,9 +67,9 @@ class Vector2:
 			if a > 0 and b > 0:
 				return True
 			return False
-		if not AB.parallel(AC):
+		if not AB.parallel(AC) and not AB.parallel(AD): # A on CD but B doesn't
 			return False
-		if AC.x * AD.x < 0:
+		if AC * AD < 0: # A between CD and B on CD
 			return True
 		i = AB.get_scale(AC)
 		j = AB.get_scale(AD)
