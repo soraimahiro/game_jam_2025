@@ -67,6 +67,12 @@ class Stage:
 					self.level += 1
 					self.round_pass = 0
 					self.player.killed = 0
+					self.boss_wait = 25 + self.level * 25
+					self.enemy_wait = 8 - self.level
+					self.new_enemy_count = 2 + self.level // 2
+					self.stage = StageOption.BATTLE
+					if self.level == 5:
+						self.stage = StageOption.END
 				self.entities.remove(entity)
 			if entity.type == Entity.T_SHOP:
 				entity.hp -= 5
@@ -92,6 +98,7 @@ class Stage:
 			if not Entity.T_BOSS in [enemy.type for enemy in self.entities]:
 				self.entities.append(Entity.random_boss(self.level))
 				self.enemy_wait = self.enemy_wait * 3 // 2
+				self.stage = StageOption.BOSS
 		if self.round_pass % self.enemy_wait == 0:
 			for i in range(self.new_enemy_count):
 				self.entities.append(Entity.random_enemy(self.stage == StageOption.BOSS, self.level))
