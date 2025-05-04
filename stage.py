@@ -57,7 +57,7 @@ class Stage:
 	def next_round(self):
 		go_shop = False
 		for entity in self.entities:
-			entity.pre_pos = Vector2(entity.pos.x, entity.pos.y)
+			entity.pre_pos = entity.pos.copy()
 			entity.next_step(self.player)
 		self.player.attack(self.entities)
 		for entity in self.entities:
@@ -81,6 +81,7 @@ class Stage:
 				entity.hp -= 5
 			if Vector2.intercept(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos):
 				if entity.damage > 0 and entity.hp > 0:
+					print(self.player.pre_pos, self.player.pos, entity.pre_pos, entity.pos)
 					self.player.hp -= entity.damage
 					play_sound_effect("blood_loss")
 				elif entity.damage < 0:

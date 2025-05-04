@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
 		return globals.icon(f"./resource/image/{globals.get_player_img()}.png")
 	
 	def move(self, move: Vector2):
-		self.pre_pos = Vector2(self.pos.x, self.pos.y)
+		self.pre_pos = self.pos.copy()
 		self.pos += move
 		pass
 	

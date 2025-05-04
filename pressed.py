@@ -112,6 +112,7 @@ def pressed_battle(stage: Stage, key) -> bool:
 				if stage.player.pos.y == shadow.pos.y:
 					stage.player.pos.x = shadow.pos.x
 					stage.player.pos = shadow.pos.copy()
+					stage.player.pre_pos = shadow.pos.copy()
 					break
 			stage.next_round()
 	elif key in {pygame.K_s, pygame.K_DOWN}:
@@ -121,6 +122,7 @@ def pressed_battle(stage: Stage, key) -> bool:
 				if stage.player.pos.y == shadow.pos.y:
 					stage.player.pos.x = shadow.pos.x
 					stage.player.pos = shadow.pos.copy()
+					stage.player.pre_pos = shadow.pos.copy()
 					break
 			stage.next_round()
 	elif key in {pygame.K_a, pygame.K_LEFT}:
