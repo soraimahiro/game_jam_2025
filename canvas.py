@@ -257,19 +257,12 @@ def draw_shop(stage: Stage, screen: pygame.Surface) -> bool:
 		screen.blit(level_icon, (pos + Vector2(0, screen.get_height() // 9) - Vector2(level_icon.get_width() // 2, level_icon.get_height() // 2)).to_tuple())
 	return True
 
-def draw_battle_story(stage, screen: pygame.Surface):
-	if stage.story_count == 0:
-		page = globals.icon("./resource/image/story/image_story_0.png", globals.screen_size)
-		screen.blit(page, globals.screen_pos)
-	elif stage.story_count == 1:
-		page = globals.icon("./resource/image/story/image_story_1_1.png", globals.screen_size)
-		screen.blit(page, globals.screen_pos)
-	elif stage.story_count == 2:
-		page = globals.icon("./resource/image/story/image_story_1_2.png", globals.screen_size)
-		screen.blit(page, globals.screen_pos)
-
-def draw_boss_story(screen: pygame.Surface):
-	page = globals.icon("./resource/image/story/image_story_2.png", globals.screen_size)
+def draw_story(stage: Stage, screen: pygame.Surface):
+	print(f"draw_story: {stage.story_count}")
+	if globals.story_list[stage.story_count] == 0:
+		print("error in draw_story")
+		return
+	page = globals.icon(globals.story_list[stage.story_count], globals.screen_size)
 	screen.blit(page, globals.screen_pos)
 
 def draw(stage: Stage, screen: pygame.Surface):
@@ -279,14 +272,12 @@ def draw(stage: Stage, screen: pygame.Surface):
 		draw_setting(stage,screen)
 	elif stage.stage == StageOption.CREDITS:
 		draw_credit(screen)
-	elif stage.stage == StageOption.BATTLE_STORY:
-		draw_battle_story(stage, screen)
+	elif stage.stage == StageOption.BATTLE_STORY or stage.stage == StageOption.BOSS_STORY:
+		draw_story(stage, screen)
 	elif stage.stage == StageOption.BATTLE:
 		draw_battle(stage, screen)
 	elif stage.stage == StageOption.SHOP:
 		draw_shop(stage, screen)
-	elif stage.stage == StageOption.BOSS_STORY:
-		draw_boss_story(screen)
 	elif stage.stage == StageOption.BOSS:
 		draw_boss(stage, screen)
 	elif stage.stage == StageOption.END:

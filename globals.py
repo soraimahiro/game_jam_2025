@@ -43,6 +43,30 @@ def init():
 	music_file_path = "./resource/bgm/"
 	global sound_file_path
 	sound_file_path = "./resource/sound/"
+	global story_list
+	story_list = [
+		"./resource/image/story/image_story_0.png",
+		"./resource/image/story/image_story_1_1.png",
+		"./resource/image/story/image_story_1_2.png",
+		"./resource/image/story/image_level_1_1.png",
+		0,
+		"./resource/image/story/image_story_2.png",
+		"./resource/image/story/image_level_1_2.png",
+		0,
+		"./resource/image/story/image_level_2_1.png",
+		0,
+		"./resource/image/story/image_level_2_2.png",
+		0,
+		"./resource/image/story/image_level_3-1.png",
+		0,
+		"./resource/image/story/image_level_3-2.png",
+		0,
+		"./resource/image/story/image_level_4-1.png",
+		0,
+		"./resource/image/story/image_level_4-2.png",
+		0,
+	]
+
 
 def get_player_img():
 	return f"type_simple/image_character_{color[color_index]}"
