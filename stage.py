@@ -29,8 +29,6 @@ class TitleOption(Enum):
 class SettingOption(Enum):
 	SKIN = 0
 	SOUND = 1
-	EXIT = 2
-
 
 class Stage:
 	def __init__(self):
